@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGEVALP", "SIGEVALP.csproj", "{08422C0B-943C-4428-8D07-69C9002AD201}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08422C0B-943C-4428-8D07-69C9002AD201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08422C0B-943C-4428-8D07-69C9002AD201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08422C0B-943C-4428-8D07-69C9002AD201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08422C0B-943C-4428-8D07-69C9002AD201}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {854F97F9-824E-40FE-B479-64A593CE711D}
+	EndGlobalSection
+EndGlobal
