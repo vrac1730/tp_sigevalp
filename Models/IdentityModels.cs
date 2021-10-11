@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+
 namespace SIGEVALP.Models
 {
     // Para agregar datos de perfil del usuario, agregue más propiedades a su clase ApplicationUser. Visite https://go.microsoft.com/fwlink/?LinkID=317594 para obtener más información.
@@ -20,11 +21,32 @@ namespace SIGEVALP.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<DetalleCompra> DetallesCompras { get; set; }
+        public DbSet<OrdenCompra> OrdenesCompras { get; set; }
+        public DbSet<Solicitud> Solicitudes { get; set; }
+        public DbSet<DetalleSolicitud> DetallesSolicitudes { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<DetalleCotizacion> DetallesCotizaciones { get; set; }
+        public DbSet<Cotizacion> Cotizaciones { get; set; }
+        public DbSet<Local> Locales { get; set; }
+        public DbSet<Proveedor> Proveedores { get; set; }
+        public DbSet<Estado> Estados { get; set; }
+        public DbSet<Alerta> Alertas { get; set; }
+        public DbSet<Almacen> Almacenes { get; set; }
+        public DbSet<ProductoxAlmacen> ProductosxAlmacen { get; set; }
+        public DbSet<Persona> Personas { get; set; }
+        public DbSet<HistorialMovimiento> HistorialMovimientos { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {         
+            modelBuilder.Entity<DetalleCotizacion>().HasKey(x => new { x.idProducto, x.idProveedor });
+            base.OnModelCreating(modelBuilder);
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

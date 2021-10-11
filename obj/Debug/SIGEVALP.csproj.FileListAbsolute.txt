@@ -125,3 +125,6 @@ C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.csproj.CoreCompileInp
 C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.csproj.CopyComplete
 C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.dll
 C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.pdb
+C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.Migrations.ModeloInicial.resources
+C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.csproj.GenerateResource.cache
+C:\Users\Usuario\Downloads\TPG\SIGEVALP\obj\Debug\SIGEVALP.Migrations.ModeloBase.resources
