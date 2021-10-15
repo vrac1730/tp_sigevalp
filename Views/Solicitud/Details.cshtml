@@ -1,0 +1,102 @@
+﻿@model SIGEVALP.Models.Solicitud
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de Solicitud</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Persona.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Persona.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Local.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Local.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+    </dl>
+
+    @if (Model.DetalleSolicitud.Count() == 0)
+    {
+        <p>Aún no hay productos asociados a esta solicitud.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Solicitado</th>
+                    <th>Entregado</th>
+                    <th>Observación</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewData["Productos"] as IEnumerable<SIGEVALP.Models.DetalleSolicitud>)
+                {
+                    <tr>
+                        <td>
+                            @item.Producto.codigo
+                        </td>
+                        <td>
+                            @item.Producto.nombre
+                        </td>
+                        <td>
+                            @item.Producto.marca
+                        </td>
+                        <td>
+                            @item.cantSolicitada
+                        </td>
+                        <td>
+                            @item.cantEntregada
+                        </td>
+                        <td>
+                            @item.Producto.Alerta.nombre
+                        </td>
+                        <td>
+                            @*Html.ActionLink("Editar", "EditDetail", new { id = item.id })*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<p>
+
+    @Html.ActionLink("Regresar", "Index")
+</p>
+

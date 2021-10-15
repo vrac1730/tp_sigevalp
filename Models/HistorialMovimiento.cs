@@ -16,8 +16,8 @@ namespace SIGEVALP.Models
         public string tipo { get; set; }
         public int idProductoxAlmacen { get; set; }
         
-        //[ForeignKey("idProductoxAlmacen")]
-        //public ProductoxAlmacen ProductoxAlmacen { get; set; }
+        [ForeignKey("idProductoxAlmacen")]
+        public ProductoxAlmacen ProductoxAlmacen { get; set; }
 
     }
 }

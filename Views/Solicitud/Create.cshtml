@@ -1,0 +1,239 @@
+﻿@model SIGEVALP.Models.Solicitud
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Registro de Solicitud</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Fecha</label>
+            <div class="col-md-3">
+                @Html.TextBox("fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control", @disabled = "disabled" })
+            </div>
+            <label class="control-label col-md-2">Estado</label>
+            <div class="col-md-3">
+                <input class="form-control" disabled type="text" value="Pendiente">
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("idUsuario", null, "--Seleccionar Usuario--", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Producto</label>
+            <div id="id-prod" class="col-md-3">
+                @Html.DropDownList("idProducto", null, "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control col-md-3" })
+            </div>
+
+            <label class="control-label col-md-2">Cant. Requerida</label>
+            <div id="cant-sol" class="col-md-3">
+                <input type="text" id="cantSolicitada" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                <input type="submit" value="Registrar" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div id="div-detalle">
+            <table id="tabla-detalle" class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Producto</th>
+                        <th>Solicitado</th>
+                        <th>Entregado</th>
+                        <th>Observación</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-cuerpo">
+                    @*<tr>
+                            <td>3</td>
+                            <td>Cuaderno</td>
+                            <td>20</td>
+                            <td>0</td>
+                            <td>Pendiente</td>
+                        </tr>*@
+                </tbody>
+            </table>
+
+            @*<input type="hidden" name="DetalleSalida.Index" id="DetalleSalida.Index" value="0" />
+                <input type="hidden" name="DetalleSalida[0].idProducto" id="DetalleSalida[0].idProducto" value="3" />
+                <input type="hidden" name="DetalleSalida[0].Producto.nombre" id="DetalleSalida[0].Producto.nombre" value="Cuaderno" />
+                <input type="hidden" name="DetalleSalida[0].cantSolicitada" id="DetalleSalida[0].cantSolicitada" value="20" />
+                <input type="hidden" name="DetalleSalida[0].cantEntregada" id="DetalleSalida[0].cantEntregada" value="0" />
+                <input type="hidden" name="DetalleSalida[0].Producto.Alerta.nombre" id="DetalleSalida[0].Producto.Alerta.id" value="Pendiente" />*@
+        </div>
+    </div>
+
+    <h4>Productos Sugeridos:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Stock Mínimo</th>
+                <th>Stock Máximo</th>
+                <th>Cantidad</th>
+                <th>Observación</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["Productos"] as IEnumerable<SIGEVALP.Models.ProductoxAlmacen>)
+            {
+                <tr>
+                    <td>
+                        @item.Producto.codigo
+                    </td>
+                    <td>
+                        @item.Producto.nombre
+                    </td>
+                    <td>
+                        @item.Producto.marca
+                    </td>
+                    <td>
+                        @item.stock_min
+                    </td>
+                    <td>
+                        @item.stock_max
+                    </td>
+                    <td>
+                        @item.cantidad
+                    </td>
+                    <td>
+                        @item.Alerta.nombre
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    var n = 0;
+    function Agregar() {
+        //obtenemos valores de elementos
+        let cant = document.getElementById("cantSolicitada").value;
+        let selectElement = document.getElementById("idProducto");
+        let nomElement = selectElement.options[selectElement.selectedIndex].text;
+        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let body = document.getElementById("tabla-cuerpo");
+
+        let div1 = document.getElementById("cant-sol");
+        let div2 = document.getElementById("id-prod");
+        let valcant = document.createElement("span");
+        let valid = document.createElement("span");
+
+        let cantmsj = "Ingrese una cantidad válida.";
+        let classname = "field-validation-error text-danger";
+        let idmsj = "Seleccione un producto.";
+
+        valcant.innerHTML = "";
+        valid.innerHTML = "";
+
+        div1.appendChild(valcant);
+        div2.appendChild(valid);
+
+        if (cant == "" & valElement == 0) {
+            valcant.innerHTML = cantmsj;
+            valcant.className = classname;
+            valid.innerHTML = idmsj;
+            valid.className = classname;
+        }
+
+        if (cant == "") {
+            valcant.innerHTML = "";
+            valcant.className = classname;
+            valcant.innerHTML = cantmsj;
+        }
+        else if (valElement == 0) {
+            valid.innerHTML = "";
+            valid.className = classname;
+            valid.innerHTML = idmsj;
+        }
+        else {
+            //crear elementos del cuerpo de la tabla
+            let tr = document.createElement("tr");
+            let tdid = document.createElement("td");
+            let tdnombre = document.createElement("td");
+            let tdsolicitado = document.createElement("td");
+            let tdentregado = document.createElement("td");
+            let tdalerta = document.createElement("td");
+            //asigna jerarquía de elementos
+            tr.appendChild(tdid);
+            tr.appendChild(tdnombre);
+            tr.appendChild(tdsolicitado);
+            tr.appendChild(tdentregado);
+            tr.appendChild(tdalerta);
+            tdid.innerHTML = valElement;
+            tdnombre.innerHTML = nomElement
+            tdsolicitado.innerHTML = cant;
+            tdentregado.innerHTML = 0;
+            tdalerta.innerHTML = "Pendiente";
+            body.appendChild(tr);
+            //crear elementos input
+            let div = document.getElementById("div-detalle");
+            let index = document.createElement("input")
+            let idProd = document.createElement("input")
+            //let nombre = document.createElement("input")
+            let cantSol = document.createElement("input")
+            let cantEnt = document.createElement("input")
+            //let alerNom = document.createElement("input")
+            //asignar valores
+            index.name = "DetalleSalida.Index";
+            index.value = n;
+            index.type = "hidden";
+            idProd.name = "DetalleSalida[" + n + "].idProducto";
+            idProd.value = valElement;
+            idProd.type = "hidden";
+            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
+            //nombre.value = nomElement;
+            //nombre.type = "hidden";
+            cantSol.name = "DetalleSalida[" + n + "].cantSolicitada";
+            cantSol.value = cant;
+            cantSol.type = "hidden";
+            cantEnt.name = "DetalleSalida[" + n + "].cantEntregada";
+            cantEnt.value = 0;
+            cantEnt.type = "hidden";
+            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
+            //alerNom.value = "Pendiente";
+            //alerNom.type = "hidden";
+
+            //asignar jerarquía de elementos
+            div.appendChild(index);
+            div.appendChild(idProd);
+            //div.appendChild(nombre);
+            div.appendChild(cantSol);
+            div.appendChild(cantEnt);
+            //div.appendChild(alerNom);
+
+            selectElement.value = "";
+            cant = "";
+            n++;
+        }
+    }
+</script>
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

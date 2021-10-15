@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SIGEVALP.Models.Solicitud>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Mis Solicitudes</h2>
+
+@using (Html.BeginForm("Index", "Solicitud", FormMethod.Post))
+{
+    <div>
+        <h5>Código de Solicitud</h5>
+        @Html.TextBox("cod", "", new { @class = "form-control" })
+
+        <button type="submit" class="btn-default">Buscar</button>
+    </div>
+}
+<hr />
+
+<p>
+    @Html.ActionLink("Registrar", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario.Persona.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario.Local.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Persona.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Local.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            <td>
+                @Html.ActionLink("Ver", "Details", new { id = item.id })
+
+            </td>
+        </tr>
+    }
+</table>

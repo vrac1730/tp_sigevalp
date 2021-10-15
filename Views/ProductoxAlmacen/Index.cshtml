@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SIGEVALP.Models.ProductoxAlmacen>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reporte Stock</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+
+@using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post))
+{
+    <div>
+        <h5>Código de Producto</h5>
+        @Html.TextBox("cod", "", new { @class = "form-control" })
+        <h5>Nombre de Producto</h5>
+        @Html.TextBox("cadena", "", new { @class = "form-control" })
+
+        <button type="submit" class="btn-default">Buscar</button>
+    </div>
+}
+<hr />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_min)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_max)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.Categoria.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock_min)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock_max)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Categoria.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>*@
+        </tr>
+    }
+</table>
+

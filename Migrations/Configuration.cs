@@ -20,7 +20,7 @@ namespace SIGEVALP.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-            context.Personas.AddOrUpdate(x => x.id,
+            context.Personas.AddOrUpdate(x => x.id,               
            new Persona() { id = 1, dni = 12345678, nombre = "Jose", aPaterno = "Zapata", aMaterno = "Tuñoque", celular = 123456789 },
            new Persona() { id = 2, dni = 70360207, nombre = "Victor", aPaterno = "Alarcón", aMaterno = "Campos", celular = 963109798 },
            new Persona() { id = 3, dni = 12345678, nombre = "Marco", aPaterno = "Rios", aMaterno = "Arone", celular = 123456789 },
@@ -75,7 +75,20 @@ namespace SIGEVALP.Migrations
                 new DetalleSolicitud() { idSolicitud = 1, idProducto = 1, cantSolicitada = 100, cantEntregada = 0, observacion = "" },
                 new DetalleSolicitud() { idSolicitud = 1, idProducto = 2, cantSolicitada = 10, cantEntregada = 0, observacion = "" }
                  );
-
+            context.Almacenes.AddOrUpdate(x => x.id,
+               new Almacen() { id = 1, nombre = "Centro #1", direccion = "Av Peru" },
+               new Almacen() { id = 2, nombre = "Centro #2", direccion = "Av Brasil" },
+               new Almacen() { id = 3, nombre = "Centro #3", direccion = "Av Proceres" },
+               new Almacen() { id = 4, nombre = "Centro #4", direccion = "Av Loreto" },
+               new Almacen() { id = 5, nombre = "Centro #5", direccion = "Av Larco" }
+               );
+                      context.Estados.AddOrUpdate(x => x.id,
+               new Estado() { id = 1, nombre = "Defectuoso", descripcion = "Buena calidad" },
+               new Estado() { id = 2, nombre = "Malo", descripcion = "Buena calidad" },
+               new Estado() { id = 3, nombre = "Regular", descripcion = "Mala calidad" },
+               new Estado() { id = 4, nombre = "Bueno", descripcion = "Buena calidad" },
+               new Estado() { id = 5, nombre = "Óptimo", descripcion = "Mala calidad" }
+               );
             context.Productos.AddOrUpdate(x => x.id,
                 new Producto() { id = 1, codigo = "111", nombre = "Cuaderno", descripcion = "Cuaderno de buena calidad", marca = "Loro", idCategoria = 1, idAlerta = 5 },
                 new Producto() { id = 2, codigo = "112", nombre = "Lapiz", descripcion = "Lapiz de buena calidad", marca = "Mongol", idCategoria = 2, idAlerta = 5 },
@@ -87,7 +100,17 @@ namespace SIGEVALP.Migrations
                 new Producto() { id = 8, codigo = "118", nombre = "Papelografo", descripcion = "Pepelografo cuadriculado", marca = "Justus", idCategoria = 2, idAlerta = 4 },
                 new Producto() { id = 9, codigo = "119", nombre = "Papelografo", descripcion = "Pepelografo en blanco", marca = "Dragon", idCategoria = 2, idAlerta = 4 }
                 );
-
+            context.ProductosxAlmacen.AddOrUpdate(x => x.id,
+              new ProductoxAlmacen() { id = 1, cantidad = 47, idAlmacen = 1, stock_min = 10, stock_max = 60, idProducto = 1, idEstado = 1, idAlerta = 3 },
+              new ProductoxAlmacen() { id = 2, cantidad = 45, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 2, idEstado = 2, idAlerta = 3 },
+              new ProductoxAlmacen() { id = 3, cantidad = 30, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 3, idEstado = 2, idAlerta = 2 },
+              new ProductoxAlmacen() { id = 4, cantidad = 21, idAlmacen = 1, stock_min = 5, stock_max = 40, idProducto = 4, idEstado = 3, idAlerta = 2 },
+              new ProductoxAlmacen() { id = 5, cantidad = 10, idAlmacen = 1, stock_min = 10, stock_max = 60, idProducto = 5, idEstado = 3, idAlerta = 1 },
+              new ProductoxAlmacen() { id = 6, cantidad = 7, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 6, idEstado = 3, idAlerta = 1 },
+              new ProductoxAlmacen() { id = 7, cantidad = 43, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 7, idEstado = 3, idAlerta = 3 },
+              new ProductoxAlmacen() { id = 8, cantidad = 40, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 8, idEstado = 3, idAlerta = 3 },
+              new ProductoxAlmacen() { id = 9, cantidad = 49, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 9, idEstado = 3, idAlerta = 3 }
+              );
         }
     }
 }
