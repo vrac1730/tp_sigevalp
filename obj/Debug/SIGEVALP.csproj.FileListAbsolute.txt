@@ -257,3 +257,4 @@ C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.csproj.CoreCompile
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.csproj.CopyComplete
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.dll
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.pdb
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.csprojAssemblyReference.cache

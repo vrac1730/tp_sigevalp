@@ -19,7 +19,7 @@ namespace SIGEVALP.Models
 
         [DisplayName("Nombre")]
         [Required]
-        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
+        //[RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
         public string nombre { get; set; }
 
         [DisplayName("Descripción")]
@@ -28,7 +28,7 @@ namespace SIGEVALP.Models
 
         [DisplayName("Marca")]
         [Required]
-        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
+        //[RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)+( [a-zA-Z]+)+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
         public string marca { get; set; }
 
         [DisplayName("Categoría")]

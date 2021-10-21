@@ -54,10 +54,10 @@ namespace SIGEVALP.Controllers
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
 
 
-            var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4 || p.Producto.idAlerta == 8));
+            var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
                 // db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
 
-            ViewData["idProducto"] = new SelectList(prod, "id", "nombre");
+            ViewData["idProducto"] = new SelectList(prod, "id", "Producto.nombre");
 
             List<ProductoxAlmacen> productoxAlmacens = prod.Include(d => d.Alerta).ToList();
             //List<Producto> productos = prod.Include(d => d.Alerta).ToList();
@@ -71,7 +71,7 @@ namespace SIGEVALP.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,fecha,codigo,estado,idUsuario,DetalleSalida")] Solicitud solicitud)
+        public ActionResult Create([Bind(Include = "id,fecha,codigo,estado,idUsuario,DetalleSolicitud")] Solicitud solicitud)
         {
 
             if (ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace SIGEVALP.Controllers
             //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);
             List<ProductoxAlmacen> productos = pro.Include(d => d.Producto.Alerta).ToList();
             //List<Producto> productos = pro.Include(d => d.Alerta).ToList();
-            ViewData["idProducto"] = new SelectList(pro, "id", "nombre");
+            ViewData["idProducto"] = new SelectList(pro, "id", "Producto.nombre");
             ViewData["Productos"] = productos;
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
 
