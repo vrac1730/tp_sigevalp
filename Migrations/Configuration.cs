@@ -29,10 +29,12 @@ namespace SIGEVALP.Migrations
             new Persona() { id = 4, dni = 12345678, nombre = "Luis", aPaterno = "Sánchez", aMaterno = "Tupia", celular = 123456789 },
             new Persona() { id = 5, dni = 12345678, nombre = "Arnold", aPaterno = "Alegria", aMaterno = "Pacheco", celular = 123456789 }
             );
-            context.Locales.AddOrUpdate(x => x.id,
-            new Local() { id = 1, nombre = "Surco", direccion = "Av: los benavides 4950", telefono = 276153485, ruc = 20501234567, razon_social = "abc" },
-            new Local() { id = 2, nombre = "Miraflores", direccion = "Av: los benavides 950", telefono = 276343485, ruc = 20501254567, razon_social = "def" },
-            new Local() { id = 3, nombre = "Barranco", direccion = "Av: Grau 495", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" }
+            context.Almacenes.AddOrUpdate(x => x.id,
+            new Almacen() { id = 1, nombre = "Centro #1", direccion = "Av Peru" },
+            new Almacen() { id = 2, nombre = "Centro #2", direccion = "Av Brasil" },
+            new Almacen() { id = 3, nombre = "Centro #3", direccion = "Av Proceres" },
+            new Almacen() { id = 4, nombre = "Centro #4", direccion = "Av Loreto" },
+            new Almacen() { id = 5, nombre = "Centro #5", direccion = "Av Larco" }
             );
             context.Categorias.AddOrUpdate(x => x.id,
             new Categoria() { id = 1, nombre = "Pastas", descripcion = "Buena calidad" },
@@ -40,9 +42,16 @@ namespace SIGEVALP.Migrations
             new Categoria() { id = 3, nombre = "Licor", descripcion = "Buena calidad" },
             new Categoria() { id = 4, nombre = "Aceites", descripcion = "Buena calidad" },
             new Categoria() { id = 5, nombre = "Embutidos", descripcion = "Buena calidad" },
-            new Categoria() { id = 6, nombre = "Lacteos", descripcion = "Buena calidad" }, 
+            new Categoria() { id = 6, nombre = "Lacteos", descripcion = "Buena calidad" },
             new Categoria() { id = 7, nombre = "Verduras", descripcion = "Buena calidad" },
             new Categoria() { id = 8, nombre = "Abarrotes", descripcion = "Buena calidad" }
+            );
+            context.Estados.AddOrUpdate(x => x.id,
+            new Estado() { id = 1, nombre = "Defectuoso", descripcion = "Buena calidad" },
+            new Estado() { id = 2, nombre = "Malo", descripcion = "Buena calidad" },
+            new Estado() { id = 3, nombre = "Regular", descripcion = "Mala calidad" },
+            new Estado() { id = 4, nombre = "Bueno", descripcion = "Buena calidad" },
+            new Estado() { id = 5, nombre = "Óptimo", descripcion = "Mala calidad" }
             );
             context.Alertas.AddOrUpdate(x => x.id,
             new Alerta() { id = 1, nombre = "Bajo Stock", descripcion = "" },
@@ -54,23 +63,21 @@ namespace SIGEVALP.Migrations
             new Alerta() { id = 7, nombre = "En orden", descripcion = "" },
             new Alerta() { id = 8, nombre = "Recibido P.", descripcion = "" },
             new Alerta() { id = 9, nombre = "Aprobado", descripcion = "" },
-            new Alerta() { id = 10, nombre = "Rechazado", descripcion = "" }            
+            new Alerta() { id = 10, nombre = "Rechazado", descripcion = "" }
             );
-            context.Almacenes.AddOrUpdate(x => x.id,
-            new Almacen() { id = 1, nombre = "Centro #1", direccion = "Av Peru" },
-            new Almacen() { id = 2, nombre = "Centro #2", direccion = "Av Brasil" },
-            new Almacen() { id = 3, nombre = "Centro #3", direccion = "Av Proceres" },
-            new Almacen() { id = 4, nombre = "Centro #4", direccion = "Av Loreto" },
-            new Almacen() { id = 5, nombre = "Centro #5", direccion = "Av Larco" }
+            context.Locales.AddOrUpdate(x => x.id,
+            new Local() { id = 1, nombre = "Surco", direccion = "Av: los benavides 4950", telefono = 276153485, ruc = 20501234567, razon_social = "abc" },
+            new Local() { id = 2, nombre = "Miraflores", direccion = "Av: los benavides 950", telefono = 276343485, ruc = 20501254567, razon_social = "def" },
+            new Local() { id = 3, nombre = "Barranco", direccion = "Av: Grau 495", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" }
+            );                   
+            context.Proveedores.AddOrUpdate(x => x.id,
+            new Proveedor() { id = 1, nombre = "Mario Salas", correo = "mariosalas@gmail.com", direccion = "villa el salvador", razon_social = "abc", ruc = 42143557923, telefono = 981232131 },
+            new Proveedor() { id = 2, nombre = "Jorge Luna", correo = "jorgeluna@gmail.com", direccion = "villa Maria del triunfo", razon_social = "def", ruc = 41212435351, telefono = 986463231 },
+            new Proveedor() { id = 3, nombre = "Luis Gonzales", correo = "lgonzales@hotmail.com", direccion = "Surco", razon_social = "ghi", ruc = 94454143564, telefono = 991212123 },
+            new Proveedor() { id = 4, nombre = "Jose Avalos", correo = "javalos@gmail.com", direccion = "Lima", razon_social = "jkl", ruc = 89948423248, telefono = 991232332 },
+            new Proveedor() { id = 5, nombre = "Ricardo Huerta", correo = "ricardoh@hotmail.com", direccion = "Chorrillos", razon_social = "mno", ruc = 12993123351, telefono = 992312316 }
             );
-            context.Estados.AddOrUpdate(x => x.id,
-            new Estado() { id = 1, nombre = "Defectuoso", descripcion = "Buena calidad" },
-            new Estado() { id = 2, nombre = "Malo", descripcion = "Buena calidad" },
-            new Estado() { id = 3, nombre = "Regular", descripcion = "Mala calidad" },
-            new Estado() { id = 4, nombre = "Bueno", descripcion = "Buena calidad" },
-            new Estado() { id = 5, nombre = "Óptimo", descripcion = "Mala calidad" }
-            );
-            
+
             context.Usuarios.AddOrUpdate(x => x.id,
             new Usuario() { id = 1, username = "Sebastián", correo = "sebas@hotmail.com", contraseña = "123", idLocal = 1, idPersona = 1 },
             new Usuario() { id = 2, username = "Victor", correo = "virualca@hotmail.com", contraseña = "123", idLocal = 1, idPersona = 2 },
@@ -105,11 +112,36 @@ namespace SIGEVALP.Migrations
             new Solicitud() { id = 4, codigo = "0004", fecha = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Pendiente", idUsuario = 4 },
             new Solicitud() { id = 5, codigo = "0005", fecha = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Pendiente", idUsuario = 5 }
             );
-            
+            context.OrdenesCompras.AddOrUpdate(x => x.id,
+            new OrdenCompra() { id = 1, codigo = "0001", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 1500, idUsuario = 1, idProveedor = 3 },
+            new OrdenCompra() { id = 2, codigo = "0002", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 500, idUsuario = 2, idProveedor = 2 },
+            new OrdenCompra() { id = 3, codigo = "0003", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 1200, idUsuario = 3, idProveedor = 1 },
+            new OrdenCompra() { id = 4, codigo = "0004", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 1000, idUsuario = 4, idProveedor = 4 },
+            new OrdenCompra() { id = 5, codigo = "0005", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 000, idUsuario = 5, idProveedor = 5 }
+            );
+            context.Cotizaciones.AddOrUpdate(x => x.id,
+            new Cotizacion() { id = 1, codigo = "0001", fechaInicio = new DateTime(2021, 06, 03, 12, 19, 20), fechaFin = new DateTime(2021, 06, 08, 12, 19, 20), estado = "Pendiente", iva = 0.11, total = 200.00, idUsuario = 2, idProveedor = 3 },
+            new Cotizacion() { id = 2, codigo = "0002", fechaInicio = new DateTime(2021, 06, 03, 12, 20, 20), fechaFin = new DateTime(2021, 06, 08, 12, 20, 20), estado = "Pendiente", iva = 0.11, total = 183.50, idUsuario = 2, idProveedor = 1 },
+            new Cotizacion() { id = 3, codigo = "0003", fechaInicio = new DateTime(2021, 06, 03, 12, 21, 20), fechaFin = new DateTime(2021, 06, 08, 12, 21, 20), estado = "Pendiente", iva = 0.11, total = 270.10, idUsuario = 2, idProveedor = 2 }
+            );
+
             context.DetallesSolicitudes.AddOrUpdate(x => new { x.idSolicitud, x.idProducto },
             new DetalleSolicitud() { idSolicitud = 1, idProducto = 1, cantSolicitada = 100, cantEntregada = 0, observacion = "" },
             new DetalleSolicitud() { idSolicitud = 1, idProducto = 2, cantSolicitada = 10, cantEntregada = 0, observacion = "" }
-            );    
+            );
+            context.DetallesCompras.AddOrUpdate(x => x.id,
+            new DetalleCompra() { id = 1, cantidad = 20, total = 410, cantidadRecibida = 0, idProducto = 5, idOrdenCompra = 1 },
+            new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, idProducto = 6, idOrdenCompra = 1 }
+            );
+            context.DetallesCotizaciones.AddOrUpdate(x => new { x.idProveedor, x.idProducto },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, idAlerta = 5, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, idAlerta = 10, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, idAlerta = 10, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, idAlerta = 9, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, idAlerta = 9, idCotizacion = 1 },
+            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, idAlerta = 9, idCotizacion = 1 }
+            );            
+              
             context.ProductosxAlmacen.AddOrUpdate(x => x.id,
             new ProductoxAlmacen() { id = 1, cantidad = 47, idAlmacen = 1, stock_min = 10, stock_max = 60, idProducto = 1, idEstado = 1, idAlerta = 3 },
             new ProductoxAlmacen() { id = 2, cantidad = 45, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 2, idEstado = 2, idAlerta = 3 },

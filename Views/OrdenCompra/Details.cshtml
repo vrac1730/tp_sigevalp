@@ -1,0 +1,109 @@
+﻿@model SIGEVALP.Models.OrdenCompra
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de Orden</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Local.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Local.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaOrden)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.fechaOrden)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPago)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.fechaPago)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.montoTotal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.montoTotal)
+        </dd>
+    </dl>
+    @if (Model.DetalleCompras.Count() == 0)
+    {
+        <p>Aún no hay productos asociados a esta orden.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Costo</th>
+                    <th>Total</th>
+                    <th>Recibido</th>
+                    <th>Observación</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DetalleCompras)
+                {
+                    <tr>
+                        <td>
+                            @item.Producto.codigo
+                        </td>
+                        <td>
+                            @item.Producto.nombre
+                        </td>
+                        <td>
+                            @item.Producto.marca
+                        </td>
+                        <td>
+                            @item.cantidad
+                        </td>
+                        <td>
+                            @item.Producto.DetalleCotizacion[0].costo
+                        </td>
+                        <td>
+                            @item.total
+                        </td>
+                        <td>
+                            @item.cantidadRecibida
+                        </td>
+                        <td>
+                            @item.Producto.Alerta.nombre
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "EditDetail", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<p>
+
+    @Html.ActionLink("Regresar", "Index")
+</p>

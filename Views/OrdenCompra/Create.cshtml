@@ -1,0 +1,236 @@
+﻿
+@model SIGEVALP.Models.OrdenCompra
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Registro de Orden</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @if (Url.RequestContext.RouteData.Values.ContainsKey("id") == false)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Proveedor.nombre, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownList("idProveedor", null, "Seleccione Proveedor", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Registrar" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <input id="idProveedor" name="idProveedor" type="hidden" value="@Url.RequestContext.RouteData.Values["id"]">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Usuario.username, "Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownList("idUsuario", null, "Seleccione Usuario", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.fechaOrden, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBox("fechaOrden", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.fechaOrden, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.fechaPago, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBox("fechaPago", DateTime.Today.AddDays(5).ToString("yyyy-MM-dd"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.fechaPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Producto</label>
+                <div id="id-prod" class="col-md-3">
+                    @Html.DropDownList("idProducto", null, "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control col-md-3" })
+                </div>
+                <label class="control-label col-md-2">Cantidad</label>
+                <div id="cant-rec" class="col-md-3">
+                    <input type="text" id="cantidad" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                    <input type="submit" value="Registrar" class="btn btn-default" />
+                </div>
+            </div>
+
+            <div id="div-detalle">
+                <table id="tabla-detalle" class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            @*<th>Costo</th>
+                                <th>Total</th>*@
+                            <th>Recibido</th>
+                            <th>Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cuerpo">
+                        @*<tr>
+                                <td>3</td>
+                                <td>Cuaderno</td>
+                                <td>20</td>
+                                <td>17.50</td>
+                                <td>350.00</td>
+                                <td>0</td>
+                                <td>En Orden</td>
+                            </tr>*@
+                    </tbody>
+                </table>
+
+                @*  <input type="hidden" name="DetalleCompras.Index" id="DetalleCompras.Index" value="0" />
+                    <input type="hidden" name="DetalleCompras[0].idProducto" id="DetalleCompras[0].idProducto" value="3" />
+                    <input type="hidden" name="DetalleCompras[0].Producto.nombre" id="DetalleCompras[0].Producto.nombre" value="Cuaderno" />
+                    <input type="hidden" name="DetalleCompras[0].cantidad" id="DetalleCompras[0].cantidad" value="20" />
+                    <input type="hidden" name="DetalleCompras[0].Producto.DetalleCotizacion[0].costo" id="DetalleCompras[0].Producto.DetalleCotizacion[0].costo" value="17.50" />
+                    <input type="hidden" name="DetalleCompras[0].Producto.Alerta.nombre" id="DetalleCompras[0].Producto.Alerta.id" value="" />
+
+                    <input type="hidden" name="DetalleCompras[0].cantidadRecibida" id="DetalleCompras[0].cantidadRecibida" value="0" />
+                    <input type="hidden" name="DetalleCompras[0].Producto.Alerta.nombre" id="DetalleCompras[0].Producto.Alerta.id" value="En orden" />
+                *@
+            </div>
+        }
+    </div>
+}
+
+<script>
+    var n = 0;
+    function Agregar() {
+        //obtenemos valores de elementos
+        let cant = document.getElementById("cantidad").value;
+        let selectElement = document.getElementById("idProducto");
+        let nomElement = selectElement.options[selectElement.selectedIndex].text;
+        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let body = document.getElementById("tabla-cuerpo");
+
+        let div1 = document.getElementById("cant-rec");
+        let div2 = document.getElementById("id-prod");
+        let valcant = document.createElement("span");
+        let valid = document.createElement("span");
+
+        let cantmsj = "Ingrese una cantidad válida.";
+        let classname = "field-validation-error text-danger";
+        let idmsj = "Seleccione un producto.";
+
+        valcant.innerHTML = "";
+        valid.innerHTML = "";
+
+        div1.appendChild(valcant);
+        div2.appendChild(valid);
+
+        if (cant == "" & valElement == 0) {
+            valcant.innerHTML = cantmsj;
+            valcant.className = classname;
+            valid.innerHTML = idmsj;
+            valid.className = classname;
+        }
+
+        if (cant == "") {
+            valcant.innerHTML = "";
+            valcant.className = classname;
+            valcant.innerHTML = cantmsj;
+        }
+        else if (valElement == 0) {
+            valid.innerHTML = "";
+            valid.className = classname;
+            valid.innerHTML = idmsj;
+        }
+        else {
+            //crear elementos del cuerpo de la tabla
+            let tr = document.createElement("tr");
+            let tdid = document.createElement("td");
+            let tdnombre = document.createElement("td");
+            let tdcant = document.createElement("td");
+            //let tdcosto = document.createElement("td");
+            //let tdtotal = document.createElement("td");
+            let tdrecibido = document.createElement("td");
+            let tdalerta = document.createElement("td");
+            //asigna jerarquía de elementos
+            tr.appendChild(tdid);
+            tr.appendChild(tdnombre);
+            tr.appendChild(tdcant);
+            //tr.appendChild(tdcosto);
+            //tr.appendChild(tdtotal);
+            tr.appendChild(tdrecibido);
+            tr.appendChild(tdalerta);
+            tdid.innerHTML = valElement;
+            tdnombre.innerHTML = nomElement;
+            tdcant.innerHTML = cant;
+            //tdcosto.innerHTML =
+            //tdtotal.innerHTML =
+            tdrecibido.innerHTML = 0;
+            tdalerta.innerHTML = "En orden";
+            body.appendChild(tr);
+            //crear elementos input
+            let div = document.getElementById("div-detalle");
+            let index = document.createElement("input")
+            let idProd = document.createElement("input")
+            //let nombre = document.createElement("input")
+            let Cant = document.createElement("input")
+            let cantRec = document.createElement("input")
+            //let alerNom = document.createElement("input")
+            //asignar valores
+            index.name = "DetalleCompras.Index";
+            index.value = n;
+            index.type = "hidden";
+            idProd.name = "DetalleCompras[" + n + "].idProducto";
+            idProd.value = valElement;
+            idProd.type = "hidden";
+            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
+            //nombre.value = nomElement;
+            //nombre.type = "hidden";
+            Cant.name = "DetalleCompras[" + n + "].cantidad";
+            Cant.value = cant;
+            Cant.type = "hidden";
+            cantRec.name = "DetalleCompras[" + n + "].cantidadRecibida";
+            cantRec.value = 0;
+            cantRec.type = "hidden";
+            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
+            //alerNom.value = "Pendiente";
+            //alerNom.type = "hidden";
+
+            //asignar jerarquía de elementos
+            div.appendChild(index);
+            div.appendChild(idProd);
+            //div.appendChild(nombre);
+            div.appendChild(Cant);
+            div.appendChild(cantRec);
+            //div.appendChild(alerNom);
+
+            selectElement.value = "";
+            cant = "";
+            n++;
+        }
+    }
+</script>
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

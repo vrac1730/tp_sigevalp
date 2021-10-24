@@ -111,7 +111,7 @@ namespace SIGEVALP.Controllers
         }
 
         //registrar nota salida////
-        /*
+       
         // GET: Solicitud/Edit/5
         public ActionResult EditDetail(int? id)
         {
@@ -155,7 +155,6 @@ namespace SIGEVALP.Controllers
                 return RedirectToAction("Details", new { id = detalle.idSolicitud });
             }
             return View(detalleSolicitud);
-        }
-        */
+        }        
     }
 }
