@@ -279,6 +279,7 @@
     <Content Include="Views\OrdenCompra\EditDetail.cshtml" />
     <Content Include="Views\OrdenCompra\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Solicitud\EditDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

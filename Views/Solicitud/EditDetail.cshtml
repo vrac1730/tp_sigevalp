@@ -1,9 +1,10 @@
-﻿@model SIGEVALP.Models.DetalleCompra
+﻿@model SIGEVALP.Models.DetalleSolicitud
+
 @{
     ViewBag.Title = "EditDetail";
 }
 
-<h2>Registrar Ingreso de Producto</h2>
+<h2>Registrar Salida de Producto</h2>
 
 @using (Html.BeginForm())
 {
@@ -30,17 +31,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cantSolicitada, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.EditorFor(model => model.cantSolicitada, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.cantidadRecibida, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cantEntregada, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cantidadRecibida, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.cantidadRecibida, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.cantEntregada, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cantEntregada, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -60,11 +61,9 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Details", new { id = Model.idOrdenCompra })
+    @Html.ActionLink("Regresar", "Details", new { id = Model.idSolicitud })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
