@@ -10,7 +10,17 @@ namespace SIGEVALP.Controllers
 {
     public class ProductoxAlmacenController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public ProductoxAlmacenController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
 
         // GET: ProductoxAlmacen
         public ActionResult Index(string cadena, string cod)

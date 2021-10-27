@@ -12,7 +12,17 @@ namespace SIGEVALP.Controllers
 {
     public class OrdenCompraController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public OrdenCompraController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
 
         // GET: OrdenCompra
         public ActionResult Index()
@@ -27,10 +37,15 @@ namespace SIGEVALP.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            OrdenCompra ordenCompra = db.OrdenesCompras.Include(o => o.Usuario.Local).Include(o => o.Proveedor).FirstOrDefault(o => o.id == id);
+            OrdenCompra ordenCompra = db.OrdenesCompras.Find(id);
 
             if (ordenCompra == null)
                 return HttpNotFound();
+
+            var proveedor = db.Proveedores.Find(ordenCompra.idProveedor);
+            var usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == ordenCompra.idUsuario);
+            ordenCompra.Proveedor = proveedor;
+            ordenCompra.Usuario = usuario;
 
             var detalleCompra = db.DetallesCompras.Include(d => d.Producto.Alerta).Where(d => d.idOrdenCompra == id).ToArray();
             for (int i = 0; i < detalleCompra.Length; i++)
@@ -41,8 +56,7 @@ namespace SIGEVALP.Controllers
                 detalleCompra[i].total = detalleCompra[i].cantidad * detalle[0].costo;
             }
             ordenCompra.DetalleCompras = detalleCompra.ToList();
-            double? total = detalleCompra.Sum(m => m.total);
-            ordenCompra.montoTotal = total;
+            ordenCompra.montoTotal = detalleCompra.Sum(m => m.total); 
 
             return View(ordenCompra);
         }
@@ -95,9 +109,7 @@ namespace SIGEVALP.Controllers
                 }
                 return RedirectToAction("Create", new { id = ordenCompra.idProveedor });
             }
-
-            //ViewBag.idProducto = new SelectList(db.DetalleCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "idProducto", "Producto.nombre");
-            //ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "nombre", ordenCompra.idUsuario);
+          
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
 
             return View(ordenCompra);
@@ -143,15 +155,5 @@ namespace SIGEVALP.Controllers
             }
             return View(detalleCompra);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
     }
 }

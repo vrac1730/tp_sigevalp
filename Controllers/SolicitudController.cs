@@ -12,7 +12,17 @@ namespace SIGEVALP.Controllers
 {
     public class SolicitudController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public SolicitudController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
 
         // GET: Solicitud
         public ActionResult Index(string cod)
@@ -37,23 +47,24 @@ namespace SIGEVALP.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Solicitud ordenSalida = db.Solicitudes.Include(o => o.Usuario.Persona).Include(o => o.Usuario.Local).Include(o => o.DetalleSolicitud).FirstOrDefault(o => o.id == id);
+            var solicitud = db.Solicitudes.Find(id);               
 
-            if (ordenSalida == null)
+            if (solicitud == null)
                 return HttpNotFound();
+                        
+            var detalles = db.DetallesSolicitudes.Include(d => d.Producto.Alerta).Where(d => d.idSolicitud == id).ToList();
+            var usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
+            solicitud.DetalleSolicitud = detalles;
+            solicitud.Usuario = usuario;
 
-            List<DetalleSolicitud> productos = db.Set<DetalleSolicitud>().Include(d => d.Producto.Alerta).Where(d => d.idSolicitud == id).ToList();
-            ViewData["Productos"] = productos;
-
-            return View(ordenSalida);
+            return View(solicitud);
         }
 
         // GET: Solicitud/Create
         public ActionResult Create()
-        {
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
-
-
+        {            
+            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");            
+     
             var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
                 // db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
 
