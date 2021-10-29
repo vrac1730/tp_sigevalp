@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202110150200330_Modelo-Base.Designer.cs">
       <DependentUpon>202110150200330_Modelo-Base.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110290451005_Alerta nula.cs" />
+    <Compile Include="Migrations\202110290451005_Alerta nula.Designer.cs">
+      <DependentUpon>202110290451005_Alerta nula.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
@@ -267,7 +271,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Producto\Create.cshtml" />
-    <Content Include="Views\Producto\Delete.cshtml" />
     <Content Include="Views\Producto\Details.cshtml" />
     <Content Include="Views\Producto\Edit.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
@@ -309,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110150200330_Modelo-Base.resx">
       <DependentUpon>202110150200330_Modelo-Base.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110290451005_Alerta nula.resx">
+      <DependentUpon>202110290451005_Alerta nula.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

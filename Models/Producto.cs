@@ -35,7 +35,7 @@ namespace SIGEVALP.Models
         public int idCategoria { get; set; }
 
         [DisplayName("Alerta")]
-        public int idAlerta { get; set; }
+        public int? idAlerta { get; set; }
 
         [ForeignKey("idAlerta")]
         public Alerta Alerta { get; set; }      

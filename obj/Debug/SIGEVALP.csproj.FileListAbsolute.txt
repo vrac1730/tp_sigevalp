@@ -388,3 +388,4 @@ C:\Users\Angie\Desktop\2021-2\pt4\sem10\tp_sigevalp\obj\Debug\SIGEVALP.csproj.Co
 C:\Users\Angie\Desktop\2021-2\pt4\sem10\tp_sigevalp\obj\Debug\SIGEVALP.csproj.CopyComplete
 C:\Users\Angie\Desktop\2021-2\pt4\sem10\tp_sigevalp\obj\Debug\SIGEVALP.dll
 C:\Users\Angie\Desktop\2021-2\pt4\sem10\tp_sigevalp\obj\Debug\SIGEVALP.pdb
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.Alertanula.resources
