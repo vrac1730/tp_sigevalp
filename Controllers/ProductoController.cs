@@ -33,6 +33,8 @@ namespace SIGEVALP.Controllers
             {
                 return HttpNotFound();
             }
+            var cat = db.Categorias.Find(producto.id);
+            producto.Categoria = cat;
             return View(producto);
         }
 

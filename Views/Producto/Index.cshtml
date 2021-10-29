@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<SIGEVALP.Models.Producto>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Catálogo";
 }
 
-<h2>Index</h2>
+<h2>Catálogo</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Registrar", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Alerta.nombre)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Categoria.nombre)
         </th>
@@ -34,9 +34,9 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Alerta.nombre)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Categoria.nombre)
         </td>
@@ -53,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.marca)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.id }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.id })*@
         </td>
     </tr>
 }
