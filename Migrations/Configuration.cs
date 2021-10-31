@@ -120,9 +120,9 @@ namespace SIGEVALP.Migrations
             new OrdenCompra() { id = 5, codigo = "0005", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 000, idUsuario = 5, idProveedor = 5 }
             );
             context.Cotizaciones.AddOrUpdate(x => x.id,
-            new Cotizacion() { id = 1, codigo = "0001", fechaInicio = new DateTime(2021, 06, 03, 12, 19, 20), fechaFin = new DateTime(2021, 06, 08, 12, 19, 20), estado = "Pendiente", iva = 0.11, total = 200.00, idUsuario = 2, idProveedor = 3 },
-            new Cotizacion() { id = 2, codigo = "0002", fechaInicio = new DateTime(2021, 06, 03, 12, 20, 20), fechaFin = new DateTime(2021, 06, 08, 12, 20, 20), estado = "Pendiente", iva = 0.11, total = 183.50, idUsuario = 2, idProveedor = 1 },
-            new Cotizacion() { id = 3, codigo = "0003", fechaInicio = new DateTime(2021, 06, 03, 12, 21, 20), fechaFin = new DateTime(2021, 06, 08, 12, 21, 20), estado = "Pendiente", iva = 0.11, total = 270.10, idUsuario = 2, idProveedor = 2 }
+            new Cotizacion() { id = 1, codigo = "0001", fechaInicio = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Aprobado", iva = 0.11, total = 200.00, idUsuario = 2, idProveedor = 3 },
+            new Cotizacion() { id = 2, codigo = "0002", fechaInicio = new DateTime(2021, 06, 03, 12, 20, 20), estado = "Pendiente", iva = 0.11, total = 183.50, idUsuario = 2, idProveedor = 1 },
+            new Cotizacion() { id = 3, codigo = "0003", fechaInicio = new DateTime(2021, 06, 03, 12, 21, 20), estado = "Aprobado", iva = 0.11, total = 270.10, idUsuario = 2, idProveedor = 2 }
             );
 
             context.DetallesSolicitudes.AddOrUpdate(x => new { x.idSolicitud, x.idProducto },
@@ -134,12 +134,12 @@ namespace SIGEVALP.Migrations
             new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, idProducto = 6, idOrdenCompra = 1 }
             );
             context.DetallesCotizaciones.AddOrUpdate(x => new { x.idProveedor, x.idProducto },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, idAlerta = 5, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, idAlerta = 10, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, idAlerta = 10, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, idAlerta = 9, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, idAlerta = 9, idCotizacion = 1 },
-            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, idAlerta = 9, idCotizacion = 1 }
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, idCotizacion = 1 },
+            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, idCotizacion = 1 }
             );            
               
             context.ProductosxAlmacen.AddOrUpdate(x => x.id,

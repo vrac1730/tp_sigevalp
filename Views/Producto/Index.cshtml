@@ -4,10 +4,10 @@
     ViewBag.Title = "Catálogo";
 }
 
-<h2>Catálogo</h2>
+<h2>Productos</h2>
 
 <p>
-    @Html.ActionLink("Registrar", "Create")
+    @Html.ActionLink("Registrar", "Create",null,new {@class="btn btn-default"})
 </p>
 <table class="table">
     <tr>
@@ -26,7 +26,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Categoria.nombre)
         </th>
-        <th></th>
+        <th>Opción</th>
     </tr>
 
 @foreach (var item in Model) {

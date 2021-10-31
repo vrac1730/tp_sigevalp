@@ -15,8 +15,9 @@ namespace SIGEVALP.Models
         public int id { get; set; }
         public string codigo { get; set; }
         
-        public DateTime fechaFin { get; set; }
+        //public DateTime fechaFin { get; set; }
         public string estado { get; set; }
+        public double neto { get; set; }
         public double iva { get; set; }
         public double total { get; set; }
         public int idUsuario { get; set; }

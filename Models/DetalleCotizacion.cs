@@ -12,7 +12,10 @@ namespace SIGEVALP.Models
         public int idProducto { get; set; }
         public int idProveedor { get; set; }
         public double costo { get; set; }
-        public int idAlerta { get; set; }
+        public int cantidad { get; set; }
+        public double descuento { get; set; }
+        public double total { get; set; }
+        //public int idAlerta { get; set; }
         public int idCotizacion { get; set; }
 
         [ForeignKey("idProducto")]
@@ -24,7 +27,7 @@ namespace SIGEVALP.Models
         [ForeignKey("idCotizacion")]
         public Cotizacion Cotizacion { get; set; }
 
-        [ForeignKey("idAlerta")]
-        public Alerta Alerta { get; set; }
+        //[ForeignKey("idAlerta")]
+        //public Alerta Alerta { get; set; }
     }
 }

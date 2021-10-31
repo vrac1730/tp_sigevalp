@@ -51,7 +51,7 @@ namespace SIGEVALP.Controllers
             for (int i = 0; i < detalleCompra.Length; i++)
             {
                 var prod = detalleCompra[i].idProducto;
-                var detalle = db.DetallesCotizaciones.Where(dc => dc.idProducto == prod && dc.idProveedor == ordenCompra.idProveedor && dc.idAlerta == 9).ToArray();
+                var detalle = db.DetallesCotizaciones.Where(dc => dc.idProducto == prod && dc.idProveedor == ordenCompra.idProveedor && dc.Cotizacion.estado=="Aprobado").ToArray();
                 detalleCompra[i].Producto.DetalleCotizacion = detalle.ToList();
                 detalleCompra[i].total = detalleCompra[i].cantidad * detalle[0].costo;
             }
@@ -64,7 +64,7 @@ namespace SIGEVALP.Controllers
         // GET: OrdenCompra/Create
         public ActionResult Create(int? id/*, [Bind(Include = "idProveedor")] OrdenCompra ordenCompra*/)
         {
-            ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.idAlerta == 9), "idProducto", "Producto.nombre");
+            ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado=="Aprobado"), "idProducto", "Producto.nombre");
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
 

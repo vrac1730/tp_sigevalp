@@ -15,9 +15,9 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <label class="control-label col-md-2">Fecha</label>
-            <div class="col-md-3">
-                @Html.TextBox("fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control", @disabled = "disabled" })
-            </div>
+            
+            @Html.TextBox("fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control col-md-3", @disabled = "disabled" })
+            
             <label class="control-label col-md-2">Estado</label>
             <div class="col-md-3">
                 <input class="form-control" disabled type="text" value="Pendiente">

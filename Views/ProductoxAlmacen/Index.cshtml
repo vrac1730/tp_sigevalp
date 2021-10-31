@@ -12,15 +12,19 @@
 @using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post))
 {
     <div>
-        <h5>Código de Producto</h5>
-        @Html.TextBox("cod", "", new { @class = "form-control" })
-        <h5>Nombre de Producto</h5>
-        @Html.TextBox("cadena", "", new { @class = "form-control" })
-
-        <button type="submit" class="btn-default">Buscar</button>
+        <div class="form-group">
+            <h5>Código de Producto</h5>
+            @Html.TextBox("cod", "", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <h5>Nombre de Producto</h5>
+            @Html.TextBox("cadena", "", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Buscar</button>
+        </div>                     
     </div>
 }
-<hr />
 <table class="table">
     <tr>
         <th>

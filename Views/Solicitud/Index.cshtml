@@ -8,18 +8,23 @@
 
 @using (Html.BeginForm("Index", "Solicitud", FormMethod.Post))
 {
-    <div>
-        <h5>Código de Solicitud</h5>
-        @Html.TextBox("cod", "", new { @class = "form-control" })
-
-        <button type="submit" class="btn-default">Buscar</button>
+    <div class="form-horizontal">
+        <div>
+            <h5>Código de Solicitud</h5>
+            @Html.TextBox("cod", "", new { @class = "form-control col-md-2" })
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-default">Buscar</button>
+        </div>              
     </div>
 }
-<hr />
 
-<p>
-    @Html.ActionLink("Registrar", "Create")
-</p>
+<div style="padding-right: 6%">
+    <p style="text-align:right">
+        @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default"})
+    </p>    
+</div>
+
 
 <table class="table">
     <tr>
@@ -38,7 +43,7 @@
         <th>
             @Html.DisplayNameFor(model => model.estado)
         </th>
-        <th></th>
+        <th>Opción</th>
     </tr>
 
     @foreach (var item in Model)
@@ -60,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.estado)
             </td>
             <td>
-                @Html.ActionLink("Ver", "Details", new { id = item.id })
+                @Html.ActionLink("Detalles", "Details", new { id = item.id })
             </td>
         </tr>
     }

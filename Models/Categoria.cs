@@ -14,8 +14,9 @@ namespace SIGEVALP.Models
         [Key]
         public int id { get; set; }
 
-        [DisplayName("Categoria")]
+        [DisplayName("Categoría")]
         public string nombre { get; set; }
+        [DisplayName("Descripción")]
         public string descripcion { get; set; }
     }
 }

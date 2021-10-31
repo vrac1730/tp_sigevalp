@@ -169,12 +169,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
+    <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProductoxAlmacenController.cs" />
-    <Compile Include="Controllers\ProveedorsController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -190,6 +192,10 @@
     <Compile Include="Migrations\202110290451005_Alerta nula.cs" />
     <Compile Include="Migrations\202110290451005_Alerta nula.Designer.cs">
       <DependentUpon>202110290451005_Alerta nula.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110301726088_cotizacion&amp;detalles.cs" />
+    <Compile Include="Migrations\202110301726088_cotizacion&amp;detalles.Designer.cs">
+      <DependentUpon>202110301726088_cotizacion&amp;detalles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -285,14 +291,20 @@
     <Content Include="Views\OrdenCompra\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Solicitud\EditDetail.cshtml" />
-    <Content Include="Views\Proveedors\Create.cshtml" />
-    <Content Include="Views\Proveedors\Delete.cshtml" />
-    <Content Include="Views\Proveedors\Details.cshtml" />
-    <Content Include="Views\Proveedors\Edit.cshtml" />
-    <Content Include="Views\Proveedors\Index.cshtml" />
+    <Content Include="Views\Proveedor\Create.cshtml" />
+    <Content Include="Views\Proveedor\Edit.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
     <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Categoria\Edit.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
+    <Content Include="Views\Cotizacion\Create.cshtml" />
+    <Content Include="Views\Cotizacion\Delete.cshtml" />
+    <Content Include="Views\Cotizacion\Details.cshtml" />
+    <Content Include="Views\Cotizacion\Edit.cshtml" />
+    <Content Include="Views\Cotizacion\Index.cshtml" />
+    <Content Include="Views\Local\Create.cshtml" />
+    <Content Include="Views\Local\Edit.cshtml" />
+    <Content Include="Views\Local\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -319,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110290451005_Alerta nula.resx">
       <DependentUpon>202110290451005_Alerta nula.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110301726088_cotizacion&amp;detalles.resx">
+      <DependentUpon>202110301726088_cotizacion&amp;detalles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

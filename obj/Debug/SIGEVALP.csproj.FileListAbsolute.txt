@@ -519,3 +519,4 @@ D:\TP2021-2\tp_sigevalp\obj\Debug\SIGEVALP.csproj.GenerateResource.cache
 D:\TP2021-2\tp_sigevalp\obj\Debug\SIGEVALP.csproj.CoreCompileInputs.cache
 D:\TP2021-2\tp_sigevalp\obj\Debug\SIGEVALP.dll
 D:\TP2021-2\tp_sigevalp\obj\Debug\SIGEVALP.pdb
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.cotizaciondetalles.resources

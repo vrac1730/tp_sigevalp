@@ -4,16 +4,21 @@
 <h2>Lista de Categorias</h2>
 
 @using(Html.BeginForm("Index","Categoria",FormMethod.Post))
-            {
-                <div>
-                    <h5>Codigo de Categoria</h5>
-                    @Html.TextBox("cod", "", new {@class="form-control"})
-                    <button type="submit" class="btn-default">Buscar</button>
-                </div>
-            }
-<hr />
+{
+    <div class="form-horizontal">
+        <h5>Codigo de Categoria</h5>
+         @Html.TextBox("cod", "", new {@class= "form-control col-md-2" })
+         <div class="col-md-3">
+            <button type="submit" class="btn btn-default">Buscar</button>
+         </div>
+    </div>
+}
+<div style="padding-right: 13%">    
+    <p style="text-align:right">
+    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
+    </p>
+</div>
 
-<p>@Html.ActionLink("Registrar","Create")</p>
 
 <table class="table">
     <tr>
