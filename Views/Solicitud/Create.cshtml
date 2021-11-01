@@ -6,6 +6,10 @@
 
 <h2>Registro de Solicitud</h2>
 
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -27,7 +31,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownList("idUsuario", null, "--Seleccionar Usuario--", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idUsuario", null, "Seleccionar Usuario", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +39,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Producto</label>
             <div id="id-prod" class="col-md-3">
-                @Html.DropDownList("idProducto", null, "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control col-md-3" })
+                @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control col-md-3" })
             </div>
 
             <label class="control-label col-md-2">Cant. Requerida</label>
@@ -51,7 +55,7 @@
         </div>
 
         <div id="div-detalle">
-            <table id="tabla-detalle" class="table">
+            <table id="tabla-detalle" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -82,7 +86,7 @@
     </div>
 
     <h4>Productos Sugeridos:</h4>
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Código</th>
@@ -229,10 +233,6 @@
         }
     }
 </script>
-
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

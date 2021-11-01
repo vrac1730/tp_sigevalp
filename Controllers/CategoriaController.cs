@@ -9,7 +9,18 @@ namespace SIGEVALP.Controllers
 {
     public class CategoriaController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public CategoriaController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
+
         // GET: Categoria
         public ActionResult Index()
         {

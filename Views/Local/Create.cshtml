@@ -4,10 +4,11 @@
     ViewBag.Title = "Create-Local";
 }
 
-
-
 <h2>Registrar</h2>
 <h4>Local</h4>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
 <hr />
 @using (Html.BeginForm("Create", "Local"))
 {
@@ -51,7 +52,3 @@
 </div>
     
 }
-
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>

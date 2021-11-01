@@ -3,6 +3,9 @@
 
 <h2>Registrar</h2>
 <h4>Categoria</h4>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
 <hr />
 @using (Html.BeginForm("Create", "Categoria"))
 {
@@ -25,7 +28,3 @@
         </div>
     </div>    
 }
-
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>

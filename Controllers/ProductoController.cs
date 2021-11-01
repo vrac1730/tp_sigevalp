@@ -12,7 +12,17 @@ namespace SIGEVALP.Controllers
 {
     public class ProductoController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+
+        public ProductoController()
+        {
+            db = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
 
         // GET: Producto
         public ActionResult Index()
@@ -32,9 +42,8 @@ namespace SIGEVALP.Controllers
             if (producto == null)
             {
                 return HttpNotFound();
-            }
-            var cat = db.Categorias.Find(producto.id);
-            producto.Categoria = cat;
+            }            
+            producto.Categoria = db.Categorias.Find(producto.id);
             return View(producto);
         }
 
@@ -101,15 +110,6 @@ namespace SIGEVALP.Controllers
             }           
             ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
             return View(producto);
-        }        
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        } 
     }
 }

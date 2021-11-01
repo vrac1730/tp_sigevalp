@@ -5,14 +5,15 @@
 }
 
 <h2>Registrar</h2>
-
-@using (Html.BeginForm()) 
+<h4>Proveedor</h4>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+<hr />
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-        <h4>Proveedor</h4>
-        <hr />
         <div class="form-group">
             @Html.LabelFor(model => model.ruc, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -53,7 +54,7 @@
                 @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
             </div>
         </div>
-       
+
         <div class="form-group">
             @Html.LabelFor(model => model.razon_social, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -69,7 +70,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>

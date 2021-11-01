@@ -20,12 +20,8 @@ namespace SIGEVALP.Controllers
         }
 
         protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+        {        
+            db.Dispose();         
         }
 
         // GET: Proveedors

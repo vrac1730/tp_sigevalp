@@ -4,16 +4,32 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
+<h2>Detalle</h2>
+<h4>Cotizacion</h4>
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+<hr />
 <div>
-    <h4>Cotizacion</h4>
-    <hr />
+
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Proveedor.nombre)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Proveedor.nombre)
         </dd>
@@ -21,62 +37,95 @@
         <dt>
             @Html.DisplayNameFor(model => model.Usuario.username)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Usuario.username)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.codigo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.codigo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaFin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fechaFin)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.estado)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.estado)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.iva)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.iva)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.total)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaInicio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fechaInicio)
-        </dd>
-
     </dl>
+    @if (Model.DetalleCotizacion.Count() == 0)
+    {
+        <p>Aún no hay productos asociados a esta cotización.</p>
+    }
+    else
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unit.</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DetalleCotizacion)
+                {
+                    <tr>
+                        <td>
+                            @item.Producto.codigo
+                        </td>
+                        <td>
+                            @item.Producto.nombre
+                        </td>
+                        <td>
+                            @item.cantidad
+                        </td>
+                        <td>
+                            @item.costo
+                        </td>
+                        <td>
+                            @item.descuento
+                        </td>
+                        <td>
+                            @item.total
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Parcial</td>
+                    <td>@Model.parcial</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Neto</td>
+                    <td>@Model.neto</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>IVA</td>
+                    <td>@Model.iva</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total</td>
+                    <td>@Model.total</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id }, new { @class="btn btn-default"})
 </p>

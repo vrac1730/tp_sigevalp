@@ -6,15 +6,16 @@
 }
 
 <h2>Registro de Orden</h2>
-
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+<hr />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-
+    <div class="form-horizontal">        
         @if (Url.RequestContext.RouteData.Values.ContainsKey("id") == false)
         {
             <div class="form-group">
@@ -58,7 +59,7 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Producto</label>
                 <div id="id-prod" class="col-md-3">
-                    @Html.DropDownList("idProducto", null, "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control col-md-3" })
+                    @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control col-md-3" })
                 </div>
                 <label class="control-label col-md-2">Cantidad</label>
                 <div id="cant-rec" class="col-md-3">
@@ -74,41 +75,19 @@
             </div>
 
             <div id="div-detalle">
-                <table id="tabla-detalle" class="table">
+                <table id="tabla-detalle" class="table table-hover">
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Producto</th>
                             <th>Cantidad</th>
-                            @*<th>Costo</th>
-                                <th>Total</th>*@
                             <th>Recibido</th>
                             <th>Observación</th>
                         </tr>
                     </thead>
                     <tbody id="tabla-cuerpo">
-                        @*<tr>
-                                <td>3</td>
-                                <td>Cuaderno</td>
-                                <td>20</td>
-                                <td>17.50</td>
-                                <td>350.00</td>
-                                <td>0</td>
-                                <td>En Orden</td>
-                            </tr>*@
                     </tbody>
                 </table>
-
-                @*  <input type="hidden" name="DetalleCompras.Index" id="DetalleCompras.Index" value="0" />
-                    <input type="hidden" name="DetalleCompras[0].idProducto" id="DetalleCompras[0].idProducto" value="3" />
-                    <input type="hidden" name="DetalleCompras[0].Producto.nombre" id="DetalleCompras[0].Producto.nombre" value="Cuaderno" />
-                    <input type="hidden" name="DetalleCompras[0].cantidad" id="DetalleCompras[0].cantidad" value="20" />
-                    <input type="hidden" name="DetalleCompras[0].Producto.DetalleCotizacion[0].costo" id="DetalleCompras[0].Producto.DetalleCotizacion[0].costo" value="17.50" />
-                    <input type="hidden" name="DetalleCompras[0].Producto.Alerta.nombre" id="DetalleCompras[0].Producto.Alerta.id" value="" />
-
-                    <input type="hidden" name="DetalleCompras[0].cantidadRecibida" id="DetalleCompras[0].cantidadRecibida" value="0" />
-                    <input type="hidden" name="DetalleCompras[0].Producto.Alerta.nombre" id="DetalleCompras[0].Producto.Alerta.id" value="En orden" />
-                *@
             </div>
         }
     </div>
@@ -162,23 +141,17 @@
             let tdid = document.createElement("td");
             let tdnombre = document.createElement("td");
             let tdcant = document.createElement("td");
-            //let tdcosto = document.createElement("td");
-            //let tdtotal = document.createElement("td");
             let tdrecibido = document.createElement("td");
             let tdalerta = document.createElement("td");
             //asigna jerarquía de elementos
             tr.appendChild(tdid);
             tr.appendChild(tdnombre);
             tr.appendChild(tdcant);
-            //tr.appendChild(tdcosto);
-            //tr.appendChild(tdtotal);
             tr.appendChild(tdrecibido);
             tr.appendChild(tdalerta);
             tdid.innerHTML = valElement;
             tdnombre.innerHTML = nomElement;
             tdcant.innerHTML = cant;
-            //tdcosto.innerHTML =
-            //tdtotal.innerHTML =
             tdrecibido.innerHTML = 0;
             tdalerta.innerHTML = "En orden";
             body.appendChild(tr);
@@ -186,10 +159,8 @@
             let div = document.getElementById("div-detalle");
             let index = document.createElement("input")
             let idProd = document.createElement("input")
-            //let nombre = document.createElement("input")
             let Cant = document.createElement("input")
             let cantRec = document.createElement("input")
-            //let alerNom = document.createElement("input")
             //asignar valores
             index.name = "DetalleCompras.Index";
             index.value = n;
@@ -197,26 +168,18 @@
             idProd.name = "DetalleCompras[" + n + "].idProducto";
             idProd.value = valElement;
             idProd.type = "hidden";
-            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
-            //nombre.value = nomElement;
-            //nombre.type = "hidden";
             Cant.name = "DetalleCompras[" + n + "].cantidad";
             Cant.value = cant;
             Cant.type = "hidden";
             cantRec.name = "DetalleCompras[" + n + "].cantidadRecibida";
             cantRec.value = 0;
             cantRec.type = "hidden";
-            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
-            //alerNom.value = "Pendiente";
-            //alerNom.type = "hidden";
 
             //asignar jerarquía de elementos
             div.appendChild(index);
             div.appendChild(idProd);
-            //div.appendChild(nombre);
             div.appendChild(Cant);
             div.appendChild(cantRec);
-            //div.appendChild(alerNom);
 
             selectElement.value = "";
             cant = "";
@@ -224,10 +187,6 @@
         }
     }
 </script>
-
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

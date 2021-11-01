@@ -17,7 +17,12 @@ namespace SIGEVALP.Controllers
         {
             db = new ApplicationDbContext();
         }
-        
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+        }
+
         // GET: Local/Index
         // Se ocupa de la primera interacción con el usuario
         public ActionResult Index()

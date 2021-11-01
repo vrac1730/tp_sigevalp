@@ -52,10 +52,8 @@ namespace SIGEVALP.Controllers
             if (solicitud == null)
                 return HttpNotFound();
                         
-            var detalles = db.DetallesSolicitudes.Include(d => d.Producto.Alerta).Where(d => d.idSolicitud == id).ToList();
-            var usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
-            solicitud.DetalleSolicitud = detalles;
-            solicitud.Usuario = usuario;
+            solicitud.DetalleSolicitud = db.DetallesSolicitudes.Include(d => d.Producto.Alerta).Where(d => d.idSolicitud == id).ToList();
+            solicitud.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
 
             return View(solicitud);
         }
@@ -84,7 +82,6 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,fecha,codigo,estado,idUsuario,DetalleSolicitud")] Solicitud solicitud)
         {
-
             if (ModelState.IsValid)
             {/*
                 if (ordenSalida.DetalleSalida == null)
@@ -133,9 +130,8 @@ namespace SIGEVALP.Controllers
 
             if (detalleSolicitud == null)
                 return HttpNotFound();
-
-            var prod = db.Productos.Include(p => p.Alerta).FirstOrDefault(p => p.id == detalleSolicitud.idProducto);
-            detalleSolicitud.Producto = prod;
+            
+            detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
             //var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.Producto.id == detalleSalida.idProducto);
 
             return View(detalleSolicitud);

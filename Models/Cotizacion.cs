@@ -13,18 +13,31 @@ namespace SIGEVALP.Models
     {
         [Key]
         public int id { get; set; }
+        
+        [DisplayName("Código")]
         public string codigo { get; set; }
         
-        //public DateTime fechaFin { get; set; }
+        [DisplayName("Estado")]
         public string estado { get; set; }
+
+        public double parcial { get; set; }
+
+        public double descuento { get; set; }
+
+        [DisplayName("Neto")]
         public double neto { get; set; }
+
+        [DisplayName("IVA")]
         public double iva { get; set; }
+
+        [DisplayName("Total")]
         public double total { get; set; }
+
         public int idUsuario { get; set; }
         public int idProveedor { get; set; }
 
-        [Column(TypeName = "datetime2"), DisplayName("Fecha de Cotizacion")]
-        public DateTime fechaInicio { get; set; }
+        [Column(TypeName = "datetime2"), DisplayName("Fecha")]
+        public DateTime fecha { get; set; }
 
         [ForeignKey("idUsuario")]
         public Usuario Usuario { get; set; }

@@ -86,23 +86,23 @@ namespace SIGEVALP.Migrations
             new Usuario() { id = 5, username = "Arnold", correo = "arnold@hotmail.com", contraseña = "123", idLocal = 1, idPersona = 5 }
             );
             context.Productos.AddOrUpdate(x => x.id,
-            new Producto() { id = 1, codigo = "111", nombre = "Spaghetti Bolsa 1Kg", descripcion = "Spaghetti de buena calidad", marca = "Nicollini", idCategoria = 1, idAlerta = 5 },
-            new Producto() { id = 2, codigo = "112", nombre = "Spaghetti Bolsa 1Kg", descripcion = "Spaghetti de buena calidad", marca = "Don Vitorio", idCategoria = 1, idAlerta = 5 },
-            new Producto() { id = 3, codigo = "113", nombre = "Aceite de Oliva Garrafa 5L", descripcion = "Aceite de Oliva de buena calidad", marca = "El Trujal de Guillermo", idCategoria = 4, idAlerta = 4 },
-            new Producto() { id = 4, codigo = "114", nombre = "Aceite de Oliva extravirgen Garrafa 5L", descripcion = "Aceite de Oliva de buena calidad", marca = "Olivos del Sur", idCategoria = 4, idAlerta = 4 },
-            new Producto() { id = 5, codigo = "115", nombre = "Aceite Bote 20L", descripcion = "Aceite de buena calidad", marca = "Cocinero", idCategoria = 4, idAlerta = 7 },
-            new Producto() { id = 6, codigo = "116", nombre = "Sal de Mesa Bolsa 1kg", descripcion = "Sal de Mesa de buena calidad", marca = "Marina", idCategoria = 2, idAlerta = 7 },
-            new Producto() { id = 7, codigo = "117", nombre = "Sal de Cocina Bolsa 1Kg", descripcion = "Sal de Cocina de buena calidad", marca = "Marina", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 8, codigo = "118", nombre = "Sal de Cocina Gruesa Bolsa 1Kg", descripcion = "Sal de Cocina cuadriculado", marca = "Lobos", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 9, codigo = "119", nombre = "Cognac Botella 700ml", descripcion = "Cognac en blanco", marca = "Hennessy", idCategoria = 3, idAlerta = 4 },
-            new Producto() { id = 10, codigo = "120", nombre = "Vino Tinto Botella 1L", descripcion = "Vino Tinto en blanco", marca = "Gato", idCategoria = 3, idAlerta = 4 },
-            new Producto() { id = 11, codigo = "121", nombre = "Pimienta Negra Frasco 198.4g", descripcion = "Pimienta Negra en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 12, codigo = "122", nombre = "Pimienta Blanca Frasco 198.4g", descripcion = "Pimienta Blanca en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 13, codigo = "123", nombre = "Pimienta Roja Frasco 198.4g ", descripcion = "Pimienta Roja en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 14, codigo = "124", nombre = "Oregano Molido Frasco 35g ", descripcion = "Oregano Molido en blanco", marca = "Kariño", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 15, codigo = "125", nombre = "Comino Molido Frasco 40g", descripcion = "Comino Molido  en blanco", marca = "Kariño", idCategoria = 2, idAlerta = 4 },
-            new Producto() { id = 16, codigo = "126", nombre = "Huevos Paq. 30 Unid.", descripcion = "Huevos en blanco", marca = "La Calera", idCategoria = 8, idAlerta = 4 },
-            new Producto() { id = 17, codigo = "127", nombre = "Tomillo Bolsa 5g ", descripcion = "Tomillo en blanco", marca = "4 Estaciones", idCategoria = 2, idAlerta = 4 }
+            new Producto() { id = 1, codigo = "PANI1", nombre = "Spaghetti Bolsa 1Kg", descripcion = "Spaghetti de buena calidad", marca = "Nicollini", idCategoria = 1, idAlerta = 5 },
+            new Producto() { id = 2, codigo = "PADO2", nombre = "Spaghetti Bolsa 1Kg", descripcion = "Spaghetti de buena calidad", marca = "Don Vitorio", idCategoria = 1, idAlerta = 5 },
+            new Producto() { id = 3, codigo = "ACEL3", nombre = "Aceite de Oliva Garrafa 5L", descripcion = "Aceite de Oliva de buena calidad", marca = "El Trujal de Guillermo", idCategoria = 4, idAlerta = 4 },
+            new Producto() { id = 4, codigo = "ACOL4", nombre = "Aceite de Oliva extravirgen Garrafa 5L", descripcion = "Aceite de Oliva de buena calidad", marca = "Olivos del Sur", idCategoria = 4, idAlerta = 4 },
+            new Producto() { id = 5, codigo = "ACCO5", nombre = "Aceite Bote 20L", descripcion = "Aceite de buena calidad", marca = "Cocinero", idCategoria = 4, idAlerta = 7 },
+            new Producto() { id = 6, codigo = "COMA6", nombre = "Sal de Mesa Bolsa 1kg", descripcion = "Sal de Mesa de buena calidad", marca = "Marina", idCategoria = 2, idAlerta = 7 },
+            new Producto() { id = 7, codigo = "COMA7", nombre = "Sal de Cocina Bolsa 1Kg", descripcion = "Sal de Cocina de buena calidad", marca = "Marina", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 8, codigo = "COLO8", nombre = "Sal de Cocina Gruesa Bolsa 1Kg", descripcion = "Sal de Cocina cuadriculado", marca = "Lobos", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 9, codigo = "LIHE9", nombre = "Cognac Botella 700ml", descripcion = "Cognac en blanco", marca = "Hennessy", idCategoria = 3, idAlerta = 4 },
+            new Producto() { id = 10, codigo = "LIGA10", nombre = "Vino Tinto Botella 1L", descripcion = "Vino Tinto en blanco", marca = "Gato", idCategoria = 3, idAlerta = 4 },
+            new Producto() { id = 11, codigo = "COBA11", nombre = "Pimienta Negra Frasco 198.4g", descripcion = "Pimienta Negra en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 12, codigo = "COBA12", nombre = "Pimienta Blanca Frasco 198.4g", descripcion = "Pimienta Blanca en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 13, codigo = "COBA13", nombre = "Pimienta Roja Frasco 198.4g ", descripcion = "Pimienta Roja en blanco", marca = "Badia", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 14, codigo = "COKA14", nombre = "Oregano Molido Frasco 35g ", descripcion = "Oregano Molido en blanco", marca = "Kariño", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 15, codigo = "COKA15", nombre = "Comino Molido Frasco 40g", descripcion = "Comino Molido  en blanco", marca = "Kariño", idCategoria = 2, idAlerta = 4 },
+            new Producto() { id = 16, codigo = "ABLA16", nombre = "Huevos Paq. 30 Unid.", descripcion = "Huevos en blanco", marca = "La Calera", idCategoria = 8, idAlerta = 4 },
+            new Producto() { id = 17, codigo = "CO4E17", nombre = "Tomillo Bolsa 5g ", descripcion = "Tomillo en blanco", marca = "4 Estaciones", idCategoria = 2, idAlerta = 4 }
             );
             
             context.Solicitudes.AddOrUpdate(x => x.id,
@@ -120,9 +120,9 @@ namespace SIGEVALP.Migrations
             new OrdenCompra() { id = 5, codigo = "0005", fechaOrden = new DateTime(2021, 06, 03, 12, 19, 20), fechaPago = new DateTime(2021, 06, 03, 15, 19, 20), estado = "Pendiente", montoTotal = 000, idUsuario = 5, idProveedor = 5 }
             );
             context.Cotizaciones.AddOrUpdate(x => x.id,
-            new Cotizacion() { id = 1, codigo = "0001", fechaInicio = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Aprobado", iva = 0.11, total = 200.00, idUsuario = 2, idProveedor = 3 },
-            new Cotizacion() { id = 2, codigo = "0002", fechaInicio = new DateTime(2021, 06, 03, 12, 20, 20), estado = "Pendiente", iva = 0.11, total = 183.50, idUsuario = 2, idProveedor = 1 },
-            new Cotizacion() { id = 3, codigo = "0003", fechaInicio = new DateTime(2021, 06, 03, 12, 21, 20), estado = "Aprobado", iva = 0.11, total = 270.10, idUsuario = 2, idProveedor = 2 }
+            new Cotizacion() { id = 1, codigo = "0001", fecha = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Aprobado", parcial = 284.5, descuento = 14.23, neto = 270.27, iva = 48.65, total = 318.92, idUsuario = 2, idProveedor = 3 },
+            new Cotizacion() { id = 2, codigo = "0002", fecha = new DateTime(2021, 06, 03, 12, 20, 20), estado = "Pendiente", parcial = 277.5, descuento = 13.88, neto = 263.62, iva = 0.00, total = 263.62, idUsuario = 2, idProveedor = 1 },
+            new Cotizacion() { id = 3, codigo = "0003", fecha = new DateTime(2021, 06, 03, 12, 21, 20), estado = "Aprobado", parcial = 279.5, descuento = 0.00, neto = 279.5, iva = 50.31, total = 329.81, idUsuario = 2, idProveedor = 2 }
             );
 
             context.DetallesSolicitudes.AddOrUpdate(x => new { x.idSolicitud, x.idProducto },
@@ -134,12 +134,12 @@ namespace SIGEVALP.Migrations
             new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, idProducto = 6, idOrdenCompra = 1 }
             );
             context.DetallesCotizaciones.AddOrUpdate(x => new { x.idProveedor, x.idProducto },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, idCotizacion = 1 },
-            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, idCotizacion = 1 }
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, cantidad = 5, descuento = 5.68, total = 113.50, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, cantidad = 10, descuento = 0.00, total = 215.00, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, cantidad = 8, descuento = 8.20, total = 164.00, idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, cantidad = 3, descuento = 0.00, total = 64.50, idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, cantidad = 7, descuento = 7.18, total = 143.50, idCotizacion = 1 },
+            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, cantidad = 6, descuento = 7.05, total = 141.00, idCotizacion = 1 }
             );            
               
             context.ProductosxAlmacen.AddOrUpdate(x => x.id,

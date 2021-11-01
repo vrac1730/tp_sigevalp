@@ -5,9 +5,12 @@
 }
 
 <h2>Detalle de Solicitud</h2>
-
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+<hr />
 <div>
-    <hr />
+    
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.codigo)
@@ -51,7 +54,7 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Código</th>
@@ -94,8 +97,4 @@
         </table>
     }
 </div>
-
-<p>
-    @Html.ActionLink("Regresar", "Index")
-</p>
 

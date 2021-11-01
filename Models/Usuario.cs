@@ -13,6 +13,8 @@ namespace SIGEVALP.Models
     {
         [Key]
         public int id { get; set; }
+
+        [DisplayName("Cliente")]
         public string username { get; set; }
         public string correo { get; set; }
         public string contraseña { get; set; }

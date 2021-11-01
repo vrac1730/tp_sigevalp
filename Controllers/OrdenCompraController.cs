@@ -41,11 +41,9 @@ namespace SIGEVALP.Controllers
 
             if (ordenCompra == null)
                 return HttpNotFound();
-
-            var proveedor = db.Proveedores.Find(ordenCompra.idProveedor);
-            var usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == ordenCompra.idUsuario);
-            ordenCompra.Proveedor = proveedor;
-            ordenCompra.Usuario = usuario;
+                        
+            ordenCompra.Proveedor = db.Proveedores.Find(ordenCompra.idProveedor);
+            ordenCompra.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == ordenCompra.idUsuario);
 
             var detalleCompra = db.DetallesCompras.Include(d => d.Producto.Alerta).Where(d => d.idOrdenCompra == id).ToArray();
             for (int i = 0; i < detalleCompra.Length; i++)
@@ -125,9 +123,8 @@ namespace SIGEVALP.Controllers
 
             if (detalleCompra == null)
                 return HttpNotFound();
-
-            var prod = db.Productos.Include(p => p.Alerta).FirstOrDefault(p => p.id == detalleCompra.idProducto);
-            detalleCompra.Producto = prod;
+            
+            detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
 
             return View(detalleCompra);
         }

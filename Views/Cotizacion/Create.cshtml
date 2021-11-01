@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Registrar</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -12,80 +12,189 @@
     
     <div class="form-horizontal">
         <h4>Cotizacion</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div>
+            @Html.ActionLink("Regresar", "Index")   
+        </div>
+        <hr />   
         <div class="form-group">
-            @Html.LabelFor(model => model.codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger" })
+                @Html.DropDownList("idUsuario", null, "Seleccionar Usuario", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.fechaFin, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idProveedor, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaFin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fechaFin, "", new { @class = "text-danger" })
+                @Html.DropDownList("idProveedor", null, "Seleccionar Proveedor", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled="disabled", @class = "form-control" } )                                
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.estado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBox("Estado","Pendiente", new { @disabled = "disabled", @class = "form-control" })                
                 @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.iva, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.iva, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.iva, "", new { @class = "text-danger" })
+        <div class="form-group" display:flex;>
+            <label class="control-label">Producto</label>
+            <div id="id-prod">
+                @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
+            </div>
+
+            <label class="control-label col-md-2">Cant. Requerida</label>
+            <div id="cant-sol" class="col-md-3">
+                <input type="text" id="cantSolicitada" class="form-control" />
+            </div>
+
+            <label class="control-label col-md-2">Precio</label>
+            <div id="pre" class="col-md-3">
+                <input type="text" id="precio" class="form-control" />
+            </div>
+
+            <label class="control-label col-md-2">% Desc.</label>
+            <div id="desc" class="col-md-3">
+                <input type="text" id="descuento" class="form-control" />
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.total, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.idUsuario, "idUsuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("idUsuario", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.idProveedor, "idProveedor", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("idProveedor", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
         </div>
+        
+        <div id="div-detalle">
+            <table id="tabla-detalle" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unit.</th>
+                        <th>Desc.</th>
+                        <th>Total</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-cuerpo">
+                </tbody>
+            </table>
+        </div>    
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script>
+    var n = 0;
+    function Agregar() {
+        //obtenemos valores de elementos
+        let cant = document.getElementById("cantSolicitada").value;
+        let selectElement = document.getElementById("idProducto");
+        let nomElement = selectElement.options[selectElement.selectedIndex].text;
+        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let body = document.getElementById("tabla-cuerpo");
+
+        let div1 = document.getElementById("cant-sol");
+        let div2 = document.getElementById("id-prod");
+        let valcant = document.createElement("span");
+        let valid = document.createElement("span");
+
+        let cantmsj = "Ingrese una cantidad válida.";
+        let classname = "field-validation-error text-danger";
+        let idmsj = "Seleccione un producto.";
+
+        valcant.innerHTML = "";
+        valid.innerHTML = "";
+
+        div1.appendChild(valcant);
+        div2.appendChild(valid);
+
+        if (cant == "" & valElement == 0) {
+            valcant.innerHTML = cantmsj;
+            valcant.className = classname;
+            valid.innerHTML = idmsj;
+            valid.className = classname;
+        }
+
+        if (cant == "") {
+            valcant.innerHTML = "";
+            valcant.className = classname;
+            valcant.innerHTML = cantmsj;
+        }
+        else if (valElement == 0) {
+            valid.innerHTML = "";
+            valid.className = classname;
+            valid.innerHTML = idmsj;
+        }
+        else {
+            //crear elementos del cuerpo de la tabla
+            let tr = document.createElement("tr");
+            let tdid = document.createElement("td");
+            let tdnombre = document.createElement("td");
+            let tdsolicitado = document.createElement("td");
+            let tdentregado = document.createElement("td");
+            let tdalerta = document.createElement("td");
+            //asigna jerarquía de elementos
+            tr.appendChild(tdid);
+            tr.appendChild(tdnombre);
+            tr.appendChild(tdsolicitado);
+            tr.appendChild(tdentregado);
+            tr.appendChild(tdalerta);
+            tdid.innerHTML = valElement;
+            tdnombre.innerHTML = nomElement
+            tdsolicitado.innerHTML = cant;
+            tdentregado.innerHTML = 0;
+            tdalerta.innerHTML = "Pendiente";
+            body.appendChild(tr);
+            //crear elementos input
+            let div = document.getElementById("div-detalle");
+            let index = document.createElement("input")
+            let idProd = document.createElement("input")
+            //let nombre = document.createElement("input")
+            let cantSol = document.createElement("input")
+            let cantEnt = document.createElement("input")
+            //let alerNom = document.createElement("input")
+            //asignar valores
+            index.name = "DetalleSolicitud.Index";
+            index.value = n;
+            index.type = "hidden";
+            idProd.name = "DetalleSolicitud[" + n + "].idProducto";
+            idProd.value = valElement;
+            idProd.type = "hidden";
+            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
+            //nombre.value = nomElement;
+            //nombre.type = "hidden";
+            cantSol.name = "DetalleSolicitud[" + n + "].cantSolicitada";
+            cantSol.value = cant;
+            cantSol.type = "hidden";
+            cantEnt.name = "DetalleSolicitud[" + n + "].cantEntregada";
+            cantEnt.value = 0;
+            cantEnt.type = "hidden";
+            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
+            //alerNom.value = "Pendiente";
+            //alerNom.type = "hidden";
+
+            //asignar jerarquía de elementos
+            div.appendChild(index);
+            div.appendChild(idProd);
+            //div.appendChild(nombre);
+            div.appendChild(cantSol);
+            div.appendChild(cantEnt);
+            //div.appendChild(alerNom);
+
+            selectElement.value = "";
+            cant = "";
+            n++;
+        }
+    }
+</script>
