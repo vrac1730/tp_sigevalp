@@ -80,30 +80,30 @@ namespace SIGEVALP.Controllers
             {
                 if (Url.RequestContext.RouteData.Values.ContainsKey("id") == true)
                 {
-                    if (ModelState.IsValid)
+                    if (!ModelState.IsValid)
                     {
-                        ordenCompra.fechaOrden = DateTime.Now;
-                        ordenCompra.estado = "Pendiente";
-                        //ordenCompra.montoTotal = 0;
-                        var os = db.OrdenesCompras.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
-                        int idOrden = os.id + 1;
-                        ordenCompra.codigo = "000" + idOrden;
-                        db.OrdenesCompras.Add(ordenCompra);
-                        db.SaveChanges();
+                        ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "idProducto", "Producto.nombre");
+                        ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenCompra.idUsuario);
+                        ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
+                        return View(ordenCompra);
+                    }                   
 
-                        foreach (var item in ordenCompra.DetalleCompras)
-                        {
-                            var prod = db.Productos.Find(item.idProducto);
-                            prod.idAlerta = 7;
-                        }
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                    ordenCompra.fechaOrden = DateTime.Now;
+                    ordenCompra.estado = "Pendiente";
+                    //ordenCompra.montoTotal = 0;
+                    var os = db.OrdenesCompras.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
+                    int idOrden = os.id + 1;
+                    ordenCompra.codigo = "000" + idOrden;
+                    db.OrdenesCompras.Add(ordenCompra);
+                    db.SaveChanges();
+
+                    foreach (var item in ordenCompra.DetalleCompras)
+                    {
+                        var prod = db.Productos.Find(item.idProducto);
+                        prod.idAlerta = 7;
                     }
-                    ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "idProducto", "Producto.nombre");
-                    ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenCompra.idUsuario);
-                    ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-
-                    return View(ordenCompra);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 return RedirectToAction("Create", new { id = ordenCompra.idProveedor });
             }

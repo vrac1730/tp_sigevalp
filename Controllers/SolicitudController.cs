@@ -82,40 +82,33 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,fecha,codigo,estado,idUsuario,DetalleSolicitud")] Solicitud solicitud)
         {
-            if (ModelState.IsValid)
-            {/*
-                if (ordenSalida.DetalleSalida == null)
-                {
-                    ViewData["idProducto"] = new SelectList(pro, "id", "nombre");
-                    ViewData["Productos"] = productos;
-                    ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenSalida.idUsuario);
-                    return View();
-                }*/
-                solicitud.fecha = DateTime.Now;
-                solicitud.estado = "Pendiente";
-                var os = db.Solicitudes.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
-                int id = os.id + 1;
-                solicitud.codigo = "000" + id;
-                db.Solicitudes.Add(solicitud);
-                db.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                var pro = db.ProductosxAlmacen.Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4);
+                //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);
+                List<ProductoxAlmacen> productos = pro.Include(d => d.Producto.Alerta).ToList();
+                //List<Producto> productos = pro.Include(d => d.Alerta).ToList();
+                ViewData["idProducto"] = new SelectList(pro, "id", "Producto.nombre");
+                ViewData["Productos"] = productos;
+                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
+                return View();
+            }            
 
-                foreach (var item in solicitud.DetalleSolicitud)
-                {
-                    var prod = db.Productos.Find(item.idProducto);
-                    prod.idAlerta = 5;
-                }
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            solicitud.fecha = DateTime.Now;
+            solicitud.estado = "Pendiente";
+            var os = db.Solicitudes.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
+            int id = os.id + 1;
+            solicitud.codigo = "000" + id;
+            db.Solicitudes.Add(solicitud);
+            db.SaveChanges();
+
+            foreach (var item in solicitud.DetalleSolicitud)
+            {
+                var prod = db.Productos.Find(item.idProducto);
+                prod.idAlerta = 5;
             }
-            var pro = db.ProductosxAlmacen.Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4);
-            //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);
-            List<ProductoxAlmacen> productos = pro.Include(d => d.Producto.Alerta).ToList();
-            //List<Producto> productos = pro.Include(d => d.Alerta).ToList();
-            ViewData["idProducto"] = new SelectList(pro, "id", "Producto.nombre");
-            ViewData["Productos"] = productos;
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
-
-            return View();
+            db.SaveChanges();
+            return RedirectToAction("Index");            
         }
 
         //registrar nota salida////

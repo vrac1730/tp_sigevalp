@@ -30,6 +30,7 @@ namespace SIGEVALP.Models
         [ForeignKey("idUsuario")]
         public Usuario Usuario { get; set; }
 
+        [Required]
         public List<DetalleSolicitud> DetalleSolicitud { get; set; }
     }
 }
