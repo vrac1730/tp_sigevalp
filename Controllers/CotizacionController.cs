@@ -64,6 +64,7 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.idProducto = new SelectList(db.Productos, "id", "nombre");
                 ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre", cotizacion.idProveedor);
                 ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", cotizacion.idUsuario);
                 return View(cotizacion);                

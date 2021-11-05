@@ -52,9 +52,9 @@
                 @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
             </div>
 
-            <label class="control-label col-md-2">Cant. Requerida</label>
-            <div id="cant-sol" class="col-md-3">
-                <input type="text" id="cantSolicitada" class="form-control" />
+            <label class="control-label col-md-2">Cantidad</label>
+            <div id="cant" class="col-md-3">
+                <input type="text" id="cantidad" class="form-control" />
             </div>
 
             <label class="control-label col-md-2">Precio</label>
@@ -62,7 +62,7 @@
                 <input type="text" id="precio" class="form-control" />
             </div>
 
-            <label class="control-label col-md-2">% Desc.</label>
+            <label class="control-label col-md-2">% Descuento</label>
             <div id="desc" class="col-md-3">
                 <input type="text" id="descuento" class="form-control" />
             </div>
@@ -98,105 +98,157 @@
     var n = 0;
     function Agregar() {
         //obtenemos valores de elementos
-        let cant = document.getElementById("cantSolicitada").value;
-        let selectElement = document.getElementById("idProducto");
+        let quantity = document.getElementById("cantidad");
         let price = document.getElementById("precio");
         let discount = document.getElementById("descuento");
+        let selectElement = document.getElementById("idProducto");
         let nomElement = selectElement.options[selectElement.selectedIndex].text;
         let valElement = selectElement.options[selectElement.selectedIndex].value;
         let body = document.getElementById("tabla-cuerpo");
 
-        let div1 = document.getElementById("cant-sol");
-        let div2 = document.getElementById("id-prod");
-        let valcant = document.createElement("span");
-        let valid = document.createElement("span");
+        //verificar que exista un elemento span, sino elimina input detalle done
+        //despues de ingresar un detalle, ingreso no validado elimina input detalle    
+        let div1 = document.getElementById("id-prod");        
+        let div2 = document.getElementById("cant");
+        let div3 = document.getElementById("pre");
+        let div4 = document.getElementById("desc");
+        /*
+        //limpiar span de detalles                    
+        let cuenta = div1.childElementCount;
+        if (div1.childElementCount == 2) { div1.removeChild(div1.lastChild); }
+        //div1.removeChild(div1.lastChild);                   
+        if (div2.childElementCount == 2) { div2.removeChild(div2.lastChild); }
+        //div2.removeChild(div2.lastChild);            
+        if (div3.childElementCount == 2) { div3.removeChild(div3.lastChild); }
+        //div3.removeChild(div3.lastChild);            
+        if (div4.childElementCount == 2) { div4.removeChild(div4.lastChild); }
+            //div4.removeChild(div4.lastChild);
+        */
+        if (!valElement || !quantity.value  || !price.value || !discount.value)
+        {
+            let classname = "field-validation-error text-danger";            
+            if (valElement == 0) {
+                div1.removeChild(div1.lastChild);
+                let valid = document.createElement("span");
+                div1.appendChild(valid);
 
-        let cantmsj = "Ingrese una cantidad válida.";
-        let classname = "field-validation-error text-danger";
-        let idmsj = "Seleccione un producto.";
+                let cuenta1 = div1.childElementCount;
+                valid.className = classname;
+                valid.innerHTML = "Seleccione un producto." + cuenta1;
+            }
+            //else { div1.removeChild(div1.lastChild); }
+            if (quantity.value == "") {
+                div2.removeChild(div2.lastChild);
+                let valcant = document.createElement("span");
+                div2.appendChild(valcant);
 
-        valcant.innerHTML = "";
-        valid.innerHTML = "";
+                valcant.className = classname;
+                valcant.innerHTML = "Ingrese una cantidad válida.";
+            }
+            //else { div2.removeChild(div2.lastChild); }
+            if (price.value == "") {
+                div3.removeChild(div3.lastChild);
+                let valcant = document.createElement("span");
+                div3.appendChild(valcant);
 
-        div1.appendChild(valcant);
-        div2.appendChild(valid);
+                valcant.className = classname;
+                valcant.innerHTML = "Ingrese un precio válido.";
+            }
+            //else { div3.removeChild(div3.lastChild); }
+            if (descuento.value == "") {
+                div4.removeChild(div4.lastChild);
+                let valcant = document.createElement("span");
+                div4.appendChild(valcant);
 
-        if (cant == "" & valElement == 0) {
-            valcant.innerHTML = cantmsj;
-            valcant.className = classname;
-            valid.innerHTML = idmsj;
-            valid.className = classname;
-        }
-
-        if (cant == "") {
-            valcant.innerHTML = "";
-            valcant.className = classname;
-            valcant.innerHTML = cantmsj;
-        }
-        else if (valElement == 0) {
-            valid.innerHTML = "";
-            valid.className = classname;
-            valid.innerHTML = idmsj;
-        }
-        else {
-            //crear elementos del cuerpo de la tabla
+                valcant.className = classname;
+                valcant.innerHTML = "Ingrese un descuento válido.";
+            }          
+            //else { div4.removeChild(div4.lastChild); }
+        }       
+        
+        else {            
+            //crear filas y celdas de la tabla
             let tr = document.createElement("tr");
             let tdid = document.createElement("td");
             let tdnombre = document.createElement("td");
-            let tdsolicitado = document.createElement("td");
-            let tdentregado = document.createElement("td");
-            let tdalerta = document.createElement("td");
+            let tdcantidad = document.createElement("td");
+            let tdcosto = document.createElement("td");
+            let tddescuento = document.createElement("td");
+            let tdtotal = document.createElement("td");
+            let tdopccion = document.createElement("td");
+            //crear botones y definir atributos
+            let btnEditar = document.createElement("input")
+            btnEditar.value = "Editar";
+            btnEditar.type = "button";
+            btnEditar.onclick = "Editar(); return false";
+            btnEditar.className = "btn btn-default";
+            let btnEliminar = document.createElement("input")
+            btnEliminar.value = "Eliminar";
+            btnEliminar.type = "button";
+            btnEliminar.onclick = "Eliminar(); return false";
+            btnEliminar.className = "btn btn-default";
             //asigna jerarquía de elementos
             tr.appendChild(tdid);
             tr.appendChild(tdnombre);
-            tr.appendChild(tdsolicitado);
-            tr.appendChild(tdentregado);
-            tr.appendChild(tdalerta);
-            tdid.innerHTML = valElement;
+            tr.appendChild(tdcantidad);
+            tr.appendChild(tdcosto);
+            tr.appendChild(tddescuento);
+            tr.appendChild(tdtotal);            
+            tr.appendChild(tdopccion)
+            //asignar valor a celdas
+            tdid.innerHTML = /*cuenta*/valElement;
             tdnombre.innerHTML = nomElement
-            tdsolicitado.innerHTML = cant;
-            tdentregado.innerHTML = 0;
-            tdalerta.innerHTML = "Pendiente";
+            tdcantidad.innerHTML = quantity.value;
+            tdcosto.innerHTML = price.value;
+            tddescuento.innerHTML = discount.value;
+            tdtotal.innerHTML = quantity.value * price.value;
+            tdopccion.appendChild(btnEditar);
+            tdopccion.appendChild(btnEliminar);            
             body.appendChild(tr);
+            
             //crear elementos input
             let div = document.getElementById("div-detalle");
             let index = document.createElement("input")
-            let idProd = document.createElement("input")
-            //let nombre = document.createElement("input")
-            let cantSol = document.createElement("input")
-            let cantEnt = document.createElement("input")
-            //let alerNom = document.createElement("input")
+            let idProd = document.createElement("input")            
+            let cant = document.createElement("input")
+            let cos = document.createElement("input")
+            let desc = document.createElement("input")
+            let total = document.createElement("input")            
             //asignar valores
-            index.name = "DetalleSolicitud.Index";
+            index.name = "DetalleCotizacion.Index";
             index.value = n;
             index.type = "hidden";
-            idProd.name = "DetalleSolicitud[" + n + "].idProducto";
+            idProd.name = "DetalleCotizacion[" + n + "].idProducto";
             idProd.value = valElement;
-            idProd.type = "hidden";
-            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
-            //nombre.value = nomElement;
-            //nombre.type = "hidden";
-            cantSol.name = "DetalleSolicitud[" + n + "].cantSolicitada";
-            cantSol.value = cant;
-            cantSol.type = "hidden";
-            cantEnt.name = "DetalleSolicitud[" + n + "].cantEntregada";
-            cantEnt.value = 0;
-            cantEnt.type = "hidden";
-            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
-            //alerNom.value = "Pendiente";
-            //alerNom.type = "hidden";
-
+            idProd.type = "hidden";            
+            cant.name = "DetalleCotizacion[" + n + "].cantidad";
+            cant.value = quantity.value;
+            cant.type = "hidden";
+            cos.name = "DetalleCotizacion[" + n + "].costo";
+            cos.value = price.value;
+            cos.type = "hidden";
+            desc.name = "DetalleCotizacion[" + n + "].descuento";
+            desc.value = discount.value;
+            desc.type = "hidden";
+            total.name = "DetalleCotizacion[" + n + "].total";
+            total.value = quantity.value * price.value;
+            total.type = "hidden";            
             //asignar jerarquía de elementos
             div.appendChild(index);
-            div.appendChild(idProd);
-            //div.appendChild(nombre);
-            div.appendChild(cantSol);
-            div.appendChild(cantEnt);
-            //div.appendChild(alerNom);
+            div.appendChild(idProd);            
+            div.appendChild(cant);
+            div.appendChild(cos);
+            div.appendChild(desc);
+            div.appendChild(total);           
 
             selectElement.value = "";
-            cant = "";
+            quantity.value = "";
+            price.value = "";
+            discount.value = "";
             n++;
         }
     }
+    function Validar() { }
+    function Editar() { }
+    function Eliminar() { }
 </script>

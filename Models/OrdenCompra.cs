@@ -32,7 +32,7 @@ namespace SIGEVALP.Models
         [DisplayName("Monto Total")]
         public double? montoTotal { get; set; }
 
-        [DisplayName("Encargado")]
+        [DisplayName("Usuario")]
         public int idUsuario { get; set; }
 
         [DisplayName("Proveedor")]

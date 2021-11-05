@@ -33,7 +33,10 @@ namespace SIGEVALP.Models
         [DisplayName("Total")]
         public double total { get; set; }
 
+        [DisplayName("Cliente")]
         public int idUsuario { get; set; }
+
+        [DisplayName("Proveedor")]
         public int idProveedor { get; set; }
 
         [Column(TypeName = "datetime2"), DisplayName("Fecha")]

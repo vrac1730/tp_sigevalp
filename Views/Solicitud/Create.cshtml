@@ -133,7 +133,7 @@
     var n = 0;
     function Agregar() {
         //obtenemos valores de elementos
-        let cant = document.getElementById("cantSolicitada").value;
+        let cant = document.getElementById("cantSolicitada");
         let selectElement = document.getElementById("idProducto");
         let nomElement = selectElement.options[selectElement.selectedIndex].text;
         let valElement = selectElement.options[selectElement.selectedIndex].value;
@@ -152,22 +152,13 @@
         valid.innerHTML = "";
 
         div1.appendChild(valcant);
-        div2.appendChild(valid);
+        div2.appendChild(valid);        
 
-        if (cant == "" & valElement == 0) {
-            valcant.innerHTML = cantmsj;
-            valcant.className = classname;
-            valid.innerHTML = idmsj;
-            valid.className = classname;
-        }
-
-        if (cant == "") {
-            valcant.innerHTML = "";
+        if (cant.value == "") {
             valcant.className = classname;
             valcant.innerHTML = cantmsj;
         }
-        else if (valElement == 0) {
-            valid.innerHTML = "";
+        if (valElement == 0) {
             valid.className = classname;
             valid.innerHTML = idmsj;
         }
@@ -187,7 +178,7 @@
             tr.appendChild(tdalerta);
             tdid.innerHTML = valElement;
             tdnombre.innerHTML = nomElement
-            tdsolicitado.innerHTML = cant;
+            tdsolicitado.innerHTML = cant.value;
             tdentregado.innerHTML = 0;
             tdalerta.innerHTML = "Pendiente";
             body.appendChild(tr);
@@ -210,7 +201,7 @@
             //nombre.value = nomElement;
             //nombre.type = "hidden";
             cantSol.name = "DetalleSolicitud[" + n + "].cantSolicitada";
-            cantSol.value = cant;
+            cantSol.value = cant.value;
             cantSol.type = "hidden";
             cantEnt.name = "DetalleSolicitud[" + n + "].cantEntregada";
             cantEnt.value = 0;
@@ -228,7 +219,7 @@
             //div.appendChild(alerNom);
 
             selectElement.value = "";
-            cant = "";
+            cant.value = "";
             n++;
         }
     }
