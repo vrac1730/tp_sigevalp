@@ -60,10 +60,12 @@
                 <label class="control-label col-md-2">Producto</label>
                 <div id="id-prod" class="col-md-3">
                     @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control col-md-3" })
+                    <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
                 </div>
                 <label class="control-label col-md-2">Cantidad</label>
                 <div id="cant-rec" class="col-md-3">
                     <input type="text" id="cantidad" class="form-control" />
+                    <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
                 </div>
             </div>
 
@@ -103,30 +105,19 @@
         let valElement = selectElement.options[selectElement.selectedIndex].value;
         let body = document.getElementById("tabla-cuerpo");
 
-        let div1 = document.getElementById("cant-rec");
-        let div2 = document.getElementById("id-prod");
-        let valcant = document.createElement("span");
-        let valid = document.createElement("span");
-
-        let cantmsj = "Ingrese una cantidad válida.";
-        let classname = "field-validation-error text-danger";
-        let idmsj = "Seleccione un producto.";
-
-        valcant.innerHTML = "";
-        valid.innerHTML = "";
-
-        div1.appendChild(valcant);
-        div2.appendChild(valid);
-
-        if (cant.value == "") {
-            valcant.className = classname;
-            valcant.innerHTML = cantmsj;
+        let valid = document.getElementById("span-prod");
+        let valcant = document.getElementById("span-cant");
+       
+        if (!valElement || !cant.value) {
+            if (valElement == 0) { valid.innerHTML = "Seleccione un producto."; }
+            else { valid.innerHTML = ""; }
+            if (cant.value == "") { valcant.innerHTML = "Ingrese una cantidad válida."; }
+            else { valcant.innerHTML = ""; }            
         }
-        if (valElement == 0) {
-            valid.className = classname;
-            valid.innerHTML = idmsj;
-        }
+        
         else {
+            valid.innerHTML = "";
+            valcant.innerHTML = "";
             //crear elementos del cuerpo de la tabla
             let tr = document.createElement("tr");
             let tdid = document.createElement("td");

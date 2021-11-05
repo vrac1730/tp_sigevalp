@@ -134,7 +134,11 @@
             else { valdesc.innerHTML = ""; }
         }       
         
-        else {            
+        else {        
+            valid.innerHTML = "";
+            valcant.innerHTML = "";
+            valprec.innerHTML = ""; 
+            valdesc.innerHTML = "";
             //crear filas y celdas de la tabla
             let tr = document.createElement("tr");
             let tdid = document.createElement("td");
