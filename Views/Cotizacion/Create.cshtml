@@ -50,21 +50,25 @@
             <label class="control-label">Producto</label>
             <div id="id-prod">
                 @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
+                <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
             </div>
 
             <label class="control-label col-md-2">Cantidad</label>
             <div id="cant" class="col-md-3">
                 <input type="text" id="cantidad" class="form-control" />
+                <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
             </div>
 
             <label class="control-label col-md-2">Precio</label>
             <div id="pre" class="col-md-3">
                 <input type="text" id="precio" class="form-control" />
+                <span id="span-pre" class="field-validation-error text-danger" text-danger></span>
             </div>
 
             <label class="control-label col-md-2">% Descuento</label>
             <div id="desc" class="col-md-3">
                 <input type="text" id="descuento" class="form-control" />
+                <span id="span-desc" class="field-validation-error text-danger" text-danger></span>
             </div>
         </div>
         <div class="form-group">
@@ -107,63 +111,27 @@
         let body = document.getElementById("tabla-cuerpo");
 
         //verificar que exista un elemento span, sino elimina input detalle done
-        //despues de ingresar un detalle, ingreso no validado elimina input detalle    
-        let div1 = document.getElementById("id-prod");        
-        let div2 = document.getElementById("cant");
-        let div3 = document.getElementById("pre");
-        let div4 = document.getElementById("desc");
-        /*
-        //limpiar span de detalles                    
-        let cuenta = div1.childElementCount;
-        if (div1.childElementCount == 2) { div1.removeChild(div1.lastChild); }
-        //div1.removeChild(div1.lastChild);                   
-        if (div2.childElementCount == 2) { div2.removeChild(div2.lastChild); }
-        //div2.removeChild(div2.lastChild);            
-        if (div3.childElementCount == 2) { div3.removeChild(div3.lastChild); }
-        //div3.removeChild(div3.lastChild);            
-        if (div4.childElementCount == 2) { div4.removeChild(div4.lastChild); }
-            //div4.removeChild(div4.lastChild);
-        */
+        //despues de ingresar un detalle, ingreso no validado elimina input detalle  
+
+        let valid = document.getElementById("span-prod");
+        let valcant = document.getElementById("span-cant");
+        let valprec = document.getElementById("span-pre");
+        let valdesc = document.getElementById("span-desc");
+        
         if (!valElement || !quantity.value  || !price.value || !discount.value)
-        {
-            let classname = "field-validation-error text-danger";            
-            if (valElement == 0) {
-                div1.removeChild(div1.lastChild);
-                let valid = document.createElement("span");
-                div1.appendChild(valid);
+        {       
+            //switch case
+            if (valElement == 0) { valid.innerHTML = "Seleccione un producto."; }
+            else { valid.innerHTML = ""; }
 
-                let cuenta1 = div1.childElementCount;
-                valid.className = classname;
-                valid.innerHTML = "Seleccione un producto." + cuenta1;
-            }
-            //else { div1.removeChild(div1.lastChild); }
-            if (quantity.value == "") {
-                div2.removeChild(div2.lastChild);
-                let valcant = document.createElement("span");
-                div2.appendChild(valcant);
+            if (quantity.value == "") { valcant.innerHTML = "Ingrese una cantidad válida."; }
+            else { valcant.innerHTML = ""; }
+            
+            if (price.value == "") { valprec.innerHTML = "Ingrese un precio válido."; }
+            else { valprec.innerHTML = ""; }
 
-                valcant.className = classname;
-                valcant.innerHTML = "Ingrese una cantidad válida.";
-            }
-            //else { div2.removeChild(div2.lastChild); }
-            if (price.value == "") {
-                div3.removeChild(div3.lastChild);
-                let valcant = document.createElement("span");
-                div3.appendChild(valcant);
-
-                valcant.className = classname;
-                valcant.innerHTML = "Ingrese un precio válido.";
-            }
-            //else { div3.removeChild(div3.lastChild); }
-            if (descuento.value == "") {
-                div4.removeChild(div4.lastChild);
-                let valcant = document.createElement("span");
-                div4.appendChild(valcant);
-
-                valcant.className = classname;
-                valcant.innerHTML = "Ingrese un descuento válido.";
-            }          
-            //else { div4.removeChild(div4.lastChild); }
+            if (descuento.value == "") { valdesc.innerHTML = "Ingrese un descuento válido."; }        
+            else { valdesc.innerHTML = ""; }
         }       
         
         else {            
