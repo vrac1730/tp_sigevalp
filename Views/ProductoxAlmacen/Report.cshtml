@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SIGEVALP.Models.ProductoxAlmacen>
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+
+<div class="row" style="text-align: center;">
+    <img style="width:50%" src="https://www.trattorialapiccolina.pe/wp-content/uploads//2020/03/logo-rojo.svg" />
+</div>
+
+<div class="row" style="text-align:center;">
+    ======================================================================================================================================================
+    <div class="row" style="text-align:center;">
+        Dirección: Calle. Simón Salguero 625 – Surco.          Horario de atención: Lunes a Miércoles: 12 pm – 10 pm         Jueves a Sábado: 12 pm – 10:30 pm
+        <div class="row" style="text-align:center;">
+            Domingo: 12 pm – 8 pm                                  Teléfono de delivery:(01) 273-6005 / 990 222 804
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_min)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stock_max)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.Categoria.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Producto.marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock_min)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock_max)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Categoria.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+

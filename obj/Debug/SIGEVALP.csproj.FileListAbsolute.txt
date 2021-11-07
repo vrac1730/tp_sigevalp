@@ -521,3 +521,5 @@ D:\TP2021-2\tp_sigevalp\obj\Debug\SIGEVALP.pdb
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.cotizaciondetalles.resources
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.Propiedadescotizacion.resources
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.csprojAssemblyReference.cache
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\bin\BouncyCastle.Crypto.dll
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\bin\Rotativa.dll
