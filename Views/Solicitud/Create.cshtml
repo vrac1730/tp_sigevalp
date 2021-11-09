@@ -3,6 +3,14 @@
 @{
     ViewBag.Title = "Create";
 }
+<head>
+    <script type="module">
+        import { EmptyOrMinor, EqualsZero, LessThanZero } from '../../Scripts/master-detail_validation.js';
+        window.EmptyOrMinor = EmptyOrMinor
+        window.EqualsZero = EqualsZero
+        window.LessThanZero = LessThanZero
+    </script>
+</head>
 
 <h2>Registro de Solicitud</h2>
 
@@ -51,7 +59,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                <input id="agregar" type="button" value="Agregar" onclick="Agregar(); return false;" class="btn btn-default" />
                 <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
         </div>
@@ -135,20 +143,22 @@
     var n = 0;
     function Agregar() {
         //obtenemos valores de elementos
-        let cant = document.getElementById("cantSolicitada");
+        let quantity = document.getElementById("cantSolicitada");
         let selectElement = document.getElementById("idProducto");
-        let nomElement = selectElement.options[selectElement.selectedIndex].text;
-        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let nameElement = selectElement.options[selectElement.selectedIndex].text;
+        let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let body = document.getElementById("tabla-cuerpo");
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
 
-        if (!valElement || !cant.value) {
-            if (valElement == 0) { valid.innerHTML = "Seleccione un producto."; }
-            else { valid.innerHTML = ""; }
-            if (cant.value == "") { valcant.innerHTML = "Ingrese una cantidad válida."; }
-            else { valcant.innerHTML = ""; }
+        if (!valueElement || !quantity.value) {
+            valid.innerHTML = EqualsZero(valueElement);
+            valcant.innerHTML = EmptyOrMinor(quantity.value);
+        }
+        else if (quantity.value < 0) {
+            valid.innerHTML = "";
+            valcant.innerHTML = LessThanZero(quantity.value);
         }
         else {
             valid.innerHTML = "";
@@ -166,9 +176,9 @@
             tr.appendChild(tdsolicitado);
             tr.appendChild(tdentregado);
             tr.appendChild(tdalerta);
-            tdid.innerHTML = valElement;
-            tdnombre.innerHTML = nomElement
-            tdsolicitado.innerHTML = cant.value;
+            tdid.innerHTML = valueElement;
+            tdnombre.innerHTML = nameElement
+            tdsolicitado.innerHTML = quantity.value;
             tdentregado.innerHTML = 0;
             tdalerta.innerHTML = "Pendiente";
             body.appendChild(tr);
@@ -176,40 +186,29 @@
             let div = document.getElementById("div-detalle");
             let index = document.createElement("input")
             let idProd = document.createElement("input")
-            //let nombre = document.createElement("input")
             let cantSol = document.createElement("input")
             let cantEnt = document.createElement("input")
-            //let alerNom = document.createElement("input")
             //asignar valores
             index.name = "DetalleSolicitud.Index";
             index.value = n;
             index.type = "hidden";
             idProd.name = "DetalleSolicitud[" + n + "].idProducto";
-            idProd.value = valElement;
+            idProd.value = valueElement;
             idProd.type = "hidden";
-            //nombre.name = "DetalleSalida[" + n + "].Producto.nombre";
-            //nombre.value = nomElement;
-            //nombre.type = "hidden";
             cantSol.name = "DetalleSolicitud[" + n + "].cantSolicitada";
-            cantSol.value = cant.value;
+            cantSol.value = quantity.value;
             cantSol.type = "hidden";
             cantEnt.name = "DetalleSolicitud[" + n + "].cantEntregada";
             cantEnt.value = 0;
             cantEnt.type = "hidden";
-            //alerNom.name = "DetalleSalida[" + n + "].Producto.Alerta.nombre";
-            //alerNom.value = "Pendiente";
-            //alerNom.type = "hidden";
-
             //asignar jerarquía de elementos
             div.appendChild(index);
             div.appendChild(idProd);
-            //div.appendChild(nombre);
             div.appendChild(cantSol);
             div.appendChild(cantEnt);
-            //div.appendChild(alerNom);
 
             selectElement.value = "";
-            cant.value = "";
+            quantity.value = "";
             n++;
         }
     }

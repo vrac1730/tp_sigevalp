@@ -4,6 +4,14 @@
 @{
     ViewBag.Title = "Create";
 }
+<head>
+    <script type="module">
+        import { EmptyOrMinor, EqualsZero, LessThanZero } from '../../Scripts/master-detail_validation.js';
+        window.EmptyOrMinor = EmptyOrMinor
+        window.EqualsZero = EqualsZero
+        window.LessThanZero = LessThanZero
+    </script>
+</head>
 
 <h2>Registro de Orden</h2>
 <div>
@@ -71,7 +79,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                    <input id="agregar" type="button" value="Agregar" onclick="Agregar(); return false;" class="btn btn-default" />
                     <input type="submit" value="Registrar" class="btn btn-default" />
                 </div>
             </div>
@@ -99,22 +107,23 @@
     var n = 0;
     function Agregar() {
         //obtenemos valores de elementos
-        let cant = document.getElementById("cantidad");
+        let quantity = document.getElementById("cantidad");
         let selectElement = document.getElementById("idProducto");
-        let nomElement = selectElement.options[selectElement.selectedIndex].text;
-        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let nameElement = selectElement.options[selectElement.selectedIndex].text;
+        let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let body = document.getElementById("tabla-cuerpo");
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
-       
-        if (!valElement || !cant.value) {
-            if (valElement == 0) { valid.innerHTML = "Seleccione un producto."; }
-            else { valid.innerHTML = ""; }
-            if (cant.value == "") { valcant.innerHTML = "Ingrese una cantidad válida."; }
-            else { valcant.innerHTML = ""; }            
+
+        if (!valueElement || !quantity.value) {
+            valid.innerHTML = EqualsZero(valueElement);
+            valcant.innerHTML = EmptyOrMinor(quantity.value);
         }
-        
+        else if (quantity.value < 0) {
+            valid.innerHTML = "";
+            valcant.innerHTML = LessThanZero(quantity.value);
+        }
         else {
             valid.innerHTML = "";
             valcant.innerHTML = "";
@@ -131,9 +140,9 @@
             tr.appendChild(tdcant);
             tr.appendChild(tdrecibido);
             tr.appendChild(tdalerta);
-            tdid.innerHTML = valElement;
-            tdnombre.innerHTML = nomElement;
-            tdcant.innerHTML = cant.value;
+            tdid.innerHTML = valueElement;
+            tdnombre.innerHTML = nameElement;
+            tdcant.innerHTML = quantity.value;
             tdrecibido.innerHTML = 0;
             tdalerta.innerHTML = "En orden";
             body.appendChild(tr);
@@ -148,15 +157,14 @@
             index.value = n;
             index.type = "hidden";
             idProd.name = "DetalleCompras[" + n + "].idProducto";
-            idProd.value = valElement;
+            idProd.value = valueElement;
             idProd.type = "hidden";
             Cant.name = "DetalleCompras[" + n + "].cantidad";
-            Cant.value = cant.value;
+            Cant.value = quantity.value;
             Cant.type = "hidden";
             cantRec.name = "DetalleCompras[" + n + "].cantidadRecibida";
             cantRec.value = 0;
             cantRec.type = "hidden";
-
             //asignar jerarquía de elementos
             div.appendChild(index);
             div.appendChild(idProd);
@@ -164,7 +172,7 @@
             div.appendChild(cantRec);
 
             selectElement.value = "";
-            cant.value = "";
+            quantity.value = "";
             n++;
         }
     }

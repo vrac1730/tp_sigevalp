@@ -3,19 +3,27 @@
 @{
     ViewBag.Title = "Create";
 }
+<head>
+    <script type="module">
+        import { EmptyOrMinor, EqualsZero, LessThanZero } from '../../Scripts/master-detail_validation.js';
+        window.EmptyOrMinor = EmptyOrMinor
+        window.EqualsZero = EqualsZero
+        window.LessThanZero = LessThanZero
+    </script>
+</head>
 
 <h2>Registrar</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Cotizacion</h4>
         <div>
-            @Html.ActionLink("Regresar", "Index")   
+            @Html.ActionLink("Regresar", "Index")
         </div>
-        <hr />   
+        <hr />
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -34,14 +42,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled="disabled", @class = "form-control" } )                                
+                @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled="disabled", @class = "form-control" } )
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("Estado","Pendiente", new { @disabled = "disabled", @class = "form-control" })                
+                @Html.TextBox("Estado","Pendiente", new { @disabled = "disabled", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,11 +81,11 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input value="Agregar" type="button" onclick="Agregar(); return false;" class="btn btn-default" />
+                <input type="button" value="Agregar" onclick="Agregar(); return false;" class="btn btn-default" />
                 <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
         </div>
-        
+
         <div id="div-detalle">
             <table id="tabla-detalle" class="table table-hover">
                 <thead>
@@ -94,50 +102,46 @@
                 <tbody id="tabla-cuerpo">
                 </tbody>
             </table>
-        </div>    
+        </div>
     </div>
 }
 
 <script>
     var n = 0;
+    //document.querySelector('#agregar').addEventListener('click', Agregar)
     function Agregar() {
         //obtenemos valores de elementos
         let quantity = document.getElementById("cantidad");
         let price = document.getElementById("precio");
         let discount = document.getElementById("descuento");
         let selectElement = document.getElementById("idProducto");
-        let nomElement = selectElement.options[selectElement.selectedIndex].text;
-        let valElement = selectElement.options[selectElement.selectedIndex].value;
+        let nameElement = selectElement.options[selectElement.selectedIndex].text;
+        let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let body = document.getElementById("tabla-cuerpo");
-
-        //verificar que exista un elemento span, sino elimina input detalle done
-        //despues de ingresar un detalle, ingreso no validado elimina input detalle  
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
         let valprec = document.getElementById("span-pre");
         let valdesc = document.getElementById("span-desc");
-        
-        if (!valElement || !quantity.value  || !price.value || !discount.value)
-        {       
-            //switch case
-            if (valElement == 0) { valid.innerHTML = "Seleccione un producto."; }
-            else { valid.innerHTML = ""; }
 
-            if (quantity.value == "") { valcant.innerHTML = "Ingrese una cantidad válida."; }
-            else { valcant.innerHTML = ""; }
-            
-            if (price.value == "") { valprec.innerHTML = "Ingrese un precio válido."; }
-            else { valprec.innerHTML = ""; }
-
-            if (descuento.value == "") { valdesc.innerHTML = "Ingrese un descuento válido."; }        
-            else { valdesc.innerHTML = ""; }
-        }       
-        
-        else {        
+        if (!valueElement || !quantity.value  || !price.value || !discount.value)
+        {
+            valid.innerHTML = EqualsZero(valueElement);
+            valcant.innerHTML = EmptyOrMinor(quantity.value);
+            valprec.innerHTML = EmptyOrMinor(price.value);
+            valdesc.innerHTML = EmptyOrMinor(discount.value);
+        }
+        else if (quantity.value < 0 || price.value < 0 || discount.value < 0)
+        {
+            valid.innerHTML = "";
+            valcant.innerHTML = LessThanZero(quantity.value);
+            valprec.innerHTML = LessThanZero(price.value);
+            valdesc.innerHTML = LessThanZero(discount.value);
+        }
+        else {
             valid.innerHTML = "";
             valcant.innerHTML = "";
-            valprec.innerHTML = ""; 
+            valprec.innerHTML = "";
             valdesc.innerHTML = "";
             //crear filas y celdas de la tabla
             let tr = document.createElement("tr");
@@ -165,34 +169,34 @@
             tr.appendChild(tdcantidad);
             tr.appendChild(tdcosto);
             tr.appendChild(tddescuento);
-            tr.appendChild(tdtotal);            
+            tr.appendChild(tdtotal);
             tr.appendChild(tdopccion)
             //asignar valor a celdas
-            tdid.innerHTML = /*cuenta*/valElement;
-            tdnombre.innerHTML = nomElement
+            tdid.innerHTML = valueElement;
+            tdnombre.innerHTML = nameElement
             tdcantidad.innerHTML = quantity.value;
             tdcosto.innerHTML = price.value;
             tddescuento.innerHTML = discount.value;
             tdtotal.innerHTML = quantity.value * price.value;
             tdopccion.appendChild(btnEditar);
-            tdopccion.appendChild(btnEliminar);            
+            tdopccion.appendChild(btnEliminar);
             body.appendChild(tr);
-            
+
             //crear elementos input
             let div = document.getElementById("div-detalle");
             let index = document.createElement("input")
-            let idProd = document.createElement("input")            
+            let idProd = document.createElement("input")
             let cant = document.createElement("input")
             let cos = document.createElement("input")
             let desc = document.createElement("input")
-            let total = document.createElement("input")            
+            let total = document.createElement("input")
             //asignar valores
             index.name = "DetalleCotizacion.Index";
             index.value = n;
             index.type = "hidden";
             idProd.name = "DetalleCotizacion[" + n + "].idProducto";
-            idProd.value = valElement;
-            idProd.type = "hidden";            
+            idProd.value = valueElement;
+            idProd.type = "hidden";
             cant.name = "DetalleCotizacion[" + n + "].cantidad";
             cant.value = quantity.value;
             cant.type = "hidden";
@@ -204,14 +208,14 @@
             desc.type = "hidden";
             total.name = "DetalleCotizacion[" + n + "].total";
             total.value = quantity.value * price.value;
-            total.type = "hidden";            
+            total.type = "hidden";
             //asignar jerarquía de elementos
             div.appendChild(index);
-            div.appendChild(idProd);            
+            div.appendChild(idProd);
             div.appendChild(cant);
             div.appendChild(cos);
             div.appendChild(desc);
-            div.appendChild(total);           
+            div.appendChild(total);
 
             selectElement.value = "";
             quantity.value = "";
@@ -220,7 +224,6 @@
             n++;
         }
     }
-    function Validar() { }
     function Editar() { }
     function Eliminar() { }
-</script>
+    </script>
