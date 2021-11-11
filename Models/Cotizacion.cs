@@ -19,15 +19,15 @@ namespace SIGEVALP.Models
         
         [DisplayName("Estado")]
         public string estado { get; set; }
-
+        [DisplayName("Parcial")]
         public double parcial { get; set; }
-
+        [DisplayName("Descuento")]
         public double descuento { get; set; }
 
         [DisplayName("Neto")]
         public double neto { get; set; }
 
-        [DisplayName("IVA")]
+        [DisplayName("IGV")]
         public double iva { get; set; }
 
         [DisplayName("Total")]

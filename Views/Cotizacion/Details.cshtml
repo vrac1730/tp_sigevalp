@@ -94,7 +94,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>Parcial</td>
+                    <td>@Html.DisplayNameFor(n => n.parcial)</td>
                     <td>@Model.parcial</td>
                 </tr>
                 <tr>
@@ -102,7 +102,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>Neto</td>
+                    <td>@Html.DisplayNameFor(n => n.descuento)</td>
+                    <td>@Model.descuento</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.neto)</td>
                     <td>@Model.neto</td>
                 </tr>
                 <tr>
@@ -110,7 +118,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>IVA</td>
+                    <td>@Html.DisplayNameFor(n => n.iva)</td>
                     <td>@Model.iva</td>
                 </tr>
                 <tr>
@@ -118,7 +126,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>Total</td>
+                    <td>@Html.DisplayNameFor(n => n.total)</td>
                     <td>@Model.total</td>
                 </tr>
             </tbody>
