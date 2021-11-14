@@ -27,8 +27,7 @@ namespace SIGEVALP.Controllers
         // GET: OrdenCompra
         public ActionResult Index()
         {
-            var ordenCompras = db.OrdenesCompras.Include(o => o.Proveedor).Include(o => o.Usuario.Local);
-            return View(ordenCompras.ToList());
+            return View(db.OrdenesCompras.Include(o => o.Proveedor).Include(o => o.Usuario.Local));
         }
 
         // GET: OrdenCompra/Details/5
@@ -59,13 +58,12 @@ namespace SIGEVALP.Controllers
             return View(ordenCompra);
         }
 
-        // GET: OrdenCompra/Create
-        public ActionResult Create(int? id/*, [Bind(Include = "idProveedor")] OrdenCompra ordenCompra*/)
-        {
+        // GET: OrdenCompra/Create        
+        public ActionResult Create(int? id)
+        {//idproveedor
             ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado=="Aprobado"), "idProducto", "Producto.nombre");
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
-
             return View();
         }
 
@@ -85,13 +83,13 @@ namespace SIGEVALP.Controllers
                         ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "idProducto", "Producto.nombre");
                         ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenCompra.idUsuario);
                         ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-                        return View(ordenCompra);
+                        return View();
                     }                   
 
                     ordenCompra.fechaOrden = DateTime.Now;
                     ordenCompra.estado = "Pendiente";
                     //ordenCompra.montoTotal = 0;
-                    var os = db.OrdenesCompras.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
+                    var os = db.OrdenesCompras.ToList().Last();
                     int idOrden = os.id + 1;
                     ordenCompra.codigo = "000" + idOrden;
                     db.OrdenesCompras.Add(ordenCompra);
@@ -109,8 +107,7 @@ namespace SIGEVALP.Controllers
             }
           
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-
-            return View(ordenCompra);
+            return View();
         }
 
         // GET: OrdenCompra/Edit/5
@@ -138,19 +135,20 @@ namespace SIGEVALP.Controllers
         {
             if (ModelState.IsValid)
             {
-                var prod = db.Productos.Find(detalleCompra.idProducto);
-                var detalle = db.DetallesCompras.Find(detalleCompra.id);
-                var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleCompra.idProducto);
-
-                prod.idAlerta = 8;
-                alm.cantidad += (detalleCompra.cantidadRecibida - detalle.cantidadRecibida);
-                detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
-                //validar existencias en almacen
-                //cambiar alerta de prodxalmacen
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = detalle.idOrdenCompra });
+                return View();
             }
-            return View(detalleCompra);
+            
+            var prod = db.Productos.Find(detalleCompra.idProducto);
+            var detalle = db.DetallesCompras.Find(detalleCompra.id);
+            var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleCompra.idProducto);
+
+            prod.idAlerta = 8;
+            alm.cantidad += (detalleCompra.cantidadRecibida - detalle.cantidadRecibida);
+            detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
+            //validar existencias en almacen
+            //cambiar alerta de prodxalmacen
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = detalle.idOrdenCompra });
         }
     }
 }

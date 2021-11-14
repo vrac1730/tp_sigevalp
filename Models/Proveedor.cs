@@ -18,29 +18,30 @@ namespace SIGEVALP.Models
         [Required]
         [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
         public string nombre { get; set; }
-
-        [Required]
+        
         [DisplayName("Dirección")]
+        [Required]
+        [StringLength(55, ErrorMessage = "Dirección no debe superar los 55 caracteres.")]
         public string direccion { get; set; }
 
-        [Required]
-        [EmailAddress]
         [DisplayName("Correo")]
+        [Required]
+        [EmailAddress]        
         public string correo { get; set; }
 
-        [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten números.")]
-        [Range(100000000, 999999999, ErrorMessage = "Campo valido de 9 digitos")]
         [DisplayName("Teléfono")]
-        public long telefono { get; set; }
-        
         [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten números.")]
-        [Range(10000000000, 99999999999, ErrorMessage = "Campo valido de 11 digitos")]
+        [Range(100000000, 999999999, ErrorMessage = "Campo valido de 9 digitos")]        
+        public long telefono { get; set; }
+
         [DisplayName("RUC")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten números.")]
+        [Range(10000000000, 99999999999, ErrorMessage = "Campo valido de 11 digitos")]        
         public long ruc { get; set; }
 
-        [Required]
         [DisplayName("Razón social")]
-        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
+        [Required]
+        [StringLength(55, ErrorMessage = "Razón social no debe superar los 55 caracteres.")]
         public string razon_social { get; set; }
 
         public List<DetalleCotizacion> DetalleCotizacion { get; set; }

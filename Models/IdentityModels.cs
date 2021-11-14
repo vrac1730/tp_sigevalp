@@ -1,5 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -38,18 +41,40 @@ namespace SIGEVALP.Models
         public DbSet<ProductoxAlmacen> ProductosxAlmacen { get; set; }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<HistorialMovimiento> HistorialMovimientos { get; set; }
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
-        }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {         
-            modelBuilder.Entity<DetalleCotizacion>().HasKey(x => new { x.idProducto, x.idProveedor });
-            base.OnModelCreating(modelBuilder);
-        }
+        }        
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DetalleCotizacion>().HasKey(x => new { x.idProducto, x.idProveedor });
+            base.OnModelCreating(modelBuilder);
+        }
+        public override int SaveChanges()
+        {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {                
+                var sb = new StringBuilder();
+
+                foreach (var item in e.EntityValidationErrors)
+                {
+                    sb.AppendFormat("Entity of type {0} in state {1} has validation errors:", item.Entry.Entity.GetType().Name, item.Entry.State);
+                    foreach (var error in item.ValidationErrors)
+                    {
+                        sb.AppendFormat(" {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+                throw new DbEntityValidationException("Entity Validation Failed:\n" + sb.ToString(), e);
+            }
+        }
+        
     }
 }

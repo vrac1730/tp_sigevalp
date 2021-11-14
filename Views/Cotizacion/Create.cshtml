@@ -16,7 +16,8 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()    
+    @Html.Hidden("estado","Pendiente")
 
     <div class="form-horizontal">
         <h4>Cotizacion</h4>
@@ -248,7 +249,7 @@
             td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
 
             //crear elementos input
-            let index = document.createElement("input")
+            //let index = document.createElement("input")
             let idProd = document.createElement("input")
             let cant = document.createElement("input")
             let cos = document.createElement("input")
@@ -260,25 +261,25 @@
             let iva = document.getElementById("in_iva");
             let total_detalle = document.getElementById("in_total");
             //asignar valores a inputs
-            index.name = "DetalleCotizacion.Index";
+          /*  index.name = "DetalleCotizacion.Index";
             index.value = n;
-            index.type = "hidden";
-            idProd.name = "DetalleCotizacion[" + n + "].idProducto";
+            index.type = "hidden";*/
+            idProd.name = "Cotizacion.DetalleCotizacion[" + n + "].idProducto";
             idProd.value = valueElement;
             idProd.type = "hidden";
-            cant.name = "DetalleCotizacion[" + n + "].cantidad";
+            cant.name = "Cotizacion.DetalleCotizacion[" + n + "].cantidad";
             cant.id = cant.name;
             cant.value = quantity.value;
             cant.type = "hidden";
-            cos.name = "DetalleCotizacion[" + n + "].costo";
+            cos.name = "Cotizacion.DetalleCotizacion[" + n + "].costo";
             cos.id = cos.name;
             cos.value = price.value;
             cos.type = "hidden";
-            desc.name = "DetalleCotizacion[" + n + "].descuento";
+            desc.name = "Cotizacion.DetalleCotizacion[" + n + "].descuento";
             desc.id = desc.name;
             desc.value = discount.value;
             desc.type = "hidden";
-            total.name = "DetalleCotizacion[" + n + "].total";
+            total.name = "Cotizacion.DetalleCotizacion[" + n + "].total";
             total.id = total.name;
             total.value = quantity.value * price.value;
             total.type = "hidden";
@@ -409,10 +410,10 @@
         btnEliminar.onclick = function () { Eliminar(this) };
         btnEliminar.className = "btn btn-default";
         //modificar elementos inputs        
-        let in_detalle_cantidad = document.getElementById("DetalleCotizacion[" + tr.id + "].cantidad");
-        let in_detalle_costo = document.getElementById("DetalleCotizacion[" + tr.id + "].costo");
-        let in_detalle_descuento = document.getElementById("DetalleCotizacion[" + tr.id + "].descuento");
-        let in_detalle_total = document.getElementById("DetalleCotizacion[" + tr.id + "].total");
+        let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
+        let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
+        let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
+        let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
 
         in_detalle_cantidad.value = cantidad.value;
         in_detalle_costo.value = costo.value;

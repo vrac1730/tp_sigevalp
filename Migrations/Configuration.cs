@@ -4,16 +4,17 @@ namespace SIGEVALP.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SIGEVALP.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SIGEVALP.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -22,7 +23,7 @@ namespace SIGEVALP.Migrations
             context.Database.Delete();
             context.Database.CreateIfNotExists();
 
-            context.Personas.AddOrUpdate(x => x.id,               
+            context.Personas.AddOrUpdate(x => x.id,
             new Persona() { id = 1, dni = 12345678, nombre = "Sebastián", aPaterno = "Rodríguez", aMaterno = "De La Torre Ugarte", celular = 123456789 },
             new Persona() { id = 2, dni = 70360207, nombre = "Victor", aPaterno = "Alarcón", aMaterno = "Campos", celular = 963109798 },
             new Persona() { id = 3, dni = 12345678, nombre = "Jairo", aPaterno = "Meléndez", aMaterno = "Alvarado", celular = 123456789 },
@@ -69,7 +70,7 @@ namespace SIGEVALP.Migrations
             new Local() { id = 1, nombre = "Surco", direccion = "Av: los benavides 4950", telefono = 276153485, ruc = 20501234567, razon_social = "abc" },
             new Local() { id = 2, nombre = "Miraflores", direccion = "Av: los benavides 950", telefono = 276343485, ruc = 20501254567, razon_social = "def" },
             new Local() { id = 3, nombre = "Barranco", direccion = "Av: Grau 495", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" }
-            );                   
+            );
             context.Proveedores.AddOrUpdate(x => x.id,
             new Proveedor() { id = 1, nombre = "Mario Salas", correo = "mariosalas@gmail.com", direccion = "villa el salvador", razon_social = "abc", ruc = 42143557923, telefono = 981232131 },
             new Proveedor() { id = 2, nombre = "Jorge Luna", correo = "jorgeluna@gmail.com", direccion = "villa Maria del triunfo", razon_social = "def", ruc = 41212435351, telefono = 986463231 },
@@ -104,7 +105,7 @@ namespace SIGEVALP.Migrations
             new Producto() { id = 16, codigo = "ABLA16", nombre = "Huevos Paq. 30 Unid.", descripcion = "Huevos en blanco", marca = "La Calera", idCategoria = 8, idAlerta = 4 },
             new Producto() { id = 17, codigo = "CO4E17", nombre = "Tomillo Bolsa 5g ", descripcion = "Tomillo en blanco", marca = "4 Estaciones", idCategoria = 2, idAlerta = 4 }
             );
-            
+
             context.Solicitudes.AddOrUpdate(x => x.id,
             new Solicitud() { id = 1, codigo = "0001", fecha = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Pendiente", idUsuario = 1 },
             new Solicitud() { id = 2, codigo = "0002", fecha = new DateTime(2021, 06, 03, 12, 19, 20), estado = "Pendiente", idUsuario = 2 },
@@ -124,7 +125,7 @@ namespace SIGEVALP.Migrations
             new Cotizacion() { id = 2, codigo = "0002", fecha = new DateTime(2021, 06, 03, 12, 20, 20), estado = "Pendiente", parcial = 277.5, descuento = 13.88, neto = 263.62, iva = 0.00, total = 263.62, idUsuario = 2, idProveedor = 1 },
             new Cotizacion() { id = 3, codigo = "0003", fecha = new DateTime(2021, 06, 03, 12, 21, 20), estado = "Aprobado", parcial = 279.5, descuento = 0.00, neto = 279.5, iva = 50.31, total = 329.81, idUsuario = 2, idProveedor = 2 }
             );
-
+            
             context.DetallesSolicitudes.AddOrUpdate(x => new { x.idSolicitud, x.idProducto },
             new DetalleSolicitud() { idSolicitud = 1, idProducto = 1, cantSolicitada = 100, cantEntregada = 0, observacion = "" },
             new DetalleSolicitud() { idSolicitud = 1, idProducto = 2, cantSolicitada = 10, cantEntregada = 0, observacion = "" }
@@ -140,8 +141,8 @@ namespace SIGEVALP.Migrations
             new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, cantidad = 3, descuento = 0.00, total = 64.50, idCotizacion = 3 },
             new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, cantidad = 7, descuento = 7.18, total = 143.50, idCotizacion = 1 },
             new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, cantidad = 6, descuento = 7.05, total = 141.00, idCotizacion = 1 }
-            );            
-              
+            );
+
             context.ProductosxAlmacen.AddOrUpdate(x => x.id,
             new ProductoxAlmacen() { id = 1, cantidad = 47, idAlmacen = 1, stock_min = 10, stock_max = 60, idProducto = 1, idEstado = 1, idAlerta = 3 },
             new ProductoxAlmacen() { id = 2, cantidad = 45, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 2, idEstado = 2, idAlerta = 3 },
@@ -152,7 +153,7 @@ namespace SIGEVALP.Migrations
             new ProductoxAlmacen() { id = 7, cantidad = 9, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 7, idEstado = 3, idAlerta = 4 },
             new ProductoxAlmacen() { id = 8, cantidad = 10, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 8, idEstado = 3, idAlerta = 4 },
             new ProductoxAlmacen() { id = 9, cantidad = 49, idAlmacen = 1, stock_min = 10, stock_max = 50, idProducto = 9, idEstado = 3, idAlerta = 3 }
-            );
+            );           
         }
     }
 }

@@ -16,26 +16,25 @@ namespace SIGEVALP.Models
 
         [DisplayName("Local")]
         [Required]
-        [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "* Solo se permiten letras.")]
+        [StringLength(45, ErrorMessage = "Local no debe superar los 45 caracteres.")]
         public string nombre { get; set; }
 
         [Required]
         [DisplayName("Dirección")]
-        [StringLength(30,ErrorMessage = "Dirección no debe superar los 30 caracteres.")]
+        [StringLength(55, ErrorMessage = "Dirección no debe superar los 55 caracteres.")]
         public string direccion { get; set; }
 
         [DisplayName("Teléfono")]
         [Range(100000000, 999999999, ErrorMessage = "Campo valido de 9 digitos")]
         public long telefono { get; set; }
 
-        [DisplayName("RUC")]
-        [Required]
+        [DisplayName("RUC")]        
         [Range(10000000000, 99999999999, ErrorMessage = "Campo valido de 11 digitos")]      
         public long ruc { get; set; }
 
         [DisplayName("Razon Social")]
         [Required]
-        [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "* Solo se permiten letras.")]
+        [StringLength(45, ErrorMessage = "Razon Social no debe superar los 45 caracteres.")]
         public string razon_social { get; set; }
     }
 }

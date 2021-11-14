@@ -19,16 +19,17 @@ namespace SIGEVALP.Models
 
         [DisplayName("Nombre")]
         [Required]
-        //[RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
+        [StringLength(45, ErrorMessage = "Nombre no debe superar los 45 caracteres.")]
         public string nombre { get; set; }
 
         [DisplayName("Descripción")]
         [Required]
+        [StringLength(55, ErrorMessage = "Descripción no debe superar los 55 caracteres.")]
         public string descripcion { get; set; }
 
         [DisplayName("Marca")]
         [Required]
-        //[RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)+( [a-zA-Z]+)+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
+        [StringLength(45, ErrorMessage = "Marca no debe superar los 45 caracteres.")]
         public string marca { get; set; }
 
         [DisplayName("Categoría")]

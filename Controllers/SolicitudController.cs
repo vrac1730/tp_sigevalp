@@ -28,15 +28,12 @@ namespace SIGEVALP.Controllers
         public ActionResult Index(string cod)
         {   //busqueda por rango de fechas, estado          
             var result = db.Solicitudes.Include(p => p.Usuario.Persona).Include(p => p.Usuario.Local);
+
             if (String.IsNullOrWhiteSpace(cod))
-            {
                 return View(result);
-            }
 
             else if (cod.Length > 0)
-            {
                 return View(result.Where(p => p.codigo == cod));
-            }
 
             return View(result);
         }
@@ -54,7 +51,6 @@ namespace SIGEVALP.Controllers
                         
             solicitud.DetalleSolicitud = db.DetallesSolicitudes.Include(d => d.Producto.Alerta).Where(d => d.idSolicitud == id).ToList();
             solicitud.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
-
             return View(solicitud);
         }
 
@@ -64,7 +60,7 @@ namespace SIGEVALP.Controllers
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");            
      
             var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
-                // db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
+            //db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
 
             ViewData["idProducto"] = new SelectList(prod, "id", "Producto.nombre");
 
@@ -96,7 +92,7 @@ namespace SIGEVALP.Controllers
 
             solicitud.fecha = DateTime.Now;
             solicitud.estado = "Pendiente";
-            var os = db.Solicitudes.OrderByDescending(o => o.id).FirstOrDefault(o => o.estado == "Pendiente");
+            var os = db.Solicitudes.ToList().Last();
             int id = os.id + 1;
             solicitud.codigo = "000" + id;
             db.Solicitudes.Add(solicitud);

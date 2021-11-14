@@ -34,14 +34,13 @@ namespace SIGEVALP.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Proveedor proveedor = db.Proveedores.Find(id);
+            
             if (proveedor == null)
-            {
                 return HttpNotFound();
-            }
+            
             return View(proveedor);
         }
 
@@ -58,28 +57,24 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,nombre,direccion,correo,telefono,ruc,razon_social")] Proveedor proveedor)
         {
-            if (ModelState.IsValid)
-            {
-                db.Proveedores.Add(proveedor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid)
+                return View();
 
-            return View(proveedor);
+            db.Proveedores.Add(proveedor);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Proveedors/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Proveedor proveedor = db.Proveedores.Find(id);
             if (proveedor == null)
-            {
                 return HttpNotFound();
-            }
+            
             return View(proveedor);
         }
 
@@ -90,13 +85,18 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,nombre,direccion,correo,telefono,ruc,razon_social")] Proveedor proveedor)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(proveedor).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(proveedor);
+            if (!ModelState.IsValid)
+                return View(proveedor);
+
+            var prov = db.Proveedores.Find(proveedor.id);
+            prov.nombre = proveedor.nombre;
+            prov.direccion = proveedor.direccion;
+            prov.correo = proveedor.correo;
+            prov.telefono = proveedor.telefono;
+            prov.ruc = proveedor.ruc;
+            prov.razon_social = proveedor.razon_social;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

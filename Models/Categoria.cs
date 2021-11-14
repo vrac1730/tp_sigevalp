@@ -15,8 +15,13 @@ namespace SIGEVALP.Models
         public int id { get; set; }
 
         [DisplayName("Categoría")]
+        [Required]
+        [RegularExpression("^[a-zA-Z]+( [a-zA-Z]+)*$", ErrorMessage = "* Solo se permiten letras.")]
         public string nombre { get; set; }
+
         [DisplayName("Descripción")]
+        [Required]
+        [StringLength(55, ErrorMessage = "Descripción no debe superar los 55 caracteres.")]
         public string descripcion { get; set; }
     }
 }

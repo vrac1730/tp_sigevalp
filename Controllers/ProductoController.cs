@@ -27,22 +27,20 @@ namespace SIGEVALP.Controllers
         // GET: Producto
         public ActionResult Index()
         {
-            var productos = db.Productos.Include(p => p.Alerta).Include(p => p.Categoria);
-            return View(productos.ToList());
+            return View(db.Productos.Include(p => p.Alerta).Include(p => p.Categoria));
         }
 
         // GET: Producto/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             var producto = db.Productos.Find(id);
-            if (producto == null)
-            {
+
+            if (producto == null)            
                 return HttpNotFound();
-            }            
+
             producto.Categoria = db.Categorias.Find(producto.id);
             return View(producto);
         }
@@ -61,36 +59,34 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,codigo,nombre,descripcion,marca,idCategoria")] Producto producto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var cat = db.Categorias.Find(producto.idCategoria);
-                var codcat = cat.nombre.Substring(0, 2).ToUpper();
-                var codmarca= producto.marca.Substring(0, 2).ToUpper();
-                var prod = db.Productos.ToList().Last();
-                int n = prod.id + 1;
-
-                producto.codigo = codcat + codmarca + n;
-                db.Productos.Add(producto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
+                return View();
+            }          
             
-            ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
-            return View(producto);
+            var cat = db.Categorias.Find(producto.idCategoria);
+            var codcat = cat.nombre.Substring(0, 2).ToUpper();
+            var codmarca = producto.marca.Substring(0, 2).ToUpper();
+            var prod = db.Productos.ToList().Last();
+            int n = prod.id + 1;
+            producto.codigo = codcat + codmarca + n;
+            db.Productos.Add(producto);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Producto/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             Producto producto = db.Productos.Find(id);
-            if (producto == null)
-            {
+
+            if (producto == null)           
                 return HttpNotFound();
-            }           
+                      
             ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
             return View(producto);
         }
@@ -102,14 +98,19 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,codigo,nombre,descripcion,marca,idCategoria")] Producto producto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.Entry(producto).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }           
-            ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
-            return View(producto);
+                ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
+                return View(producto);
+            }
+
+            var prod = db.Productos.Find(producto.id);
+            prod.nombre = producto.nombre;
+            prod.descripcion = producto.descripcion;
+            prod.marca = producto.marca;
+            prod.idCategoria = producto.idCategoria;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         } 
     }
 }

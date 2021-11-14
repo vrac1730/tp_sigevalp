@@ -1,24 +1,13 @@
 ﻿@model IEnumerable<SIGEVALP.Models.Categoria>
-@{ViewBag.Title = "Index-Categoria";}
+@{
+    ViewBag.Title = "Index";
+}
 
 <h2>Lista de Categorias</h2>
 
-@using(Html.BeginForm("Index","Categoria",FormMethod.Post))
-{
-    <div class="form-horizontal">
-        <h5>Codigo de Categoria</h5>
-         @Html.TextBox("cod", "", new {@class= "form-control col-md-2" })
-         <div class="col-md-3">
-            <button type="submit" class="btn btn-default">Buscar</button>
-         </div>
-    </div>
-}
-<div style="padding-right: 13%">    
-    <p style="text-align:right">
-    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
-    </p>
-</div>
-
+<p>    
+    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })   
+</p>
 
 <table class="table table-hover">
     <tr>
@@ -27,13 +16,12 @@
         <th>Descripción</th>
         <th>Opción</th>
     </tr>
-    @foreach(var elemento in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem=>elemento.id)</td>
-                    <td>@Html.DisplayFor(modelItem=>elemento.nombre)</td>
-                    <td>@Html.DisplayFor(modelItem=>elemento.descripcion)</td>
-                    <td>@Html.ActionLink("Editar", "Edit", new { id = elemento.id })</td>
-                </tr>
-            }
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.id)</td>
+        <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+        <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.id })</td>
+    </tr>
+}
 </table>

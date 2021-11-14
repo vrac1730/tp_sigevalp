@@ -60,7 +60,7 @@ namespace SIGEVALP.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,codigo,fechaFin,estado,iva,total,idUsuario,idProveedor,fecha")] Cotizacion cotizacion)
+        public ActionResult Create([Bind(Include = "id,codigo,estado,parcial,descuento,neto,iva,total,idUsuario,idProveedor,fecha,DetalleCotizacion")] Cotizacion cotizacion)
         {
             if (!ModelState.IsValid)
             {
@@ -69,6 +69,9 @@ namespace SIGEVALP.Controllers
                 ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", cotizacion.idUsuario);
                 return View(cotizacion);                
             }
+            //cotizacion.estado = "Pendiente";
+            //cotizacion.fecha = DateTime.Now;
+            //generar codigo
             db.Cotizaciones.Add(cotizacion);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -85,6 +88,7 @@ namespace SIGEVALP.Controllers
 
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre", cotizacion.idProveedor);
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", cotizacion.idUsuario);
+            ViewBag.idProducto = new SelectList(db.Productos, "id", "nombre");
 
             cotizacion.Usuario = db.Usuarios.Find(cotizacion.idUsuario);
             cotizacion.Proveedor = db.Proveedores.Find(cotizacion.idProveedor);

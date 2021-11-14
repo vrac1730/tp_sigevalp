@@ -207,6 +207,10 @@
     <Compile Include="Migrations\202110311905004_Propiedades-cotizacion.Designer.cs">
       <DependentUpon>202110311905004_Propiedades-cotizacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111142325524_Validacion Modelos.cs" />
+    <Compile Include="Migrations\202111142325524_Validacion Modelos.Designer.cs">
+      <DependentUpon>202111142325524_Validacion Modelos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
@@ -354,6 +358,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110311905004_Propiedades-cotizacion.resx">
       <DependentUpon>202110311905004_Propiedades-cotizacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111142325524_Validacion Modelos.resx">
+      <DependentUpon>202111142325524_Validacion Modelos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
