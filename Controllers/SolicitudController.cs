@@ -62,7 +62,7 @@ namespace SIGEVALP.Controllers
             var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
             //db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
 
-            ViewData["idProducto"] = new SelectList(prod, "id", "Producto.nombre");
+            ViewData["idProducto"] = new SelectList(prod, "Producto.codigo", "Producto.nombre");
 
             List<ProductoxAlmacen> productoxAlmacens = prod.Include(d => d.Alerta).ToList();
             //List<Producto> productos = prod.Include(d => d.Alerta).ToList();
@@ -84,7 +84,7 @@ namespace SIGEVALP.Controllers
                 //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);
                 List<ProductoxAlmacen> productos = pro.Include(d => d.Producto.Alerta).ToList();
                 //List<Producto> productos = pro.Include(d => d.Alerta).ToList();
-                ViewData["idProducto"] = new SelectList(pro, "id", "Producto.nombre");
+                ViewData["idProducto"] = new SelectList(pro, "Producto.codigo", "Producto.nombre");
                 ViewData["Productos"] = productos;
                 ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
                 return View();
@@ -133,24 +133,21 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDetail([Bind(Include = "id,cantEntregada,idProducto")] DetalleSolicitud detalleSolicitud)
         {
-            if (ModelState.IsValid)
-            {
-                var prod = db.Productos.Find(detalleSolicitud.idProducto);
-                var detalle = db.DetallesSolicitudes.Find(detalleSolicitud.id);
-                var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleSolicitud.idProducto);
+            if (!ModelState.IsValid)
+                return View();
 
-                prod.idAlerta = 6;
+            var prod = db.Productos.Find(detalleSolicitud.idProducto);
+            var detalle = db.DetallesSolicitudes.Find(detalleSolicitud.id);
+            var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleSolicitud.idProducto);
 
-                //prod.cantidad += (detalleSolicitud.cantEntregada - detalle.cantEntregada);
-
-                alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
-                detalle.cantEntregada = detalleSolicitud.cantEntregada;
-                //validar existencias en almacen
-                //cambiar alerta de prodxalmacen
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = detalle.idSolicitud });
-            }
-            return View(detalleSolicitud);
+            prod.idAlerta = 6;
+            //prod.cantidad += (detalleSolicitud.cantEntregada - detalle.cantEntregada);
+            alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
+            detalle.cantEntregada = detalleSolicitud.cantEntregada;
+            //validar existencias en almacen
+            //cambiar alerta de prodxalmacen
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = detalle.idSolicitud });
         }        
     }
 }

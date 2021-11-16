@@ -13,40 +13,40 @@
 @using (Html.BeginForm("Create", "Local"))
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal">
-    <div class="form-group">
-        @Html.LabelFor(m => m.ruc, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(m => m.ruc, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.ruc, "", new { @class = "text-danger" })
-    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ruc, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.ruc, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ruc, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(m => m.direccion, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.direccion, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.direccion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(m => m.telefono, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.telefono, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.razon_social, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.TextBoxFor(m => m.razon_social, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.razon_social, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.razon_social, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.razon_social, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.razon_social, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Registrar" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Registrar" class="btn btn-default" />
         </div>
     </div>
 </div>

@@ -61,7 +61,7 @@ namespace SIGEVALP.Controllers
         // GET: OrdenCompra/Create        
         public ActionResult Create(int? id)
         {//idproveedor
-            ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado=="Aprobado"), "idProducto", "Producto.nombre");
+            ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado=="Aprobado"), "Producto.codigo", "Producto.nombre");
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
             return View();
@@ -80,7 +80,7 @@ namespace SIGEVALP.Controllers
                 {
                     if (!ModelState.IsValid)
                     {
-                        ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "idProducto", "Producto.nombre");
+                        ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "Producto.codigo", "Producto.nombre");
                         ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenCompra.idUsuario);
                         ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
                         return View();
@@ -133,10 +133,8 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDetail([Bind(Include = "id,cantidadRecibida,idProducto")] DetalleCompra detalleCompra)
         {
-            if (ModelState.IsValid)
-            {
+            if (!ModelState.IsValid)
                 return View();
-            }
             
             var prod = db.Productos.Find(detalleCompra.idProducto);
             var detalle = db.DetallesCompras.Find(detalleCompra.id);

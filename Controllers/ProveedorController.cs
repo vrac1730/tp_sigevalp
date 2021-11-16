@@ -27,7 +27,7 @@ namespace SIGEVALP.Controllers
         // GET: Proveedors
         public ActionResult Index()
         {
-            return View(db.Proveedores.ToList());
+            return View(db.Proveedores);
         }
 
         // GET: Proveedors/Details/5
@@ -72,6 +72,7 @@ namespace SIGEVALP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             
             Proveedor proveedor = db.Proveedores.Find(id);
+
             if (proveedor == null)
                 return HttpNotFound();
             
@@ -86,7 +87,7 @@ namespace SIGEVALP.Controllers
         public ActionResult Edit([Bind(Include = "id,nombre,direccion,correo,telefono,ruc,razon_social")] Proveedor proveedor)
         {
             if (!ModelState.IsValid)
-                return View(proveedor);
+                return View();
 
             var prov = db.Proveedores.Find(proveedor.id);
             prov.nombre = proveedor.nombre;

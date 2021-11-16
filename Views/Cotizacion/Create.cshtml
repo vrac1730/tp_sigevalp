@@ -5,26 +5,25 @@
 }
 <head>
     <script type="module">
-        import { EmptyOrMinor, EqualsZero, LessThanZero } from '../../Scripts/master-detail_validation.js';
+        import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
         window.EmptyOrMinor = EmptyOrMinor
         window.EqualsZero = EqualsZero
         window.LessThanZero = LessThanZero
+        window.GetId = GetId
     </script>
 </head>
 
 <h2>Registrar</h2>
+<h4>Cotizacion</h4>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+<hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create","Cotizacion"))
 {
-    @Html.AntiForgeryToken()    
-    @Html.Hidden("estado","Pendiente")
-
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        <h4>Cotizacion</h4>
-        <div>
-            @Html.ActionLink("Regresar", "Index")
-        </div>
-        <hr />
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -43,15 +42,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled="disabled", @class = "form-control" } )
+                @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled = "disabled", @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("Estado","Pendiente", new { @disabled = "disabled", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+                @Html.TextBox("Estado", "Pendiente", new { @disabled = "disabled", @class = "form-control" })
             </div>
         </div>
 
@@ -168,7 +166,7 @@
     let td_igv = document.getElementById("td_igv");
     let td_total = document.getElementById("td_total");
 
-    function Agregar() {        
+    function Agregar() {
         //identificamos elementos por id
         let quantity = document.getElementById("cantidad");
         let price = document.getElementById("precio");
@@ -176,18 +174,19 @@
         let selectElement = document.getElementById("idProducto");
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
+        let id = GetId(valueElement);
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
         let valprec = document.getElementById("span-pre");
-        let valdesc = document.getElementById("span-desc");        
+        let valdesc = document.getElementById("span-desc");
         //validacion con condiciones en master-detail_valiation.js
         //evaluar duplicados
         //si son símbolos
         //si cantidad es fraccion
         //validar que el descuento no exceda 1
         if (!valueElement || !quantity.value || !price.value || !discount.value) {
-            valid.innerHTML = EqualsZero(valueElement);
+            valid.innerHTML = EqualsZero(id);
             valcant.innerHTML = EmptyOrMinor(quantity.value);
             valprec.innerHTML = EmptyOrMinor(price.value);
             valdesc.innerHTML = EmptyOrMinor(discount.value);
@@ -232,11 +231,11 @@
             tdcantidad.innerHTML = quantity.value;
             tdcosto.innerHTML = price.value;
             tdtotal.innerHTML = quantity.value * price.value;
-            tddescuento.innerHTML = discount.value * parseFloat(tdtotal.innerHTML);            
+            tddescuento.innerHTML = discount.value * parseFloat(tdtotal.innerHTML);
             btnEditar.value = "Editar";
             btnEditar.type = "button";
             btnEditar.onclick = function () { Editar(this) };
-            btnEditar.className = "btn btn-default";           
+            btnEditar.className = "btn btn-default";
             btnEliminar.value = "Eliminar";
             btnEliminar.type = "button";
             btnEliminar.onclick = function () { Eliminar(this) };
@@ -248,8 +247,7 @@
             td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
             td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
 
-            //crear elementos input
-            //let index = document.createElement("input")
+            //crear elementos input            
             let idProd = document.createElement("input")
             let cant = document.createElement("input")
             let cos = document.createElement("input")
@@ -261,27 +259,24 @@
             let iva = document.getElementById("in_iva");
             let total_detalle = document.getElementById("in_total");
             //asignar valores a inputs
-          /*  index.name = "DetalleCotizacion.Index";
-            index.value = n;
-            index.type = "hidden";*/
             idProd.name = "Cotizacion.DetalleCotizacion[" + n + "].idProducto";
-            idProd.value = valueElement;
+            idProd.value = id;
             idProd.type = "hidden";
             cant.name = "Cotizacion.DetalleCotizacion[" + n + "].cantidad";
             cant.id = cant.name;
-            cant.value = quantity.value;
+            cant.value = tdcantidad.innerHTML;
             cant.type = "hidden";
             cos.name = "Cotizacion.DetalleCotizacion[" + n + "].costo";
             cos.id = cos.name;
-            cos.value = price.value;
+            cos.value = tdcosto.innerHTML;
             cos.type = "hidden";
             desc.name = "Cotizacion.DetalleCotizacion[" + n + "].descuento";
             desc.id = desc.name;
-            desc.value = discount.value;
+            desc.value = tddescuento.innerHTML;
             desc.type = "hidden";
             total.name = "Cotizacion.DetalleCotizacion[" + n + "].total";
             total.id = total.name;
-            total.value = quantity.value * price.value;
+            total.value = tdtotal.innerHTML;
             total.type = "hidden";
 
             parcial.value = td_parcial.innerHTML;
@@ -290,7 +285,6 @@
             iva.value = td_igv.innerHTML;
             total_detalle.value = td_total.innerHTML;
             //asignar jerarquía de inputs
-            div.appendChild(index);
             div.appendChild(idProd);
             div.appendChild(cant);
             div.appendChild(cos);
@@ -307,7 +301,7 @@
 
     var enEdicion = false;
     let valedicion = document.getElementById("span-edicion");
-    function Editar(nodo) {                
+    function Editar(nodo) {
         if (enEdicion == false) {
             let td = nodo.parentNode;
             let tr = td.parentNode;
@@ -352,7 +346,7 @@
         }
         else {
             valedicion.innerHTML = "Termine de editar un detalle. Para continuar...";
-        }       
+        }
     }
     function Aceptar(nodo) {
         enEdicion = false;
@@ -361,23 +355,27 @@
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let nodostr = tr.getElementsByTagName("td");
-        //validar        
+        //validar
         //validar que el descuento no exceda 1
         //si son símbolos
         //si cantidad es fraccion
         let valcant = document.getElementById("span-detalle-cantidad");
         let valprec = document.getElementById("span-detalle-precio");
         let valdesc = document.getElementById("span-detalle-descuento");
-        
-        //reemplazar data de inputs a celdas        
+
+        //reemplazar data de inputs a celdas
         let id = nodostr[0].innerHTML;
         let nombre = nodostr[1].innerHTML;
         let cantidad = document.getElementById("tdCant");
         let costo = document.getElementById("tdCost");
-        let desc = document.getElementById("tdDesc");        
+        let desc = document.getElementById("tdDesc");
+        let tot = nodostr[5].innerHTML;
         let total = cantidad.value * costo.value;
-        let descuento = desc.value * cantidad.value * costo.value;
-        
+        var descuento = 0;
+        //descuento no mayor a 1
+        if (desc.value > 1) { descuento = (desc.value / tot) * total; }
+        else { descuento = desc.value * total; }         
+
         console.log(id);
         console.log(nombre);
         console.log(cantidad.value);
@@ -385,7 +383,7 @@
         console.log(descuento);
         console.log(total);
         console.log(desc.value);
-        
+
         let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
             '<td>' + cantidad.value + '</td>' +
             '<td>' + costo.value + '</td>' +
@@ -393,8 +391,8 @@
             '<td>' + total + '</td>' +
             '<td id = "tdopccion"></td>';
         tr.innerHTML = nuevotd;
-        
-        let tdopccion = document.getElementById("tdopccion");        
+
+        let tdopccion = document.getElementById("tdopccion");
         let btnEditar = document.createElement("input")
         let btnEliminar = document.createElement("input")
 
@@ -409,7 +407,7 @@
         btnEliminar.type = "button";
         btnEliminar.onclick = function () { Eliminar(this) };
         btnEliminar.className = "btn btn-default";
-        //modificar elementos inputs        
+        //modificar elementos inputs
         let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
         let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
         let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
@@ -426,25 +424,24 @@
 
         let td = nodo.parentNode;
         let tr = td.parentNode;
-        let nodostr2 = tr.getElementsByTagName("td");
+        let nodostr = tr.getElementsByTagName("td");
 
-        let tdid = nodostr2[0].innerHTML;
-        let tdnombre = nodostr2[1].innerHTML;
-        let tdcantidad = document.getElementById("DetalleCotizacion[" + tr.id + "].cantidad");
-        let tdcosto = document.getElementById("DetalleCotizacion[" + tr.id + "].costo");
-        let descuento = document.getElementById("DetalleCotizacion[" + tr.id + "].descuento");
-        let tddescuento = tdcantidad.value * tdcosto.value * descuento.value;
+        let tdid = nodostr[0].innerHTML;
+        let tdnombre = nodostr[1].innerHTML;
+        let tdcantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
+        let tdcosto = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
+        let tddescuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
         let tdtotal = tdcantidad.value * tdcosto.value;
 
         let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
             '<td>' + tdcantidad.value + '</td>' +
             '<td>' + tdcosto.value + '</td>' +
-            '<td>' + tddescuento + '</td>' +
+            '<td>' + tddescuento.value + '</td>' +
             '<td>' + tdtotal + '</td>' +
             '<td id = "tdopccion"></td>';
         tr.innerHTML = nuevotd;
 
-        let tdopccion = document.getElementById("tdopccion");        
+        let tdopccion = document.getElementById("tdopccion");
         let btnEditar = document.createElement("input")
         let btnEliminar = document.createElement("input")
 
@@ -458,12 +455,12 @@
         btnEliminar.value = "Eliminar";
         btnEliminar.type = "button";
         btnEliminar.onclick = function () { Eliminar(this) };
-        btnEliminar.className = "btn btn-default";      
+        btnEliminar.className = "btn btn-default";
     }
-    function Eliminar(nodo) {        
+    function Eliminar(nodo) {
         let td = nodo.parentNode;
-        let tr = td.parentNode;        
+        let tr = td.parentNode;
         let deletetr = document.getElementById(tr.id);
-        body.removeChild(deletetr);        
+        body.removeChild(deletetr);
     }
 </script>

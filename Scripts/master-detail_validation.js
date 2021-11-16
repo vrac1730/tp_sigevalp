@@ -15,4 +15,7 @@ function IsSymbol(c) {
 function EmptyOrMinorOrSymbol(c) {
     return c == "" ? IsEmpty(c) : c < 0 ? LessThanZero(c) : IsSymbol(c);
 }
-export { EqualsZero, IsEmpty, LessThanZero, EmptyOrMinor };
+function GetId(c) {
+    return c.substr(4, c.length);
+}
+export { EqualsZero, IsEmpty, LessThanZero, EmptyOrMinor, GetId };

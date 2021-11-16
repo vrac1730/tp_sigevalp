@@ -101,7 +101,7 @@ namespace SIGEVALP.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
-                return View(producto);
+                return View();
             }
 
             var prod = db.Productos.Find(producto.id);

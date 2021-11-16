@@ -6,10 +6,11 @@
 }
 <head>
     <script type="module">
-        import { EmptyOrMinor, EqualsZero, LessThanZero } from '../../Scripts/master-detail_validation.js';
+        import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
         window.EmptyOrMinor = EmptyOrMinor
         window.EqualsZero = EqualsZero
         window.LessThanZero = LessThanZero
+        window.GetId = GetId
     </script>
 </head>
 
@@ -111,13 +112,14 @@
         let selectElement = document.getElementById("idProducto");
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
+        let id = GetId(valueElement);
         let body = document.getElementById("tabla-cuerpo");
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
 
         if (!valueElement || !quantity.value) {
-            valid.innerHTML = EqualsZero(valueElement);
+            valid.innerHTML = EqualsZero(id);
             valcant.innerHTML = EmptyOrMinor(quantity.value);
         }
         else if (quantity.value < 0) {
@@ -157,7 +159,7 @@
             index.value = n;
             index.type = "hidden";
             idProd.name = "DetalleCompras[" + n + "].idProducto";
-            idProd.value = valueElement;
+            idProd.value = id;
             idProd.type = "hidden";
             Cant.name = "DetalleCompras[" + n + "].cantidad";
             Cant.value = quantity.value;

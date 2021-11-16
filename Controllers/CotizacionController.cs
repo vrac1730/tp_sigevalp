@@ -27,8 +27,7 @@ namespace SIGEVALP.Controllers
         // GET: Cotizacion
         public ActionResult Index()
         {
-            var cotizaciones = db.Cotizaciones.Include(c => c.Proveedor).Include(c => c.Usuario);
-            return View(cotizaciones.ToList());
+            return View(db.Cotizaciones.Include(c => c.Proveedor).Include(c => c.Usuario));
         }
 
         // GET: Cotizacion/Details/5
@@ -49,7 +48,7 @@ namespace SIGEVALP.Controllers
         // GET: Cotizacion/Create
         public ActionResult Create()
         {
-            ViewBag.idProducto = new SelectList(db.Productos, "id", "nombre");
+            ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
             return View();
@@ -60,14 +59,14 @@ namespace SIGEVALP.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,codigo,estado,parcial,descuento,neto,iva,total,idUsuario,idProveedor,fecha,DetalleCotizacion")] Cotizacion cotizacion)
+        public ActionResult Create([Bind(Include = "id,parcial,descuento,neto,iva,total,idUsuario,idProveedor,DetalleCotizacion")] Cotizacion cotizacion)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.idProducto = new SelectList(db.Productos, "id", "nombre");
-                ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre", cotizacion.idProveedor);
-                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", cotizacion.idUsuario);
-                return View(cotizacion);                
+                ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
+                ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
+                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
+                return View();                
             }
             //cotizacion.estado = "Pendiente";
             //cotizacion.fecha = DateTime.Now;
@@ -101,13 +100,13 @@ namespace SIGEVALP.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,codigo,fechaFin,estado,iva,total,idUsuario,idProveedor,fecha")] Cotizacion cotizacion)
+        public ActionResult Edit([Bind(Include = "id,codigo,estado,iva,total,idUsuario,idProveedor,fecha")] Cotizacion cotizacion)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre", cotizacion.idProveedor);
                 ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", cotizacion.idUsuario);
-                return View(cotizacion);                
+                return View();                
             }
             db.Entry(cotizacion).State = EntityState.Modified;
             db.SaveChanges();
