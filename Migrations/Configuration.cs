@@ -67,9 +67,10 @@ namespace SIGEVALP.Migrations
             new Alerta() { id = 10, nombre = "Rechazado", descripcion = "" }
             );
             context.Locales.AddOrUpdate(x => x.id,
-            new Local() { id = 1, nombre = "Surco", direccion = "Av: los benavides 4950", telefono = 276153485, ruc = 20501234567, razon_social = "abc" },
-            new Local() { id = 2, nombre = "Miraflores", direccion = "Av: los benavides 950", telefono = 276343485, ruc = 20501254567, razon_social = "def" },
-            new Local() { id = 3, nombre = "Barranco", direccion = "Av: Grau 495", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" }
+            new Local() { id = 1, nombre = "La Picolina-Surco", direccion = "Calle. Simón Salguero 625 – Surco", telefono = 276153485, ruc = 20501234567, razon_social = "abc" },
+            new Local() { id = 2, nombre = "La Picolina_2-Surco", direccion = "Calle. La Encalada 895 – Surco", telefono = 276343485, ruc = 20501254567, razon_social = "def" },
+            new Local() { id = 3, nombre = "La Picolina-Chacarilla", direccion = "Calle. Monterrey 269", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" },
+            new Local() { id = 4, nombre = "La Picolina-San Borja", direccion = "Calle Morelli 235 – Frente a La Rambla", telefono = 275323485, ruc = 20501235567, razon_social = "ghi" }
             );
             context.Proveedores.AddOrUpdate(x => x.id,
             new Proveedor() { id = 1, nombre = "Mario Salas", correo = "mariosalas@gmail.com", direccion = "villa el salvador", razon_social = "abc", ruc = 42143557923, telefono = 981232131 },

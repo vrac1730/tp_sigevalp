@@ -58,16 +58,9 @@ namespace SIGEVALP.Controllers
         public ActionResult Create()
         {            
             ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");            
-     
-            var prod = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
+            ViewData["idProducto"] = new SelectList(db.Productos.Include(P=>P.Alerta), "codigo", "nombre");
             //db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
-
-            ViewData["idProducto"] = new SelectList(prod, "Producto.codigo", "Producto.nombre");
-
-            List<ProductoxAlmacen> productoxAlmacens = prod.Include(d => d.Alerta).ToList();
-            //List<Producto> productos = prod.Include(d => d.Alerta).ToList();
-            ViewData["Productos"] = productoxAlmacens;
-
+            ViewData["Productos"] = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4)).Include(d => d.Alerta);
             return View();
         }
 
@@ -80,12 +73,9 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var pro = db.ProductosxAlmacen.Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4);
-                //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);
-                List<ProductoxAlmacen> productos = pro.Include(d => d.Producto.Alerta).ToList();
-                //List<Producto> productos = pro.Include(d => d.Alerta).ToList();
-                ViewData["idProducto"] = new SelectList(pro, "Producto.codigo", "Producto.nombre");
-                ViewData["Productos"] = productos;
+                ViewData["idProducto"] = new SelectList(db.Productos.Include(P => P.Alerta), "codigo", "nombre");
+                //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);   
+                ViewData["Productos"] = db.ProductosxAlmacen.Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4).Include(d => d.Producto.Alerta);
                 ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
                 return View();
             }            

@@ -20,14 +20,15 @@
 </div>
 <hr />
 
-@using (Html.BeginForm("Create","Cotizacion"))
+@using (Html.BeginForm("Create","Cotizacion",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+<input type="hidden" name="Cotizacion.idUsuario" value="2" />
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idUsuario", null, "Seleccionar Usuario", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idUsuario", null, "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -175,6 +176,11 @@
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let id = GetId(valueElement);
+        //usuario
+        let iduser = document.getElementById("idUsuario");
+        let idprov = document.getElementById("idProveedor");
+        console.log(iduser.value);
+        console.log(idprov.value);
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");

@@ -50,7 +50,7 @@ namespace SIGEVALP.Controllers
         {
             ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
             ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
+            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "Persona.nombre");
             return View();
         }
 
@@ -59,18 +59,20 @@ namespace SIGEVALP.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,parcial,descuento,neto,iva,total,idUsuario,idProveedor,DetalleCotizacion")] Cotizacion cotizacion)
+        public ActionResult Create([Bind(Exclude = "Usuario,Proveedor")] Cotizacion cotizacion)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
                 ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
+                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "Persona.nombre");
                 return View();                
             }
-            //cotizacion.estado = "Pendiente";
-            //cotizacion.fecha = DateTime.Now;
-            //generar codigo
+            cotizacion.estado = "Pendiente";
+            cotizacion.fecha = DateTime.Now;
+            var co = db.Cotizaciones.ToList().Last();
+            int id = co.id + 1;
+            cotizacion.codigo = "000" + id;
             db.Cotizaciones.Add(cotizacion);
             db.SaveChanges();
             return RedirectToAction("Index");
