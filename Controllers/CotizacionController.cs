@@ -49,8 +49,8 @@ namespace SIGEVALP.Controllers
         public ActionResult Create()
         {
             ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "Persona.nombre");
+            ViewBag.idProveedor = db.Proveedores;
+            ViewBag.idUsuario = db.Usuarios.Include(u => u.Persona);
             return View();
         }
 
@@ -64,8 +64,8 @@ namespace SIGEVALP.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.idProducto = new SelectList(db.Productos, "codigo", "nombre");
-                ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "Persona.nombre");
+                ViewBag.idProveedor = db.Proveedores;
+                ViewBag.idUsuario = db.Usuarios.Include(u => u.Persona);
                 return View();                
             }
             cotizacion.estado = "Pendiente";
@@ -73,6 +73,8 @@ namespace SIGEVALP.Controllers
             var co = db.Cotizaciones.ToList().Last();
             int id = co.id + 1;
             cotizacion.codigo = "000" + id;
+            foreach (var item in cotizacion.DetalleCotizacion)
+            { item.idProveedor = cotizacion.idProveedor; }
             db.Cotizaciones.Add(cotizacion);
             db.SaveChanges();
             return RedirectToAction("Index");

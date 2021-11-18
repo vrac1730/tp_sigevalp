@@ -23,21 +23,20 @@
 @using (Html.BeginForm("Create","Cotizacion",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-<input type="hidden" name="Cotizacion.idUsuario" value="2" />
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idUsuario", null, "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
+                @Html.DropDownList("Cotizacion.idUsuario", new SelectList(ViewBag.idUsuario, "id", "Persona.nombre"), "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessage("Cotizacion.idUsuario", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.idProveedor, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idProveedor", null, "Seleccionar Proveedor", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
+                @Html.DropDownList("Cotizacion.idProveedor", new SelectList(ViewBag.idProveedor, "id", "nombre"), "Seleccionar Proveedor", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessage("Cotizacion.idProveedor", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -146,6 +145,7 @@
                     <td id="td_total">0.00</td>
                 </tr>
             </table>
+            <div id="detalle-input"></div>
             <input id="in_parcial" name="Cotizacion.parcial" type="hidden">
             <input id="in_descuento" name="Cotizacion.descuento" type="hidden">
             <input id="in_neto" name="Cotizacion.neto" type="hidden">
@@ -160,6 +160,7 @@
     //document.querySelector('#agregar').addEventListener('click', Agregar)
     let div = document.getElementById("div-detalle");
     let body = document.getElementById("tabla-cuerpo");
+    let div_detalle_input = document.getElementById("detalle-input");
 
     let td_parcial = document.getElementById("td_parcial");
     let td_descuento = document.getElementById("td_descuento");
@@ -177,10 +178,11 @@
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let id = GetId(valueElement);
         //usuario
-        let iduser = document.getElementById("idUsuario");
-        let idprov = document.getElementById("idProveedor");
+        /*
+        let iduser = document.getElementById("Cotizacion_idUsuario");
+        let idprov = document.getElementById("Cotizacion_idProveedor");
         console.log(iduser.value);
-        console.log(idprov.value);
+        console.log(idprov.value);*/
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
@@ -253,8 +255,10 @@
             td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
             td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
 
-            //crear elementos input            
+            //crear elementos input       
+            let detalle_input = document.createElement("div");
             let idProd = document.createElement("input")
+            //let idProv = document.createElement("input")
             let cant = document.createElement("input")
             let cos = document.createElement("input")
             let desc = document.createElement("input")
@@ -265,9 +269,13 @@
             let iva = document.getElementById("in_iva");
             let total_detalle = document.getElementById("in_total");
             //asignar valores a inputs
+            detalle_input.id = "input-" + n;
             idProd.name = "Cotizacion.DetalleCotizacion[" + n + "].idProducto";
             idProd.value = id;
             idProd.type = "hidden";
+            /*idProv.name = "Cotizacion.DetalleCotizacion[" + n + "].idProveedor";
+            idProv.value = idprov.value;
+            idProv.type = "hidden";*/
             cant.name = "Cotizacion.DetalleCotizacion[" + n + "].cantidad";
             cant.id = cant.name;
             cant.value = tdcantidad.innerHTML;
@@ -291,11 +299,12 @@
             iva.value = td_igv.innerHTML;
             total_detalle.value = td_total.innerHTML;
             //asignar jerarquía de inputs
-            div.appendChild(idProd);
-            div.appendChild(cant);
-            div.appendChild(cos);
-            div.appendChild(desc);
-            div.appendChild(total);
+            detalle_input.appendChild(idProd);
+            detalle_input.appendChild(cant);
+            detalle_input.appendChild(cos);
+            detalle_input.appendChild(desc);
+            detalle_input.appendChild(total);
+            div_detalle_input.appendChild(detalle_input);
             //limpiar inputs al agregar detalles
             selectElement.value = "";
             quantity.value = "";
@@ -361,68 +370,85 @@
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let nodostr = tr.getElementsByTagName("td");
-        //validar
         //validar que el descuento no exceda 1
         //si son símbolos
         //si cantidad es fraccion
+        let td_input_cant = document.getElementById("tdCant");
+        let td_input_cost = document.getElementById("tdCost");
+        let td_input_desc = document.getElementById("tdDesc");
         let valcant = document.getElementById("span-detalle-cantidad");
         let valprec = document.getElementById("span-detalle-precio");
         let valdesc = document.getElementById("span-detalle-descuento");
+        /*
+        if (!td_input_cant.value || !td_input_cost.value || !td_input_desc.value) {
+            valcant.innerHTML = EmptyOrMinor(td_input_cant.value);
+            valprec.innerHTML = EmptyOrMinor(td_input_cost.value);
+            valdesc.innerHTML = EmptyOrMinor(td_input_desc.value);
+        }
+        else if (td_input_cant.value < 0 || td_input_cost.value < 0 || td_input_desc.value < 0) {
+            valcant.innerHTML = LessThanZero(td_input_cant.value);
+            valprec.innerHTML = LessThanZero(td_input_cost.value);
+            valdesc.innerHTML = LessThanZero(td_input_desc.value);
+        }
+        else {
+            valcant.innerHTML = "";
+            valprec.innerHTML = "";
+            valdesc.innerHTML = "";*/
+            //reemplazar data de inputs a celdas
+            let id = nodostr[0].innerHTML;
+            let nombre = nodostr[1].innerHTML;
+            let cantidad = document.getElementById("tdCant");
+            let costo = document.getElementById("tdCost");
+            let desc = document.getElementById("tdDesc");
+            let tot = nodostr[5].innerHTML;
+            let total = cantidad.value * costo.value;
+            var descuento = 0;
+            //descuento no mayor a 1
+            if (desc.value > 1) { descuento = (desc.value / tot) * total; }
+            else { descuento = desc.value * total; }
 
-        //reemplazar data de inputs a celdas
-        let id = nodostr[0].innerHTML;
-        let nombre = nodostr[1].innerHTML;
-        let cantidad = document.getElementById("tdCant");
-        let costo = document.getElementById("tdCost");
-        let desc = document.getElementById("tdDesc");
-        let tot = nodostr[5].innerHTML;
-        let total = cantidad.value * costo.value;
-        var descuento = 0;
-        //descuento no mayor a 1
-        if (desc.value > 1) { descuento = (desc.value / tot) * total; }
-        else { descuento = desc.value * total; }         
+            console.log(id);
+            console.log(nombre);
+            console.log(cantidad.value);
+            console.log(costo.value);
+            console.log(descuento);
+            console.log(total);
+            console.log(desc.value);
 
-        console.log(id);
-        console.log(nombre);
-        console.log(cantidad.value);
-        console.log(costo.value);
-        console.log(descuento);
-        console.log(total);
-        console.log(desc.value);
+            let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
+                '<td>' + cantidad.value + '</td>' +
+                '<td>' + costo.value + '</td>' +
+                '<td>' + descuento + '</td>' +
+                '<td>' + total + '</td>' +
+                '<td id = "tdopccion"></td>';
+            tr.innerHTML = nuevotd;
 
-        let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
-            '<td>' + cantidad.value + '</td>' +
-            '<td>' + costo.value + '</td>' +
-            '<td>' + descuento + '</td>' +
-            '<td>' + total + '</td>' +
-            '<td id = "tdopccion"></td>';
-        tr.innerHTML = nuevotd;
+            let tdopccion = document.getElementById("tdopccion");
+            let btnEditar = document.createElement("input")
+            let btnEliminar = document.createElement("input")
 
-        let tdopccion = document.getElementById("tdopccion");
-        let btnEditar = document.createElement("input")
-        let btnEliminar = document.createElement("input")
+            tdopccion.appendChild(btnEditar);
+            tdopccion.appendChild(btnEliminar);
 
-        tdopccion.appendChild(btnEditar);
-        tdopccion.appendChild(btnEliminar);
+            btnEditar.value = "Editar";
+            btnEditar.type = "button";
+            btnEditar.onclick = function () { Editar(this) };
+            btnEditar.className = "btn btn-default";
+            btnEliminar.value = "Eliminar";
+            btnEliminar.type = "button";
+            btnEliminar.onclick = function () { Eliminar(this) };
+            btnEliminar.className = "btn btn-default";
+            //modificar elementos inputs
+            let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
+            let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
+            let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
+            let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
 
-        btnEditar.value = "Editar";
-        btnEditar.type = "button";
-        btnEditar.onclick = function () { Editar(this) };
-        btnEditar.className = "btn btn-default";
-        btnEliminar.value = "Eliminar";
-        btnEliminar.type = "button";
-        btnEliminar.onclick = function () { Eliminar(this) };
-        btnEliminar.className = "btn btn-default";
-        //modificar elementos inputs
-        let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
-        let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
-        let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
-        let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
-
-        in_detalle_cantidad.value = cantidad.value;
-        in_detalle_costo.value = costo.value;
-        in_detalle_descuento.value = descuento;
-        in_detalle_total.value = total;
+            in_detalle_cantidad.value = cantidad.value;
+            in_detalle_costo.value = costo.value;
+            in_detalle_descuento.value = descuento;
+            in_detalle_total.value = total;
+       // }
     }
     function Cancelar(nodo) {
         enEdicion = false;
@@ -467,6 +493,9 @@
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let deletetr = document.getElementById(tr.id);
+        let deleteinput = document.getElementById("input-" + tr.id);
         body.removeChild(deletetr);
+        div_detalle_input.removeChild(deleteinput);
+        //redistribuir id en secuencia
     }
 </script>
