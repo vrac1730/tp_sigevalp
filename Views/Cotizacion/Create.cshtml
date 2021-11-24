@@ -26,133 +26,129 @@
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-3">
                 @Html.DropDownList("Cotizacion.idUsuario", new SelectList(ViewBag.idUsuario, "id", "Persona.nombre"), "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessage("Cotizacion.idUsuario", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.idProveedor, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-3">
                 @Html.DropDownList("Cotizacion.idProveedor", new SelectList(ViewBag.idProveedor, "id", "nombre"), "Seleccionar Proveedor", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessage("Cotizacion.idProveedor", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-3">
                 @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled = "disabled", @class = "form-control" })
             </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-3">
                 @Html.TextBox("Estado", "Pendiente", new { @disabled = "disabled", @class = "form-control" })
             </div>
         </div>
-
+        <br />
         <div class="form-group" display:flex;>
-            <label class="control-label">Producto</label>
-            <div id="id-prod">
-                @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
-                <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
+            <div class="form-group">
+                <label class="control-label col-md-2">Producto</label>
+                <div id="id-prod" class="col-md-3">
+                    @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
+                    <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
+                </div>
+                <label class="control-label col-md-2">Cantidad</label>
+                <div id="cant" class="col-md-3">
+                    <input type="text" id="cantidad" class="form-control" />
+                    <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
+                </div>
             </div>
-
-            <label class="control-label col-md-2">Cantidad</label>
-            <div id="cant" class="col-md-3">
-                <input type="text" id="cantidad" class="form-control" />
-                <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
+            <div class="form-group">
+                <label class="control-label col-md-2">Precio</label>
+                <div id="pre" class="col-md-3">
+                    <input type="text" id="precio" class="form-control" />
+                    <span id="span-pre" class="field-validation-error text-danger" text-danger></span>
+                </div>
+                <label class="control-label col-md-2">% Descuento</label>
+                <div id="desc" class="col-md-3">
+                    <input type="text" id="descuento" class="form-control" />
+                    <span id="span-desc" class="field-validation-error text-danger" text-danger></span>
+                </div>
             </div>
-
-            <label class="control-label col-md-2">Precio</label>
-            <div id="pre" class="col-md-3">
-                <input type="text" id="precio" class="form-control" />
-                <span id="span-pre" class="field-validation-error text-danger" text-danger></span>
-            </div>
-
-            <label class="control-label col-md-2">% Descuento</label>
-            <div id="desc" class="col-md-3">
-                <input type="text" id="descuento" class="form-control" />
-                <span id="span-desc" class="field-validation-error text-danger" text-danger></span>
+      
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
+                    <input type="submit" value="Registrar" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
-                <input type="submit" value="Registrar" class="btn btn-default" />
-            </div>
-        </div>
 
-        <div id="div-detalle">
-            <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
-            <span id="span-detalle-cantidad" class="field-validation-error text-danger" text-danger></span>
-            <span id="span-detalle-precio" class="field-validation-error text-danger" text-danger></span>
-            <span id="span-detalle-descuento" class="field-validation-error text-danger" text-danger></span>
-            <table id="tabla-detalle" class="table table-hover">
-                <thead>
+            <div id="div-detalle">
+                <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
+                <span id="span-detalle-cantidad" class="field-validation-error text-danger" text-danger></span>
+                <span id="span-detalle-precio" class="field-validation-error text-danger" text-danger></span>
+                <span id="span-detalle-descuento" class="field-validation-error text-danger" text-danger></span>
+                <table id="tabla-detalle" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unit.</th>
+                            <th>Desc.</th>
+                            <th>Total</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cuerpo">
+                    </tbody>
                     <tr>
-                        <th>Código</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unit.</th>
-                        <th>Desc.</th>
-                        <th>Total</th>
-                        <th>Opciones</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(n => n.parcial)</td>
+                        <td id="td_parcial">0.00</td>
                     </tr>
-                </thead>
-                <tbody id="tabla-cuerpo">
-                </tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.parcial)</td>
-                    <td id="td_parcial">0.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.descuento)</td>
-                    <td id="td_descuento">0.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.neto)</td>
-                    <td id="td_neto">0.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.iva)</td>
-                    <td id="td_igv">0.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.total)</td>
-                    <td id="td_total">0.00</td>
-                </tr>
-            </table>
-            <div id="detalle-input"></div>
-            <input id="in_parcial" name="Cotizacion.parcial" type="hidden">
-            <input id="in_descuento" name="Cotizacion.descuento" type="hidden">
-            <input id="in_neto" name="Cotizacion.neto" type="hidden">
-            <input id="in_iva" name="Cotizacion.iva" type="hidden">
-            <input id="in_total" name="Cotizacion.total" type="hidden">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(n => n.descuento)</td>
+                        <td id="td_descuento">0.00</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(n => n.neto)</td>
+                        <td id="td_neto">0.00</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(n => n.iva)</td>
+                        <td id="td_igv">0.00</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(n => n.total)</td>
+                        <td id="td_total">0.00</td>
+                    </tr>
+                </table>
+                <div id="detalle-input"></div>
+                <input id="in_parcial" name="Cotizacion.parcial" type="hidden">
+                <input id="in_descuento" name="Cotizacion.descuento" type="hidden">
+                <input id="in_neto" name="Cotizacion.neto" type="hidden">
+                <input id="in_iva" name="Cotizacion.iva" type="hidden">
+                <input id="in_total" name="Cotizacion.total" type="hidden">
+            </div>
         </div>
-    </div>
 }
 
 <script>
@@ -255,7 +251,7 @@
             td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
             td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
 
-            //crear elementos input       
+            //crear elementos input
             let detalle_input = document.createElement("div");
             let idProd = document.createElement("input")
             //let idProv = document.createElement("input")
@@ -394,61 +390,61 @@
             valcant.innerHTML = "";
             valprec.innerHTML = "";
             valdesc.innerHTML = "";*/
-            //reemplazar data de inputs a celdas
-            let id = nodostr[0].innerHTML;
-            let nombre = nodostr[1].innerHTML;
-            let cantidad = document.getElementById("tdCant");
-            let costo = document.getElementById("tdCost");
-            let desc = document.getElementById("tdDesc");
-            let tot = nodostr[5].innerHTML;
-            let total = cantidad.value * costo.value;
-            var descuento = 0;
-            //descuento no mayor a 1
-            if (desc.value > 1) { descuento = (desc.value / tot) * total; }
-            else { descuento = desc.value * total; }
+        //reemplazar data de inputs a celdas
+        let id = nodostr[0].innerHTML;
+        let nombre = nodostr[1].innerHTML;
+        let cantidad = document.getElementById("tdCant");
+        let costo = document.getElementById("tdCost");
+        let desc = document.getElementById("tdDesc");
+        let tot = nodostr[5].innerHTML;
+        let total = cantidad.value * costo.value;
+        var descuento = 0;
+        //descuento no mayor a 1
+        if (desc.value > 1) { descuento = (desc.value / tot) * total; }
+        else { descuento = desc.value * total; }
 
-            console.log(id);
-            console.log(nombre);
-            console.log(cantidad.value);
-            console.log(costo.value);
-            console.log(descuento);
-            console.log(total);
-            console.log(desc.value);
+        console.log(id);
+        console.log(nombre);
+        console.log(cantidad.value);
+        console.log(costo.value);
+        console.log(descuento);
+        console.log(total);
+        console.log(desc.value);
 
-            let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
-                '<td>' + cantidad.value + '</td>' +
-                '<td>' + costo.value + '</td>' +
-                '<td>' + descuento + '</td>' +
-                '<td>' + total + '</td>' +
-                '<td id = "tdopccion"></td>';
-            tr.innerHTML = nuevotd;
+        let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
+            '<td>' + cantidad.value + '</td>' +
+            '<td>' + costo.value + '</td>' +
+            '<td>' + descuento + '</td>' +
+            '<td>' + total + '</td>' +
+            '<td id = "tdopccion"></td>';
+        tr.innerHTML = nuevotd;
 
-            let tdopccion = document.getElementById("tdopccion");
-            let btnEditar = document.createElement("input")
-            let btnEliminar = document.createElement("input")
+        let tdopccion = document.getElementById("tdopccion");
+        let btnEditar = document.createElement("input")
+        let btnEliminar = document.createElement("input")
 
-            tdopccion.appendChild(btnEditar);
-            tdopccion.appendChild(btnEliminar);
+        tdopccion.appendChild(btnEditar);
+        tdopccion.appendChild(btnEliminar);
 
-            btnEditar.value = "Editar";
-            btnEditar.type = "button";
-            btnEditar.onclick = function () { Editar(this) };
-            btnEditar.className = "btn btn-default";
-            btnEliminar.value = "Eliminar";
-            btnEliminar.type = "button";
-            btnEliminar.onclick = function () { Eliminar(this) };
-            btnEliminar.className = "btn btn-default";
-            //modificar elementos inputs
-            let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
-            let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
-            let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
-            let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
+        btnEditar.value = "Editar";
+        btnEditar.type = "button";
+        btnEditar.onclick = function () { Editar(this) };
+        btnEditar.className = "btn btn-default";
+        btnEliminar.value = "Eliminar";
+        btnEliminar.type = "button";
+        btnEliminar.onclick = function () { Eliminar(this) };
+        btnEliminar.className = "btn btn-default";
+        //modificar elementos inputs
+        let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
+        let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
+        let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
+        let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
 
-            in_detalle_cantidad.value = cantidad.value;
-            in_detalle_costo.value = costo.value;
-            in_detalle_descuento.value = descuento;
-            in_detalle_total.value = total;
-       // }
+        in_detalle_cantidad.value = cantidad.value;
+        in_detalle_costo.value = costo.value;
+        in_detalle_descuento.value = descuento;
+        in_detalle_total.value = total;
+        // }
     }
     function Cancelar(nodo) {
         enEdicion = false;
@@ -492,10 +488,40 @@
     function Eliminar(nodo) {
         let td = nodo.parentNode;
         let tr = td.parentNode;
-        let deletetr = document.getElementById(tr.id);
+        var inputIndex = parseInt(tr.id);
+        console.log(div_detalle_input);
+        console.log(n);
+        console.log(tr.id);
+        //no eliminar antes de obtener el tr.id
         let deleteinput = document.getElementById("input-" + tr.id);
-        body.removeChild(deletetr);
         div_detalle_input.removeChild(deleteinput);
-        //redistribuir id en secuencia
+        let deletetr = document.getElementById(tr.id);
+        body.removeChild(deletetr);
+        //si hay más de un detalle y la selección no es el ultimo detalle, entonces elimina, reinicia n y ordena
+        //si es diferente eliminar y reiniciar
+        if (n > 1 && inputIndex != n - 1) {
+            for (var i = inputIndex; i < n - 1; i++) {//indice for de acuerdo a selección
+                var nextInputId = inputIndex + 1;
+                var nextinput = document.getElementById("input-" + nextInputId);
+                var nextbody = document.getElementById(nextInputId);
+                var input = nextinput.children;
+                console.log(nextinput);
+                //cambiar id del div y el nombre de inputs
+                nextbody.id = inputIndex;
+                nextinput.id = "input-" + inputIndex;
+                input[0].name = "Cotizacion.DetalleCotizacion[" + inputIndex + "].idProducto";
+                input[1].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].cantidad";
+                input[2].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].costo";
+                input[3].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].descuento";
+                input[4].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].total";
+                input[1].name = input[1].id;
+                input[2].name = input[2].id;
+                input[3].name = input[3].id;
+                input[4].name = input[4].id;
+                inputIndex++;
+                console.log(inputIndex);
+            }
+        }         
+        n--;
     }
 </script>
