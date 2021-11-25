@@ -5,29 +5,22 @@
 
 <h2>Reporte Stock</h2>
 
-@using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post))
+@using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post, new { @id = "form1" }))
 {
     <div>
         <div class="form-group">
             <h5>Código de Producto</h5>
-            @Html.TextBox("cod", "", new { @class = "form-control" })
+            @Html.TextBox("codigo", "", new { @class = "form-control" })
         </div>
         <div class="form-group">
             <h5>Nombre de Producto</h5>
-            @Html.TextBox("cad", "", new { @class = "form-control" })
+            @Html.TextBox("nombre", "", new { @class = "form-control" })
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-default" value="Buscar">
+            <input type="button" class="btn btn-default" onclick="Search();" value="Buscar">
+            <input type="button" class="btn btn-default" onclick="Report();" value="Generar Reporte">
+            <input type="button" class="btn btn-default" onclick="Print();" value="Imprimir Pdf">
         </div>
-    </div>
-}
-
-@using (Html.BeginForm("Report", "ProductoxAlmacen", FormMethod.Post, new { @id = "form2" }))
-{
-    <div class="form-group">
-        @Html.TextBox("codigo", "", new { @class = "form-control", @type = "hidden" })
-        @Html.TextBox("cadena", "", new { @class = "form-control", @type = "hidden" })
-        <button type="submit" class="btn btn-default" onclick="Generar(); return false;">Generar Reporte</button>
     </div>
 }
 
@@ -91,11 +84,16 @@
 </table>
 
 <script>
-    function Generar(){
-        let cod = document.getElementById("cod");
-        let cad = document.getElementById("cad");
-        document.getElementById("codigo").value = cod.value;
-        document.getElementById("cadena").value = cad.value;
-        document.getElementById("form2").submit();
+    let form = document.getElementById("form1");
+    function Search() {
+        form.submit();
+    }
+    function Report() {
+        form.setAttribute("action", "/ProductoxAlmacen/Report");
+        form.submit();
+    }
+    function Print() {
+        form.setAttribute("action", "/ProductoxAlmacen/Print");
+        form.submit();
     }
 </script>
