@@ -8,6 +8,7 @@
 @using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post, new { @id = "form1" }))
 {
     <div>
+        @Html.Hidden("check")
         <div class="form-group">
             <h5>Código de Producto</h5>
             @Html.TextBox("codigo", "", new { @class = "form-control" })
@@ -85,14 +86,17 @@
 
 <script>
     let form = document.getElementById("form1");
+    let bool = document.getElementById("check");
     function Search() {
+        bool.value = "Index";
         form.submit();
     }
     function Report() {
-        form.setAttribute("action", "/ProductoxAlmacen/Report");
+        bool.value = "Report";
         form.submit();
     }
     function Print() {
+        bool.value = "Report";
         form.setAttribute("action", "/ProductoxAlmacen/Print");
         form.submit();
     }

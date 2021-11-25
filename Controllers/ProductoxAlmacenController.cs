@@ -24,42 +24,26 @@ namespace SIGEVALP.Controllers
         }
 
         // GET: ProductoxAlmacen
-        public ActionResult Index(string codigo, string nombre)
+        public ActionResult Index(string codigo, string nombre, string check)
         {
             var result = db.ProductosxAlmacen.Include(p => p.Producto.Categoria);
             //validar simbolos y caracteres no permitidos
             //mostrar otra vista para resultados no encontrados?
-            if (String.IsNullOrWhiteSpace(nombre) && String.IsNullOrWhiteSpace(codigo))      
-                return View(result);
+            if (String.IsNullOrWhiteSpace(nombre) && String.IsNullOrWhiteSpace(codigo))
+                return View(check, result);
 
             else if (codigo.Length > 0)
-                return View(result.Where(p => p.Producto.codigo == codigo));   
-            
-            else if (nombre.Length > 0)            
-                return View(result.Where(p => p.Producto.nombre.Contains(nombre)));            
+                return View(check, result.Where(p => p.Producto.codigo == codigo));
 
-            return View(result);
+            else if (nombre.Length > 0)
+                return View(check, result.Where(p => p.Producto.nombre.Contains(nombre)));
+
+            return View(check, result);
         }      
 
-        public ActionResult Report(string codigo, string nombre)
+        public ActionResult Print(string codigo, string nombre, string check)
         {
-            var result = db.ProductosxAlmacen.Include(p => p.Producto.Categoria);
-
-            if (String.IsNullOrWhiteSpace(nombre) && String.IsNullOrWhiteSpace(codigo))            
-                return View(result);
-
-            else if (codigo.Length > 0)
-                return View(result.Where(p => p.Producto.codigo == codigo));
-
-            else if (nombre.Length > 0)                            
-                return View(result.Where(p => p.Producto.nombre.Contains(nombre)));        
-     
-            return View(result);
-        }
-
-        public ActionResult Print(string codigo, string nombre)
-        {
-            return new UrlAsPdf("/ProductoxAlmacen/Report?codigo="+codigo+"&nombre="+nombre);
+            return new UrlAsPdf("/ProductoxAlmacen/Index?codigo=" + codigo + "&nombre=" + nombre + "&check=" + check) { FileName = "Reporte_Stock.pdf" };
         }
     }
 }
