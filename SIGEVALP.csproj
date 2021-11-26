@@ -211,6 +211,10 @@
     <Compile Include="Migrations\202111142325524_Validacion Modelos.Designer.cs">
       <DependentUpon>202111142325524_Validacion Modelos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111261717488_Estado null.cs" />
+    <Compile Include="Migrations\202111261717488_Estado null.Designer.cs">
+      <DependentUpon>202111261717488_Estado null.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
@@ -326,6 +330,7 @@
     <Content Include="Views\Local\Edit.cshtml" />
     <Content Include="Views\Local\Index.cshtml" />
     <Content Include="Views\ProductoxAlmacen\Report.cshtml" />
+    <Content Include="Views\ProductoxAlmacen\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -361,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111142325524_Validacion Modelos.resx">
       <DependentUpon>202111142325524_Validacion Modelos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111261717488_Estado null.resx">
+      <DependentUpon>202111261717488_Estado null.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

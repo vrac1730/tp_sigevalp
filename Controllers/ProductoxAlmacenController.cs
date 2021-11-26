@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SIGEVALP.Models;
 using System.Data.Entity;
 using Rotativa;
+using System.Net;
 
 namespace SIGEVALP.Controllers
 {
@@ -39,7 +40,42 @@ namespace SIGEVALP.Controllers
                 return View(check, result.Where(p => p.Producto.nombre.Contains(nombre)));
 
             return View(check, result);
-        }      
+        }
+
+        // GET: ProductoxAlmacen/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var producto = db.ProductosxAlmacen.Find(id);
+
+            if (producto == null)
+                return HttpNotFound();
+
+            producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
+            return View(producto);
+        }
+
+        // POST: ProductoxAlmacen/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
+        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "id,stock_min,stock_max")] ProductoxAlmacen producto)
+        {
+            if (!ModelState.IsValid)
+            {
+                producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
+                return View(producto);
+            }
+
+            var prod = db.ProductosxAlmacen.Find(producto.id);
+            prod.stock_min = producto.stock_min;
+            prod.stock_max = producto.stock_max;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         public ActionResult Print(string codigo, string nombre, string check)
         {

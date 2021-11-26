@@ -27,7 +27,7 @@ namespace SIGEVALP.Models
         public int stock_max { get; set; }
 
         public int idProducto { get; set; }
-        public int idEstado { get; set; }        
+        public int? idEstado { get; set; }        
         public int idAlmacen { get; set; }
 
         [DisplayName("Alerta")]

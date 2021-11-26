@@ -72,6 +72,13 @@ namespace SIGEVALP.Controllers
             int n = prod.id + 1;
             producto.codigo = codcat + codmarca + n;
             db.Productos.Add(producto);
+
+            ProductoxAlmacen pro = new ProductoxAlmacen {
+                idProducto = producto.id,
+                idAlmacen = 1,
+                idAlerta = 4 };//stock min max pp y cant=0, idEstado=null
+            db.ProductosxAlmacen.Add(pro);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

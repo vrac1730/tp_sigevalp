@@ -145,6 +145,13 @@ namespace SIGEVALP.Controllers
             detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
             //validar existencias en almacen
             //cambiar alerta de prodxalmacen
+            HistorialMovimiento historial = new HistorialMovimiento {
+                cantidad = detalleCompra.cantidadRecibida,
+                fecha = DateTime.Now,
+                tipo = "Ingreso",
+                idProductoxAlmacen = alm.id };
+            db.HistorialMovimientos.Add(historial);
+
             db.SaveChanges();
             return RedirectToAction("Details", new { id = detalle.idOrdenCompra });
         }

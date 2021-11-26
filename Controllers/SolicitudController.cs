@@ -131,11 +131,17 @@ namespace SIGEVALP.Controllers
             var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleSolicitud.idProducto);
 
             prod.idAlerta = 6;
-            //prod.cantidad += (detalleSolicitud.cantEntregada - detalle.cantEntregada);
             alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
             detalle.cantEntregada = detalleSolicitud.cantEntregada;
             //validar existencias en almacen
             //cambiar alerta de prodxalmacen
+            HistorialMovimiento historial = new HistorialMovimiento {
+                cantidad = detalleSolicitud.cantEntregada,
+                fecha = DateTime.Now,
+                tipo = "Salida",
+                idProductoxAlmacen = alm.id };
+            db.HistorialMovimientos.Add(historial);
+
             db.SaveChanges();
             return RedirectToAction("Details", new { id = detalle.idSolicitud });
         }        
