@@ -27,7 +27,7 @@ namespace SIGEVALP.Controllers
         // GET: OrdenCompra
         public ActionResult Index()
         {
-            return View(db.OrdenesCompras.Include(o => o.Proveedor).Include(o => o.Usuario.Local));
+            return View(db.OrdenesCompras.Include(o => o.Proveedor).Include(o => o.Usuario.Local).Include(o => o.Usuario.Persona));
         }
 
         // GET: OrdenCompra/Details/5
@@ -42,7 +42,7 @@ namespace SIGEVALP.Controllers
                 return HttpNotFound();
                         
             ordenCompra.Proveedor = db.Proveedores.Find(ordenCompra.idProveedor);
-            ordenCompra.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == ordenCompra.idUsuario);
+            ordenCompra.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).First(u => u.id == ordenCompra.idUsuario);
 
             var detalleCompra = db.DetallesCompras.Include(d => d.Producto.Alerta).Where(d => d.idOrdenCompra == id).ToArray();
             for (int i = 0; i < detalleCompra.Length; i++)
@@ -59,12 +59,23 @@ namespace SIGEVALP.Controllers
         }
 
         // GET: OrdenCompra/Create        
-        public ActionResult Create(int? id)
-        {//idproveedor
-            ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado=="Aprobado"), "Producto.codigo", "Producto.nombre");
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");
-            return View();
+        public ActionResult Create(int? id)//idproveedor
+        {
+            if (id == null)
+            {
+                ViewBag.Proveedores = db.Proveedores;
+                return View();
+            }
+
+            var proveedor = db.Proveedores.Find(id);
+
+            if (proveedor == null)
+                return HttpNotFound();
+
+            //Traer producto aprobados de cotizacion cuyo stock min y max sea diferente de 0
+            ViewBag.Productos = db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado == "Aprobado");
+            ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+            return View(); 
         }
 
         // POST: OrdenCompra/Create
@@ -80,9 +91,9 @@ namespace SIGEVALP.Controllers
                 {
                     if (!ModelState.IsValid)
                     {
-                        ViewBag.idProducto = new SelectList(db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id), "Producto.codigo", "Producto.nombre");
-                        ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", ordenCompra.idUsuario);
-                        ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
+                        ViewBag.Productos = db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado == "Aprobado");
+                        ViewBag.Proveedores = db.Proveedores;
+                        ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
                         return View();
                     }                   
 
@@ -122,7 +133,6 @@ namespace SIGEVALP.Controllers
                 return HttpNotFound();
             
             detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
-
             return View(detalleCompra);
         }
 
@@ -133,18 +143,20 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDetail([Bind(Include = "id,cantidadRecibida,idProducto")] DetalleCompra detalleCompra)
         {
-            if (!ModelState.IsValid)
-                return View();
+            if (!ModelState.IsValid) 
+            {
+                detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
+                return View(detalleCompra);
+            }
             
-            var prod = db.Productos.Find(detalleCompra.idProducto);
-            var detalle = db.DetallesCompras.Find(detalleCompra.id);
+            var detalle = db.DetallesCompras.Include(d => d.Producto).First(d => d.id == detalleCompra.id);
             var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleCompra.idProducto);
 
-            prod.idAlerta = 8;
+            detalle.Producto.idAlerta = 8;
             alm.cantidad += (detalleCompra.cantidadRecibida - detalle.cantidadRecibida);
             detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
             //validar existencias en almacen
-            //cambiar alerta de prodxalmacen
+            //evaluar cambio alerta de prodxalmacen
             HistorialMovimiento historial = new HistorialMovimiento {
                 cantidad = detalleCompra.cantidadRecibida,
                 fecha = DateTime.Now,

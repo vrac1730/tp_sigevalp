@@ -9,20 +9,24 @@
     @Html.ActionLink("Regresar", "Index")
 </div>
 <hr />
+
 @using (Html.BeginForm("Create", "Categoria"))
 {
     @Html.AntiForgeryToken();
+
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(m => m.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.nombre, new { @class = "control-label col-md-2" })
             @Html.TextBoxFor(m => m.nombre, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger"})
         </div>
+
         <div class="form-group">
-            @Html.LabelFor(m => m.descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.descripcion, new { @class = "control-label col-md-2" })
             @Html.TextBoxFor(m => m.descripcion, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.descripcion, "", new { @class = "text-danger" })
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Registrar" class="btn btn-default" />

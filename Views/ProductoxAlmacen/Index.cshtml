@@ -7,8 +7,9 @@
 
 @using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post, new { @id = "form1" }))
 {
+    @Html.Hidden("check")
+
     <div>
-        @Html.Hidden("check")
         <div class="form-group">
             <h5>Código de Producto</h5>
             @Html.TextBox("codigo", "", new { @class = "form-control" })
@@ -54,41 +55,42 @@
         <th>Opcción</th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.stock_min)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.stock_max)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.Categoria.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producto.marca)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cantidad)
-            </td>
-            <td>
-                @if (item.stock_min == 0 || item.stock_max == 0)
-                {
-                    @Html.ActionLink("Editar", "Edit", new { id = item.id }, new { @class = "btn-light" })
-                }
-            </td>
-        </tr>
-    }
+@foreach (var item in Model)
+{
+    var stockClass = item.stock_min == 0 || item.stock_max == 0 ? "label label-danger" : "";
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.descripcion)
+        </td>
+        <td>
+            <span class="@stockClass">@item.stock_min</span>
+        </td>
+        <td>
+            <span class="@stockClass">@item.stock_max</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.Categoria.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Producto.marca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @if (item.stock_min == 0 || item.stock_max == 0)
+            {
+                @Html.ActionLink("Editar", "Edit", new { id = item.id })
+            }
+        </td>
+    </tr>
+}
 </table>
 
 <script>

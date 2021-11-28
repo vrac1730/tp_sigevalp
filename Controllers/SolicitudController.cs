@@ -111,8 +111,6 @@ namespace SIGEVALP.Controllers
                 return HttpNotFound();
             
             detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
-            //var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.Producto.id == detalleSalida.idProducto);
-
             return View(detalleSolicitud);
         }
 
@@ -123,18 +121,20 @@ namespace SIGEVALP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDetail([Bind(Include = "id,cantEntregada,idProducto")] DetalleSolicitud detalleSolicitud)
         {
-            if (!ModelState.IsValid)
-                return View();
+            if (!ModelState.IsValid) 
+            {
+                detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
+                return View(detalleSolicitud);
+            }
 
-            var prod = db.Productos.Find(detalleSolicitud.idProducto);
-            var detalle = db.DetallesSolicitudes.Find(detalleSolicitud.id);
+            var detalle = db.DetallesSolicitudes.Include(d => d.Producto).First(d => d.id == detalleSolicitud.id);
             var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleSolicitud.idProducto);
 
-            prod.idAlerta = 6;
-            alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
+            detalle.Producto.idAlerta = 6;
             detalle.cantEntregada = detalleSolicitud.cantEntregada;
+            alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
             //validar existencias en almacen
-            //cambiar alerta de prodxalmacen
+            //evaluar cambio alerta de prodxalmacen
             HistorialMovimiento historial = new HistorialMovimiento {
                 cantidad = detalleSolicitud.cantEntregada,
                 fecha = DateTime.Now,

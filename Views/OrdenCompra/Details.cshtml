@@ -1,14 +1,15 @@
 ﻿@model SIGEVALP.Models.OrdenCompra
-
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Detalle de Orden</h2>
+<h2>Detalle</h2>
+<h4>Orden Compra</h4>
 <p>
     @Html.ActionLink("Regresar", "Index")
 </p>
 <hr />
+
 <div>    
     <dl class="dl-horizontal">
         <dt>
@@ -17,30 +18,35 @@
         <dd>
             @Html.DisplayFor(model => model.codigo)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Usuario.Local.nombre)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Usuario.Local.nombre)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Proveedor.nombre)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Proveedor.nombre)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.fechaOrden)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.fechaOrden)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.fechaPago)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.fechaPago)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.montoTotal)
         </dt>
@@ -48,60 +54,74 @@
             @Html.DisplayFor(model => model.montoTotal)
         </dd>
     </dl>
-    @if (Model.DetalleCompras.Count() == 0)
+@if (Model.DetalleCompras.Count() == 0)
+{
+    <p>Aún no hay productos asociados a esta orden.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].Producto.codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].Producto.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].Producto.marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].Producto.DetalleCotizacion[0].costo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].cantidadRecibida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetalleCompras[0].Producto.Alerta.nombre)
+            </th>
+            <th>Opciones</th>
+        </tr>
+        <tbody>
+    @foreach (var item in Model.DetalleCompras)
     {
-        <p>Aún no hay productos asociados a esta orden.</p>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.DetalleCotizacion[0].costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidadRecibida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Alerta.nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "EditDetail", new { id = item.id })
+            </td>
+        </tr>
     }
-    else
-    {
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Producto</th>
-                    <th>Marca</th>
-                    <th>Cantidad</th>
-                    <th>Costo</th>
-                    <th>Total</th>
-                    <th>Recibido</th>
-                    <th>Observación</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.DetalleCompras)
-                {
-                    <tr>
-                        <td>
-                            @item.Producto.codigo
-                        </td>
-                        <td>
-                            @item.Producto.nombre
-                        </td>
-                        <td>
-                            @item.Producto.marca
-                        </td>
-                        <td>
-                            @item.cantidad
-                        </td>
-                        <td>
-                            @item.Producto.DetalleCotizacion[0].costo
-                        </td>
-                        <td>
-                            @item.total
-                        </td>
-                        <td>
-                            @item.cantidadRecibida
-                        </td>
-                        <td>
-                            @item.Producto.Alerta.nombre
-                        </td>
-                        <td>
-                            @Html.ActionLink("Editar", "EditDetail", new { id = item.id })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+        </tbody>
+    </table>
+}
 </div>

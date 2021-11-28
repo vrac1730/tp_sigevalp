@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace SIGEVALP.Models
     {
         public int idProducto { get; set; }
         public int idProveedor { get; set; }
+        [DisplayName("Costo")]
         public double costo { get; set; }
         public int cantidad { get; set; }
         public double descuento { get; set; }

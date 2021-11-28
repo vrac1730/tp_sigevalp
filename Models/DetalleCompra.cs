@@ -21,6 +21,7 @@ namespace SIGEVALP.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten  positivos.")]
         public int cantidadRecibida { get; set; }
 
+        [DisplayName("Total")]
         public double total { get; set; }
         public int idOrdenCompra { get; set; }
         public int idProducto { get; set; }

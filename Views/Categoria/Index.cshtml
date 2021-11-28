@@ -4,24 +4,39 @@
 }
 
 <h2>Lista de Categorias</h2>
-
-<p>    
+<div>    
     @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })   
-</p>
+</div>
+<br />
 
 <table class="table table-hover">
     <tr>
-        <th>Codigo</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
+        <th>
+            @Html.DisplayNameFor(model => model.id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
         <th>Opción</th>
     </tr>
+
 @foreach (var item in Model) {
     <tr>
-        <td>@Html.DisplayFor(modelItem => item.id)</td>
-        <td>@Html.DisplayFor(modelItem => item.nombre)</td>
-        <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
-        <td>@Html.ActionLink("Editar", "Edit", new { id = item.id })</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.id })
+        </td>
     </tr>
-}
+    }
 </table>

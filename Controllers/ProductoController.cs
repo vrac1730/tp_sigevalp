@@ -27,7 +27,7 @@ namespace SIGEVALP.Controllers
         // GET: Producto
         public ActionResult Index()
         {
-            return View(db.Productos.Include(p => p.Alerta).Include(p => p.Categoria));
+            return View(db.Productos.Include(p => p.Categoria));
         }
 
         // GET: Producto/Details/5
@@ -35,20 +35,19 @@ namespace SIGEVALP.Controllers
         {
             if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
-            var producto = db.Productos.Find(id);
+
+            var producto = db.Productos.Include(p => p.Categoria).FirstOrDefault(p => p.id == id);
 
             if (producto == null)            
                 return HttpNotFound();
 
-            producto.Categoria = db.Categorias.Find(producto.id);
             return View(producto);
         }
 
         // GET: Producto/Create
         public ActionResult Create()
         {
-            ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre");
+            ViewBag.Categorias = db.Categorias;
             return View();
         }
 
@@ -61,7 +60,7 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
+                ViewBag.Categorias = db.Categorias;
                 return View();
             }          
             
@@ -88,13 +87,13 @@ namespace SIGEVALP.Controllers
         {
             if (id == null)            
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
-            Producto producto = db.Productos.Find(id);
+
+            var producto = db.Productos.Include(p => p.Categoria).FirstOrDefault(p => p.id == id);
 
             if (producto == null)           
                 return HttpNotFound();
-                      
-            ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
+
+            ViewBag.Categorias = db.Categorias;
             return View(producto);
         }
 
@@ -107,8 +106,8 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.idCategoria = new SelectList(db.Categorias, "id", "nombre", producto.idCategoria);
-                return View();
+                ViewBag.Categorias = db.Categorias;
+                return View(producto);
             }
 
             var prod = db.Productos.Find(producto.id);

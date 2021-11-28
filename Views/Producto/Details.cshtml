@@ -1,19 +1,17 @@
 ﻿@model SIGEVALP.Models.Producto
-
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Detalles</h2>
+<h4>Producto</h4>
+<hr />
 
 <div>
-    <h4>Producto</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.codigo)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.codigo)
         </dd>
@@ -21,7 +19,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.nombre)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.nombre)
         </dd>
@@ -29,7 +26,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.descripcion)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.descripcion)
         </dd>
@@ -37,14 +33,13 @@
         <dt>
             @Html.DisplayNameFor(model => model.marca)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.marca)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Categoria.nombre)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Categoria.nombre)
         </dd>

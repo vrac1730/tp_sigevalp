@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<SIGEVALP.Models.Proveedor>
-
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Proveedores</h2>
+<div>
+    @Html.ActionLink("Registrar", "Create", null, new { @class="btn btn-default" })
+</div>
+<br />
 
-<p>
-    @Html.ActionLink("Registrar", "Create",null, new { @class="btn btn-default" })
-</p>
 <table class="table table-hover">
     <tr>
         <th>

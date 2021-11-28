@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<SIGEVALP.Models.OrdenCompra>
-
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Ordenes de Compra</h2>
+<div>
+    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
+</div>
+<br />
 
-<p>
-    @Html.ActionLink("Registrar", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
-</p>
 <table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.codigo)
         </th>
         <th>
-            Encargado
+            @Html.DisplayNameFor(model => model.Usuario.Persona.nombre)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Usuario.Local.nombre)
@@ -30,40 +30,38 @@
             @Html.DisplayNameFor(model => model.fechaPago)
         </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.montoTotal)
-            </th>*@
+            @Html.DisplayNameFor(model => model.montoTotal)
+        </th>*@
         <th>Opción</th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Local.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proveedor.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaOrden)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaPago)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.montoTotal)
-                </td>*@
-            <td>
-                @Html.ActionLink("Ver", "Details", new { id = item.id })
-
-            </td>
-        </tr>
-    }
-
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Persona.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Local.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proveedor.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaOrden)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaPago)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.montoTotal)
+        </td>*@
+        <td>
+            @Html.ActionLink("Ver", "Details", new { id = item.id })
+        </td>
+    </tr>
+}
 </table>
