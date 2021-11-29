@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<SIGEVALP.Models.Cotizacion>
-
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Cotizaciones</h2>
-
-<p>
+<div>
     @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default"})
-</p>
+</div>
+<br />
+
 <table class="table table-hover">
     <tr>
         <th>
@@ -55,7 +55,6 @@
         </td>             
         <td>        
             <span class="label @stateClass">@item.estado</span>
-            @*Html.DisplayFor(modelItem => item.estado)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.neto)
@@ -67,9 +66,9 @@
             @Html.DisplayFor(modelItem => item.total)
         </td>        
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.id }, new { @class="btn-light"}) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.id })
+            @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
         </td>
     </tr>
 }

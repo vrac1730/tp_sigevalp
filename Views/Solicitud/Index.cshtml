@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<SIGEVALP.Models.Solicitud>
-
 @{
     ViewBag.Title = "Index";
 }
@@ -21,10 +20,9 @@
 
 <div style="padding-right: 6%">
     <p style="text-align:right">
-        @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default"})
+        @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
     </p>    
 </div>
-
 
 <table class="table table-hover">
     <tr>
@@ -46,27 +44,27 @@
         <th>Opción</th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Persona.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Local.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
-            </td>
-            <td>
-                @Html.ActionLink("Detalles", "Details", new { id = item.id })
-            </td>
-        </tr>
-    }
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Persona.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Local.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.ActionLink("Detalles", "Details", new { id = item.id })
+        </td>
+    </tr>
+}
 </table>

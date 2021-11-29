@@ -1,5 +1,4 @@
 ﻿@model SIGEVALP.Models.DetalleSolicitud
-
 @{
     ViewBag.Title = "EditDetail";
 }
@@ -13,45 +12,43 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.idProducto)
 
-    <div class="form-horizontal">        
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-        @Html.HiddenFor(model => model.idProducto)
-
+    <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(model => model.Producto.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Producto.nombre, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Producto.nombre, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.TextBoxFor(model => model.Producto.nombre, new { @class = "form-control", @disabled = "disabled" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Producto.marca, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Producto.marca, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Producto.marca, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.TextBoxFor(model => model.Producto.marca, new { @class = "form-control", @disabled = "disabled" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.cantSolicitada, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cantSolicitada, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cantSolicitada, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.TextBoxFor(model => model.cantSolicitada, new { @class = "form-control", @disabled = "disabled" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.cantEntregada, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cantEntregada, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cantEntregada, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.cantEntregada, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.cantEntregada, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Producto.Alerta.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Producto.Alerta.nombre, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Producto.Alerta.nombre, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.TextBoxFor(model => model.Producto.Alerta.nombre, new { @class = "form-control", @disabled = "disabled" })
             </div>
         </div>
 

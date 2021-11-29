@@ -14,13 +14,14 @@ namespace SIGEVALP.Models
         [Key]
         public int id{ get; set; }       
         
-        [DisplayName("Cantidad Requerida")]
+        [DisplayName("Cant. Requerida")]
         public int cantSolicitada { get; set; }
 
-        [DisplayName("Cantidad Entregada")]
+        [DisplayName("Cant. Entregada")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten  positivos.")]
         public int cantEntregada { get; set; }
 
+        [DisplayName("Observación")]
         public string observacion { get; set; }
 
         [DisplayName("Producto")]

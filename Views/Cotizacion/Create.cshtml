@@ -1,8 +1,8 @@
 ﻿@model SIGEVALP.Models.Cotizacion
-
 @{
     ViewBag.Title = "Create";
 }
+
 <head>
     <script type="module">
         import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
@@ -23,49 +23,56 @@
 @using (Html.BeginForm("Create","Cotizacion",FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(model => model.idUsuario, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idUsuario, "Cliente", new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownList("Cotizacion.idUsuario", new SelectList(ViewBag.idUsuario, "id", "Persona.nombre"), "Seleccionar Cliente", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Cotizacion.idUsuario", new SelectList(ViewBag.Usuarios, "id", "Persona.nombre"), "Seleccionar Cliente", new { @class = "form-control" })
                 @Html.ValidationMessage("Cotizacion.idUsuario", new { @class = "text-danger" })
             </div>
-            @Html.LabelFor(model => model.idProveedor, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.LabelFor(model => model.idProveedor, "Proveedor", new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownList("Cotizacion.idProveedor", new SelectList(ViewBag.idProveedor, "id", "nombre"), "Seleccionar Proveedor", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Cotizacion.idProveedor", new SelectList(ViewBag.Proveedores, "id", "nombre"), "Seleccionar Proveedor", new { @class = "form-control" })
                 @Html.ValidationMessage("Cotizacion.idProveedor", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
-            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.fecha, new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.TextBox("Fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @disabled = "disabled", @class = "form-control" })
             </div>
-            @Html.LabelFor(model => model.estado, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.LabelFor(model => model.estado, new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.TextBox("Estado", "Pendiente", new { @disabled = "disabled", @class = "form-control" })
             </div>
         </div>
         <br />
-        <div class="form-group" display:flex;>
+        <div class="form-group">
             <div class="form-group">
                 <label class="control-label col-md-2">Producto</label>
                 <div id="id-prod" class="col-md-3">
-                    @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("idProducto", new SelectList(ViewBag.Productos, "codigo", "nombre"), "Seleccionar Producto", new { @class = "form-control" })
                     <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
                 </div>
+
                 <label class="control-label col-md-2">Cantidad</label>
                 <div id="cant" class="col-md-3">
                     <input type="text" id="cantidad" class="form-control" />
                     <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-md-2">Precio</label>
                 <div id="pre" class="col-md-3">
                     <input type="text" id="precio" class="form-control" />
                     <span id="span-pre" class="field-validation-error text-danger" text-danger></span>
                 </div>
+
                 <label class="control-label col-md-2">% Descuento</label>
                 <div id="desc" class="col-md-3">
                     <input type="text" id="descuento" class="form-control" />
@@ -89,13 +96,24 @@
                 <table id="tabla-detalle" class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unit.</th>
-                            <th>Desc.</th>
-                            <th>Total</th>
-                            <th>Opciones</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.codigo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].cantidad)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].costo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].descuento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].total)
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="tabla-cuerpo">
@@ -173,18 +191,11 @@
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let id = GetId(valueElement);
-        //usuario
-        /*
-        let iduser = document.getElementById("Cotizacion_idUsuario");
-        let idprov = document.getElementById("Cotizacion_idProveedor");
-        console.log(iduser.value);
-        console.log(idprov.value);*/
-
+   
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
         let valprec = document.getElementById("span-pre");
         let valdesc = document.getElementById("span-desc");
-        //validacion con condiciones en master-detail_valiation.js
         //evaluar duplicados
         //si son símbolos
         //si cantidad es fraccion

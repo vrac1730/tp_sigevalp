@@ -1,8 +1,8 @@
 ﻿@model SIGEVALP.Models.Solicitud
-
 @{
     ViewBag.Title = "Create";
 }
+
 <head>
     <script type="module">
         import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
@@ -14,23 +14,20 @@
 </head>
 
 <h2>Registro de Solicitud</h2>
-
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+<hr />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <label class="control-label col-md-2">Fecha</label>
-            
             @Html.TextBox("fecha", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control col-md-3", @disabled = "disabled" })
-            
+
             <label class="control-label col-md-2">Estado</label>
             <div class="col-md-3">
                 <input class="form-control" disabled type="text" value="Pendiente">
@@ -38,9 +35,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idUsuario, new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.DropDownList("idUsuario", null, "Seleccionar Usuario", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idUsuario", new SelectList(ViewBag.Usuarios, "id", "Persona.nombre"), "Seleccionar Usuario", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -48,7 +45,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Producto</label>
             <div id="id-prod" class="col-md-3">
-                @Html.DropDownList("idProducto", null, "Seleccionar Producto", htmlAttributes: new { @class = "form-control col-md-3" })
+                @Html.DropDownList("idProducto", new SelectList(ViewBag.Productos, "codigo", "nombre"), "Seleccionar Producto", new { @class = "form-control col-md-3" })
                 <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
             </div>
 
@@ -60,7 +57,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="agregar" type="button" value="Agregar" onclick="Agregar(); return false;" class="btn btn-default" />
+                <input id="agregar" type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
                 <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
         </div>
@@ -69,30 +66,26 @@
             <table id="tabla-detalle" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Producto</th>
-                        <th>Solicitado</th>
-                        <th>Entregado</th>
-                        <th>Observación</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleSolicitud[0].Producto.codigo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleSolicitud[0].Producto.nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleSolicitud[0].cantSolicitada)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleSolicitud[0].cantEntregada)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleSolicitud[0].observacion)
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="tabla-cuerpo">
-                    @*<tr>
-                            <td>3</td>
-                            <td>Cuaderno</td>
-                            <td>20</td>
-                            <td>0</td>
-                            <td>Pendiente</td>
-                        </tr>*@
                 </tbody>
             </table>
-
-            @*<input type="hidden" name="DetalleSalida.Index" id="DetalleSalida.Index" value="0" />
-                <input type="hidden" name="DetalleSalida[0].idProducto" id="DetalleSalida[0].idProducto" value="3" />
-                <input type="hidden" name="DetalleSalida[0].Producto.nombre" id="DetalleSalida[0].Producto.nombre" value="Cuaderno" />
-                <input type="hidden" name="DetalleSalida[0].cantSolicitada" id="DetalleSalida[0].cantSolicitada" value="20" />
-                <input type="hidden" name="DetalleSalida[0].cantEntregada" id="DetalleSalida[0].cantEntregada" value="0" />
-                <input type="hidden" name="DetalleSalida[0].Producto.Alerta.nombre" id="DetalleSalida[0].Producto.Alerta.id" value="Pendiente" />*@
         </div>
     </div>
 
@@ -110,32 +103,32 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewData["Productos"] as IEnumerable<SIGEVALP.Models.ProductoxAlmacen>)
-            {
-                <tr>
-                    <td>
-                        @item.Producto.codigo
-                    </td>
-                    <td>
-                        @item.Producto.nombre
-                    </td>
-                    <td>
-                        @item.Producto.marca
-                    </td>
-                    <td>
-                        @item.stock_min
-                    </td>
-                    <td>
-                        @item.stock_max
-                    </td>
-                    <td>
-                        @item.cantidad
-                    </td>
-                    <td>
-                        @item.Alerta.nombre
-                    </td>
-                </tr>
-            }
+        @foreach (var item in ViewData["ProductosA"] as IEnumerable<SIGEVALP.Models.ProductoxAlmacen>)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stock_min)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stock_max)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.Alerta.nombre)
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -147,7 +140,7 @@
         let quantity = document.getElementById("cantSolicitada");
         let selectElement = document.getElementById("idProducto");
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
-        let valueElement = selectElement.options[selectElement.selectedIndex].value; 
+        let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let id = GetId(valueElement);
         let body = document.getElementById("tabla-cuerpo");
 

@@ -12,11 +12,19 @@ namespace SIGEVALP.Models
     {
         public int idProducto { get; set; }
         public int idProveedor { get; set; }
-        [DisplayName("Costo")]
+
+        [DisplayName("Precio Unit.")]
         public double costo { get; set; }
+        
+        [DisplayName("Cantidad")]
         public int cantidad { get; set; }
+
+        [DisplayName("Descuento")]
         public double descuento { get; set; }
+
+        [DisplayName("Total")]
         public double total { get; set; }
+
         //public int idAlerta { get; set; }
         public int idCotizacion { get; set; }
 

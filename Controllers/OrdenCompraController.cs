@@ -92,7 +92,6 @@ namespace SIGEVALP.Controllers
                     if (!ModelState.IsValid)
                     {
                         ViewBag.Productos = db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado == "Aprobado");
-                        ViewBag.Proveedores = db.Proveedores;
                         ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
                         return View();
                     }                   
@@ -116,8 +115,7 @@ namespace SIGEVALP.Controllers
                 }
                 return RedirectToAction("Create", new { id = ordenCompra.idProveedor });
             }
-          
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "id", "nombre");
+            ViewBag.Proveedores = db.Proveedores;
             return View();
         }
 

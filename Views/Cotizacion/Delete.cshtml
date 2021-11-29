@@ -1,5 +1,4 @@
 ﻿@model SIGEVALP.Models.Cotizacion
-
 @{
     ViewBag.Title = "Delete";
 }
@@ -8,8 +7,9 @@
 <h4>Cotizacion</h4>
 @Html.ActionLink("Regresar", "Index")
 <hr />
-<h4>¿Estás seguro de que deseas eliminar el registro?</h4>
+
 <div>
+    <h4>¿Estás seguro de que deseas eliminar el registro?</h4>
 
     <dl class="dl-horizontal">
         <dt>
@@ -47,90 +47,102 @@
             @Html.DisplayFor(model => model.estado)
         </dd>
     </dl>
-    @if (Model.DetalleCotizacion.Count() == 0)
-    {
-        <p>Aún no hay productos asociados a esta cotización.</p>
-    }
-    else
-    {
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unit.</th>
-                    <th>Descuento</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.DetalleCotizacion)
-                {
-                    <tr>
-                        <td>
-                            @item.Producto.codigo
-                        </td>
-                        <td>
-                            @item.Producto.nombre
-                        </td>
-                        <td>
-                            @item.cantidad
-                        </td>
-                        <td>
-                            @item.costo
-                        </td>
-                        <td>
-                            @item.descuento
-                        </td>
-                        <td>
-                            @item.total
-                        </td>
-                    </tr>
-                }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.parcial)</td>
-                    <td>@Model.parcial</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.descuento)</td>
-                    <td>@Model.descuento</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.neto)</td>
-                    <td>@Model.neto</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.iva)</td>
-                    <td>@Model.iva</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>@Html.DisplayNameFor(n => n.total)</td>
-                    <td>@Model.total</td>
-                </tr>
-            </tbody>
-        </table>
-    }
+@if (Model.DetalleCotizacion.Count() == 0)
+{
+    <p>Aún no hay productos asociados a esta cotización.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.codigo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].costo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].descuento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DetalleCotizacion[0].total)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.DetalleCotizacion)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producto.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descuento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+            </tr>
+        }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayNameFor(n => n.parcial)</td>
+                <td>@Model.parcial</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayNameFor(n => n.descuento)</td>
+                <td>@Model.descuento</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayNameFor(n => n.neto)</td>
+                <td>@Model.neto</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayNameFor(n => n.iva)</td>
+                <td>@Model.iva</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Html.DisplayNameFor(n => n.total)</td>
+                <td>@Model.total</td>
+            </tr>
+        </tbody>
+    </table>
+}
 
     @using (Html.BeginForm())
     {

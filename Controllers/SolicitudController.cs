@@ -56,11 +56,11 @@ namespace SIGEVALP.Controllers
 
         // GET: Solicitud/Create
         public ActionResult Create()
-        {            
-            ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username");            
-            ViewData["idProducto"] = new SelectList(db.Productos.Include(P=>P.Alerta), "codigo", "nombre");
+        {
+            ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+            ViewBag.Productos = db.Productos.Include(p => p.Alerta);
             //db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
-            ViewData["Productos"] = db.ProductosxAlmacen.Include(p => p.Producto).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4)).Include(d => d.Alerta);
+            ViewData["ProductosA"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
             return View();
         }
 
@@ -73,10 +73,10 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["idProducto"] = new SelectList(db.Productos.Include(P => P.Alerta), "codigo", "nombre");
+                ViewBag.Productos = db.Productos.Include(p => p.Alerta);
                 //var pro = db.Productos.Where(p => p.cantidad <= p.stock_min & p.idAlerta == 4);   
-                ViewData["Productos"] = db.ProductosxAlmacen.Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4).Include(d => d.Producto.Alerta);
-                ViewBag.idUsuario = new SelectList(db.Usuarios, "id", "username", solicitud.idUsuario);
+                ViewData["ProductosA"] = db.ProductosxAlmacen.Include(d => d.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & p.Producto.idAlerta == 4);
+                ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
                 return View();
             }            
 
@@ -96,8 +96,6 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");            
         }
-
-        //registrar nota salida////
        
         // GET: Solicitud/Edit/5
         public ActionResult EditDetail(int? id)
