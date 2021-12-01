@@ -23,6 +23,11 @@ namespace SIGEVALP.Models
 
         [DisplayName("Total")]
         public double total { get; set; }
+
+        [DisplayName("Fecha")]
+        [Column(TypeName = "datetime2")]
+        public DateTime? fecha { get; set; }
+
         public int idOrdenCompra { get; set; }
         public int idProducto { get; set; }
 

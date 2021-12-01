@@ -24,6 +24,10 @@ namespace SIGEVALP.Models
         [DisplayName("Observación")]
         public string observacion { get; set; }
 
+        [DisplayName("Fecha")]
+        [Column(TypeName = "datetime2")]
+        public DateTime? fecha { get; set; }
+
         [DisplayName("Producto")]
         public int idProducto { get; set; }
 

@@ -525,3 +525,4 @@ C:\Users\Usuario\Downloads\TPG\tp_sigevalp\bin\Rotativa.dll
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.ValidacionModelos.resources
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.Estadonull.resources
 C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.csprojAssemblyReference.cache
+C:\Users\Usuario\Downloads\TPG\tp_sigevalp\obj\Debug\SIGEVALP.Migrations.fecha.resources

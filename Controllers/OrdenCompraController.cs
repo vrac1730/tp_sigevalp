@@ -153,14 +153,9 @@ namespace SIGEVALP.Controllers
             detalle.Producto.idAlerta = 8;
             alm.cantidad += (detalleCompra.cantidadRecibida - detalle.cantidadRecibida);
             detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
+            detalle.fecha = DateTime.Now;
             //validar existencias en almacen
             //evaluar cambio alerta de prodxalmacen
-            HistorialMovimiento historial = new HistorialMovimiento {
-                cantidad = detalleCompra.cantidadRecibida,
-                fecha = DateTime.Now,
-                tipo = "Ingreso",
-                idProductoxAlmacen = alm.id };
-            db.HistorialMovimientos.Add(historial);
 
             db.SaveChanges();
             return RedirectToAction("Details", new { id = detalle.idOrdenCompra });
