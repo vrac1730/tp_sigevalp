@@ -114,6 +114,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.DetalleCotizacion[0].total)
                             </th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody id="tabla-cuerpo">
@@ -172,7 +173,6 @@
 <script>
     var n = 0;
     //document.querySelector('#agregar').addEventListener('click', Agregar)
-    let div = document.getElementById("div-detalle");
     let body = document.getElementById("tabla-cuerpo");
     let div_detalle_input = document.getElementById("detalle-input");
 
@@ -190,8 +190,10 @@
         let selectElement = document.getElementById("idProducto");
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
+        let total = quantity.value * price.value;
+        let descuento = discount.value * total;
         let id = GetId(valueElement);
-   
+
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
         let valprec = document.getElementById("span-pre");
@@ -217,101 +219,51 @@
             valcant.innerHTML = "";
             valprec.innerHTML = "";
             valdesc.innerHTML = "";
-            //crear filas, celdas y botones de la tabla
+            //crear filas,
             let tr = document.createElement("tr");
-            let tdid = document.createElement("td");
-            let tdnombre = document.createElement("td");
-            let tdcantidad = document.createElement("td");
-            let tdcosto = document.createElement("td");
-            let tddescuento = document.createElement("td");
-            let tdtotal = document.createElement("td");
-            let tdopccion = document.createElement("td");
-            let btnEditar = document.createElement("input")
-            let btnEliminar = document.createElement("input")
-            //asigna jerarquía de celdas y botones
-            tr.appendChild(tdid);
-            tr.appendChild(tdnombre);
-            tr.appendChild(tdcantidad);
-            tr.appendChild(tdcosto);
-            tr.appendChild(tddescuento);
-            tr.appendChild(tdtotal);
-            tr.appendChild(tdopccion)
-            tdopccion.appendChild(btnEditar);
-            tdopccion.appendChild(btnEliminar);
             body.appendChild(tr);
-            //asignar valor a celdas e inputs
             tr.id = n;
-            tdid.innerHTML = valueElement;
-            tdnombre.innerHTML = nameElement
-            tdcantidad.innerHTML = quantity.value;
-            tdcosto.innerHTML = price.value;
-            tdtotal.innerHTML = quantity.value * price.value;
-            tddescuento.innerHTML = discount.value * parseFloat(tdtotal.innerHTML);
-            btnEditar.value = "Editar";
-            btnEditar.type = "button";
-            btnEditar.onclick = function () { Editar(this) };
-            btnEditar.className = "btn btn-default";
-            btnEliminar.value = "Eliminar";
-            btnEliminar.type = "button";
-            btnEliminar.onclick = function () { Eliminar(this) };
-            btnEliminar.className = "btn btn-default";
-
-            td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) + parseFloat(tdtotal.innerHTML);
-            td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) + parseFloat(tddescuento.innerHTML);
+            //celdas,
+            createTd(valueElement, tr);
+            createTd(nameElement, tr);
+            createTd(quantity.value, tr);
+            createTd(price.value, tr);
+            createTd(descuento, tr);
+            createTd(total, tr);
+            //y botones de la tabla
+            let tdopccion = document.createElement("td");
+            tr.appendChild(tdopccion);
+            createButton("Editar", tdopccion, function () { Editar(this) });
+            createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            //celdas costos totales
+            td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) + total;
+            td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) + descuento;
             td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
             td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
             td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
 
-            //crear elementos input
+            //crear div para inputs
             let detalle_input = document.createElement("div");
-            let idProd = document.createElement("input")
-            //let idProv = document.createElement("input")
-            let cant = document.createElement("input")
-            let cos = document.createElement("input")
-            let desc = document.createElement("input")
-            let total = document.createElement("input")
+            detalle_input.id = "input-" + n;
+            div_detalle_input.appendChild(detalle_input);
+            //crear inputs detalles
+            createInput(n, "idProducto", id, detalle_input);
+            createInput(n, "cantidad", quantity.value, detalle_input);
+            createInput(n, "costo", price.value, detalle_input);
+            createInput(n, "descuento", descuento, detalle_input);
+            createInput(n, "total", total, detalle_input);
+            //inputs costos totales
             let parcial = document.getElementById("in_parcial");
-            let descuento = document.getElementById("in_descuento");
+            let descuento_detalle = document.getElementById("in_descuento");
             let neto = document.getElementById("in_neto");
             let iva = document.getElementById("in_iva");
             let total_detalle = document.getElementById("in_total");
-            //asignar valores a inputs
-            detalle_input.id = "input-" + n;
-            idProd.name = "Cotizacion.DetalleCotizacion[" + n + "].idProducto";
-            idProd.value = id;
-            idProd.type = "hidden";
-            /*idProv.name = "Cotizacion.DetalleCotizacion[" + n + "].idProveedor";
-            idProv.value = idprov.value;
-            idProv.type = "hidden";*/
-            cant.name = "Cotizacion.DetalleCotizacion[" + n + "].cantidad";
-            cant.id = cant.name;
-            cant.value = tdcantidad.innerHTML;
-            cant.type = "hidden";
-            cos.name = "Cotizacion.DetalleCotizacion[" + n + "].costo";
-            cos.id = cos.name;
-            cos.value = tdcosto.innerHTML;
-            cos.type = "hidden";
-            desc.name = "Cotizacion.DetalleCotizacion[" + n + "].descuento";
-            desc.id = desc.name;
-            desc.value = tddescuento.innerHTML;
-            desc.type = "hidden";
-            total.name = "Cotizacion.DetalleCotizacion[" + n + "].total";
-            total.id = total.name;
-            total.value = tdtotal.innerHTML;
-            total.type = "hidden";
-
             parcial.value = td_parcial.innerHTML;
-            descuento.value = td_descuento.innerHTML;
+            descuento_detalle.value = td_descuento.innerHTML;
             neto.value = td_neto.innerHTML;
             iva.value = td_igv.innerHTML;
             total_detalle.value = td_total.innerHTML;
-            //asignar jerarquía de inputs
-            detalle_input.appendChild(idProd);
-            detalle_input.appendChild(cant);
-            detalle_input.appendChild(cos);
-            detalle_input.appendChild(desc);
-            detalle_input.appendChild(total);
-            div_detalle_input.appendChild(detalle_input);
+
             //limpiar inputs al agregar detalles
             selectElement.value = "";
             quantity.value = "";
@@ -352,20 +304,9 @@
             tr.innerHTML = nuevotd;
 
             let tdopccion = document.getElementById(opccionId);
-            let btnAceptar = document.createElement("input");
-            let btnCancelar = document.createElement("input");
+            createButton("Aceptar", tdopccion, function () { Aceptar(this) });
+            createButton("Cancelar", tdopccion, function () { Cancelar(this) });
 
-            btnAceptar.value = "Aceptar";
-            btnAceptar.type = "button";
-            btnAceptar.onclick = function () { Aceptar(this) };
-            btnAceptar.className = "btn btn-default";
-            btnCancelar.value = "Cancelar";
-            btnCancelar.type = "button";
-            btnCancelar.onclick = function () { Cancelar(this) };
-            btnCancelar.className = "btn btn-default";
-
-            tdopccion.appendChild(btnAceptar);
-            tdopccion.appendChild(btnCancelar);
             enEdicion = true;
         }
         else {
@@ -411,7 +352,7 @@
         let desc = document.getElementById("tdDesc");
         let tot = nodostr[5].innerHTML;
         let total = cantidad.value * costo.value;
-        let opccionId = "tdopccion-" + GetId(tdid);
+        let opccionId = "tdopccion-" + GetId(id);
         var descuento = 0;
         //descuento no mayor a 1
         if (desc.value > 1) { descuento = (desc.value / tot) * total; }
@@ -434,20 +375,8 @@
         tr.innerHTML = nuevotd;
 
         let tdopccion = document.getElementById(opccionId);
-        let btnEditar = document.createElement("input")
-        let btnEliminar = document.createElement("input")
-
-        tdopccion.appendChild(btnEditar);
-        tdopccion.appendChild(btnEliminar);
-
-        btnEditar.value = "Editar";
-        btnEditar.type = "button";
-        btnEditar.onclick = function () { Editar(this) };
-        btnEditar.className = "btn btn-default";
-        btnEliminar.value = "Eliminar";
-        btnEliminar.type = "button";
-        btnEliminar.onclick = function () { Eliminar(this) };
-        btnEliminar.className = "btn btn-default";
+        createButton("Editar", tdopccion, function () { Editar(this) });
+        createButton("Eliminar", tdopccion, function () { Eliminar(this) });
         //modificar elementos inputs
         let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
         let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
@@ -485,20 +414,8 @@
         tr.innerHTML = nuevotd;
 
         let tdopccion = document.getElementById(opccionId);
-        let btnEditar = document.createElement("input")
-        let btnEliminar = document.createElement("input")
-
-        tdopccion.appendChild(btnEditar);
-        tdopccion.appendChild(btnEliminar);
-
-        btnEditar.value = "Editar";
-        btnEditar.type = "button";
-        btnEditar.onclick = function () { Editar(this) };
-        btnEditar.className = "btn btn-default";
-        btnEliminar.value = "Eliminar";
-        btnEliminar.type = "button";
-        btnEliminar.onclick = function () { Eliminar(this) };
-        btnEliminar.className = "btn btn-default";
+        createButton("Editar", tdopccion, function () { Editar(this) });
+        createButton("Eliminar", tdopccion, function () { Eliminar(this) });
     }
     function Eliminar(nodo) {
         let td = nodo.parentNode;
@@ -536,7 +453,28 @@
                 inputIndex++;
                 console.log(inputIndex);
             }
-        }         
+        }
         n--;
+    }
+    function createButton(name, tdopccion, funct) {
+        let button = document.createElement("input");
+        button.value = name;
+        button.type = "button";
+        button.onclick = funct;
+        button.className = "btn btn-default";
+        tdopccion.appendChild(button);
+    }
+    function createTd(value, tr) {
+        let td = document.createElement("td");
+        td.innerHTML = value;
+        tr.appendChild(td);
+    }
+    function createInput(id, prop, value, div) {
+        let input = document.createElement("input");
+        input.name = "Cotizacion.DetalleCotizacion[" + id + "]." + prop;
+        input.id = input.name;
+        input.value = value;
+        input.type = "hidden";
+        div.appendChild(input);
     }
 </script>
