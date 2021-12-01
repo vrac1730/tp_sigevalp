@@ -335,6 +335,7 @@
             let tdcosto = nodostr[3].innerHTML;
             let tddescuento = nodostr[4].innerHTML;
             let tdtotal = nodostr[5].innerHTML;
+            let opccionId = "tdopccion-" + GetId(tdid);
             console.log(tdid);
             console.log(tdnombre);
             console.log(tdcantidad);
@@ -347,9 +348,10 @@
                 '<td><input id = "tdCost" type = "text" value = "' + tdcosto + '"size = "7"></td>' +
                 '<td><input id = "tdDesc" type = "text" value = "' + tddescuento + '"size = "7"></td>' +
                 '<td>' + tdtotal + '</td>' +
-                '<td id = "tdopccion"></td>';
+                '<td id = "' + opccionId + '"></td>';
             tr.innerHTML = nuevotd;
-            let tdopccion = document.getElementById("tdopccion");
+
+            let tdopccion = document.getElementById(opccionId);
             let btnAceptar = document.createElement("input");
             let btnCancelar = document.createElement("input");
 
@@ -409,6 +411,7 @@
         let desc = document.getElementById("tdDesc");
         let tot = nodostr[5].innerHTML;
         let total = cantidad.value * costo.value;
+        let opccionId = "tdopccion-" + GetId(tdid);
         var descuento = 0;
         //descuento no mayor a 1
         if (desc.value > 1) { descuento = (desc.value / tot) * total; }
@@ -427,10 +430,10 @@
             '<td>' + costo.value + '</td>' +
             '<td>' + descuento + '</td>' +
             '<td>' + total + '</td>' +
-            '<td id = "tdopccion"></td>';
+            '<td id = "' + opccionId + '"></td>';
         tr.innerHTML = nuevotd;
 
-        let tdopccion = document.getElementById("tdopccion");
+        let tdopccion = document.getElementById(opccionId);
         let btnEditar = document.createElement("input")
         let btnEliminar = document.createElement("input")
 
@@ -471,16 +474,17 @@
         let tdcosto = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
         let tddescuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
         let tdtotal = tdcantidad.value * tdcosto.value;
+        let opccionId = "tdopccion-" + GetId(tdid);
 
         let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
             '<td>' + tdcantidad.value + '</td>' +
             '<td>' + tdcosto.value + '</td>' +
             '<td>' + tddescuento.value + '</td>' +
             '<td>' + tdtotal + '</td>' +
-            '<td id = "tdopccion"></td>';
+            '<td id = "' + opccionId + '"></td>';
         tr.innerHTML = nuevotd;
 
-        let tdopccion = document.getElementById("tdopccion");
+        let tdopccion = document.getElementById(opccionId);
         let btnEditar = document.createElement("input")
         let btnEliminar = document.createElement("input")
 
