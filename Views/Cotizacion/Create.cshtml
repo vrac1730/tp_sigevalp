@@ -175,12 +175,18 @@
     //document.querySelector('#agregar').addEventListener('click', Agregar)
     let body = document.getElementById("tabla-cuerpo");
     let div_detalle_input = document.getElementById("detalle-input");
-
+    //celdas costos totales
     let td_parcial = document.getElementById("td_parcial");
     let td_descuento = document.getElementById("td_descuento");
     let td_neto = document.getElementById("td_neto");
     let td_igv = document.getElementById("td_igv");
     let td_total = document.getElementById("td_total");
+    //inputs costos totales
+    let parcial = document.getElementById("in_parcial");
+    let descuento_detalle = document.getElementById("in_descuento");
+    let neto = document.getElementById("in_neto");
+    let iva = document.getElementById("in_iva");
+    let total_detalle = document.getElementById("in_total");
 
     function Agregar() {
         //identificamos elementos por id
@@ -252,12 +258,7 @@
             createInput(n, "costo", price.value, detalle_input);
             createInput(n, "descuento", descuento, detalle_input);
             createInput(n, "total", total, detalle_input);
-            //inputs costos totales
-            let parcial = document.getElementById("in_parcial");
-            let descuento_detalle = document.getElementById("in_descuento");
-            let neto = document.getElementById("in_neto");
-            let iva = document.getElementById("in_iva");
-            let total_detalle = document.getElementById("in_total");
+            //inputs costos totales        
             parcial.value = td_parcial.innerHTML;
             descuento_detalle.value = td_descuento.innerHTML;
             neto.value = td_neto.innerHTML;
@@ -320,6 +321,9 @@
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let nodostr = tr.getElementsByTagName("td");
+        let tdid = nodostr[0].innerHTML;
+        let tdnombre = nodostr[1].innerHTML;
+        let tdtotal = nodostr[5].innerHTML;
         //validar que el descuento no exceda 1
         //si son símbolos
         //si cantidad es fraccion
@@ -345,30 +349,19 @@
             valprec.innerHTML = "";
             valdesc.innerHTML = "";*/
         //reemplazar data de inputs a celdas
-        let id = nodostr[0].innerHTML;
-        let nombre = nodostr[1].innerHTML;
-        let cantidad = document.getElementById("tdCant");
-        let costo = document.getElementById("tdCost");
-        let desc = document.getElementById("tdDesc");
-        let tot = nodostr[5].innerHTML;
-        let total = cantidad.value * costo.value;
-        let opccionId = "tdopccion-" + GetId(id);
-        var descuento = 0;
+        let total = td_input_cant.value * td_input_cost.value;
+        let opccionId = "tdopccion-" + GetId(tdid);
+        var descuento = td_input_desc.value / tdtotal;
         //descuento no mayor a 1
-        if (desc.value > 1) { descuento = (desc.value / tot) * total; }
-        else { descuento = desc.value * total; }
-
-        console.log(id);
-        console.log(nombre);
-        console.log(cantidad.value);
-        console.log(costo.value);
-        console.log(descuento);
-        console.log(total);
-        console.log(desc.value);
-
-        let nuevotd = '<td>' + id + '</td>' + '<td>' + nombre + '</td>' +
-            '<td>' + cantidad.value + '</td>' +
-            '<td>' + costo.value + '</td>' +
+        if (td_input_desc.value < 1) {
+            descuento = td_input_desc.value * total; }
+        if (descuento < 1) {
+            descuento *= total; }
+        //span descuento
+        
+        let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
+            '<td>' + td_input_cant.value + '</td>' +
+            '<td>' + td_input_cost.value + '</td>' +
             '<td>' + descuento + '</td>' +
             '<td>' + total + '</td>' +
             '<td id = "' + opccionId + '"></td>';
@@ -377,14 +370,25 @@
         let tdopccion = document.getElementById(opccionId);
         createButton("Editar", tdopccion, function () { Editar(this) });
         createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+        //celdas costos totales
+        td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal + total;
+        td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - td_input_desc.getAttribute("value") + descuento;
+        td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
+        td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
+        td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
+        //inputs costos totales
+        parcial.value = td_parcial.innerHTML;
+        descuento_detalle.value = td_descuento.innerHTML;
+        neto.value = td_neto.innerHTML;
+        iva.value = td_igv.innerHTML;
+        total_detalle.value = td_total.innerHTML;
         //modificar elementos inputs
         let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
         let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
         let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
         let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
-
-        in_detalle_cantidad.value = cantidad.value;
-        in_detalle_costo.value = costo.value;
+        in_detalle_cantidad.value = td_input_cant.value;
+        in_detalle_costo.value = td_input_cost.value;
         in_detalle_descuento.value = descuento;
         in_detalle_total.value = total;
         // }
@@ -424,6 +428,22 @@
         console.log(div_detalle_input);
         console.log(n);
         console.log(tr.id);
+
+        let nodostr = tr.getElementsByTagName("td");
+        let tddescuento = nodostr[4].innerHTML;
+        let tdtotal = nodostr[5].innerHTML;
+         //celdas costos totales
+        td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal;
+        td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - tddescuento;
+        td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
+        td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
+        td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
+        //inputs costos totales
+        parcial.value = td_parcial.innerHTML;
+        descuento_detalle.value = td_descuento.innerHTML;
+        neto.value = td_neto.innerHTML;
+        iva.value = td_igv.innerHTML;
+        total_detalle.value = td_total.innerHTML;
         //no eliminar antes de obtener el tr.id
         let deleteinput = document.getElementById("input-" + tr.id);
         div_detalle_input.removeChild(deleteinput);
@@ -453,7 +473,7 @@
                 inputIndex++;
                 console.log(inputIndex);
             }
-        }
+        }    
         n--;
     }
     function createButton(name, tdopccion, funct) {
