@@ -1,0 +1,149 @@
+﻿@model SIGEVALP.ViewModels.HistorialMovimientoViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle Movimiento</h2>
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+<hr />
+
+@if (Model.detalleSolicitud == null)
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].Producto.codigo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].Producto.codigo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].Producto.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].Producto.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].Producto.Categoria.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].Producto.Categoria.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].Producto.marca)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].Producto.marca)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].fecha)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].fecha)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].cantidadRecibida)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].cantidadRecibida)
+            </dd>
+
+            <dt>
+                Tipo
+            </dt>
+            <dd>
+                Ingreso
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleCompra[0].OrdenCompra.Proveedor.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleCompra[0].OrdenCompra.Proveedor.nombre)
+            </dd>
+
+            <dt>
+                Almacen
+            </dt>
+            <dd>
+                Centro #1
+            </dd>
+        </dl>
+    </div>
+}
+@if (Model.detalleCompra == null)
+{
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Producto.codigo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Producto.codigo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Producto.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Producto.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Producto.Categoria.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Producto.Categoria.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Producto.marca)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Producto.marca)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].fecha)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].fecha)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].cantEntregada)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].cantEntregada)
+            </dd>
+
+            <dt>
+                Tipo
+            </dt>
+            <dd>
+                Salida
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Solicitud.Usuario.Persona.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Solicitud.Usuario.Persona.nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.detalleSolicitud[0].Solicitud.Usuario.Local.nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.detalleSolicitud[0].Solicitud.Usuario.Local.nombre)
+            </dd>
+        </dl>
+    </div>
+}

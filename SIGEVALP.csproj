@@ -228,6 +228,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
     <Compile Include="Models\Almacen.cs" />
+    <Compile Include="Models\AuthorizeRolesAttribute.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Cotizacion.cs" />
     <Compile Include="Models\DetalleCompra.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Models\Local.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra.cs" />
+    <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\Solicitud.cs" />
     <Compile Include="Models\Persona.cs" />
     <Compile Include="Models\Producto.cs" />
@@ -342,6 +344,7 @@
     <Content Include="Views\ProductoxAlmacen\Report.cshtml" />
     <Content Include="Views\ProductoxAlmacen\Edit.cshtml" />
     <Content Include="Views\HistorialMovimiento\Index.cshtml" />
+    <Content Include="Views\HistorialMovimiento\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
