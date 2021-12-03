@@ -41,7 +41,7 @@ namespace SIGEVALP.Controllers
 
             return View(check, result);
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // GET: ProductoxAlmacen/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -56,7 +56,7 @@ namespace SIGEVALP.Controllers
             producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
             return View(producto);
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // POST: ProductoxAlmacen/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

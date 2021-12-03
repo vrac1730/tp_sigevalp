@@ -43,13 +43,13 @@ namespace SIGEVALP.Controllers
             
             return View(proveedor);
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // GET: Proveedors/Create
         public ActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // POST: Proveedors/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -64,7 +64,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // GET: Proveedors/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -78,7 +78,7 @@ namespace SIGEVALP.Controllers
             
             return View(proveedor);
         }
-
+        [Authorize(Roles = "AdminWeb")]
         // POST: Proveedors/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

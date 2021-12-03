@@ -45,6 +45,7 @@ namespace SIGEVALP.Controllers
             return View(cotizacion);
         }
 
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: Cotizacion/Create
         public ActionResult Create()
         {
@@ -53,7 +54,7 @@ namespace SIGEVALP.Controllers
             ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
             return View();
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: Cotizacion/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -81,7 +82,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: Cotizacion/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -100,7 +101,7 @@ namespace SIGEVALP.Controllers
             cotizacion.DetalleCotizacion = db.DetallesCotizaciones.Include(d => d.Producto).Where(d => d.idCotizacion == cotizacion.id).ToList();                        
             return View(cotizacion);
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: Cotizacion/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,7 +119,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: Cotizacion/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -133,7 +134,7 @@ namespace SIGEVALP.Controllers
             cotizacion.DetalleCotizacion = db.DetallesCotizaciones.Include(d => d.Producto).Where(d => d.idCotizacion == cotizacion.id).ToList();            
             return View(cotizacion);
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: Cotizacion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -42,7 +42,7 @@ namespace SIGEVALP.Models
         public Usuario Usuario { get; set; }
         
         [ForeignKey("idProveedor")]
-        public Proveedor Proveedor { get; set; } 
+        public Proveedor Proveedor { get; set; }
 
         [Required]
         public List<DetalleCompra> DetalleCompras { get; set; }

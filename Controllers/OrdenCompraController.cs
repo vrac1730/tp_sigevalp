@@ -57,7 +57,7 @@ namespace SIGEVALP.Controllers
 
             return View(ordenCompra);
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: OrdenCompra/Create        
         public ActionResult Create(int? id)//idproveedor
         {
@@ -77,7 +77,7 @@ namespace SIGEVALP.Controllers
             ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
             return View(); 
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: OrdenCompra/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,7 +118,7 @@ namespace SIGEVALP.Controllers
             ViewBag.Proveedores = db.Proveedores;
             return View();
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: OrdenCompra/Edit/5
         public ActionResult EditDetail(int? id)
         {
@@ -133,7 +133,7 @@ namespace SIGEVALP.Controllers
             detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
             return View(detalleCompra);
         }
-
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: OrdenSalida/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

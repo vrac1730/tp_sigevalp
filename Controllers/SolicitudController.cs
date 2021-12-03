@@ -53,7 +53,7 @@ namespace SIGEVALP.Controllers
             solicitud.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
             return View(solicitud);
         }
-
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Solicitud/Create
         public ActionResult Create()
         {
@@ -63,7 +63,7 @@ namespace SIGEVALP.Controllers
             ViewData["ProductosA"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
             return View();
         }
-
+        [Authorize(Roles = "AdminGeneral")]
         // POST: Solicitud/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -96,7 +96,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");            
         }
-       
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Solicitud/Edit/5
         public ActionResult EditDetail(int? id)
         {
@@ -111,7 +111,7 @@ namespace SIGEVALP.Controllers
             detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
             return View(detalleSolicitud);
         }
-
+        [Authorize(Roles = "AdminGeneral")]
         // POST: Solicitud/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
