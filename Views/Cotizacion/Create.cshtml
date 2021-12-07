@@ -90,9 +90,6 @@
 
             <div id="div-detalle">
                 <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
-                <span id="span-detalle-cantidad" class="field-validation-error text-danger" text-danger></span>
-                <span id="span-detalle-precio" class="field-validation-error text-danger" text-danger></span>
-                <span id="span-detalle-descuento" class="field-validation-error text-danger" text-danger></span>
                 <table id="tabla-detalle" class="table table-hover">
                     <thead>
                         <tr>
@@ -253,11 +250,11 @@
             detalle_input.id = "input-" + n;
             div_detalle_input.appendChild(detalle_input);
             //crear inputs detalles
-            createInput(n, "idProducto", id, detalle_input);
-            createInput(n, "cantidad", quantity.value, detalle_input);
-            createInput(n, "costo", price.value, detalle_input);
-            createInput(n, "descuento", descuento, detalle_input);
-            createInput(n, "total", total, detalle_input);
+            createInput(n, "Cotizacion.DetalleCotizacion", "idProducto", id, detalle_input);
+            createInput(n, "Cotizacion.DetalleCotizacion", "cantidad", quantity.value, detalle_input);
+            createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
+            createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
+            createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
             //inputs costos totales        
             parcial.value = td_parcial.innerHTML;
             descuento_detalle.value = td_descuento.innerHTML;
@@ -297,11 +294,14 @@
             console.log(tdtotal);
 
             let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
-                '<td><input id = "tdCant" type = "text" value = "' + tdcantidad + '"size = "7"></td>' +
-                '<td><input id = "tdCost" type = "text" value = "' + tdcosto + '"size = "7"></td>' +
-                '<td><input id = "tdDesc" type = "text" value = "' + tddescuento + '"size = "7"></td>' +
+                '<td>' + '<input id = "tdCant" type = "text" value = "' + tdcantidad + '"size = "7">' +
+                '<span id="span-detalle-cantidad" class="field-validation-error text-danger"></span>' + '</td>' +
+                '<td>' + '<input id = "tdCost" type = "text" value = "' + tdcosto + '"size = "7">' +
+                '<span id="span-detalle-precio" class="field-validation-error text-danger"></span>'+'</td>' +
+                '<td>' + '<input id = "tdDesc" type = "text" value = "' + tddescuento + '"size = "7">' +
+                '<span id="span-detalle-descuento" class="field-validation-error text-danger"></span>'+'</td>' +
                 '<td>' + tdtotal + '</td>' +
-                '<td id = "' + opccionId + '"></td>';
+                '<td id = "' + opccionId + '"></td>';                                           
             tr.innerHTML = nuevotd;
 
             let tdopccion = document.getElementById(opccionId);
@@ -314,10 +314,7 @@
             valedicion.innerHTML = "Termine de editar un detalle. Para continuar...";
         }
     }
-    function Aceptar(nodo) {
-        enEdicion = false;
-        valedicion.innerHTML = "";
-
+    function Aceptar(nodo) {    
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let nodostr = tr.getElementsByTagName("td");
@@ -333,7 +330,7 @@
         let valcant = document.getElementById("span-detalle-cantidad");
         let valprec = document.getElementById("span-detalle-precio");
         let valdesc = document.getElementById("span-detalle-descuento");
-        /*
+        
         if (!td_input_cant.value || !td_input_cost.value || !td_input_desc.value) {
             valcant.innerHTML = EmptyOrMinor(td_input_cant.value);
             valprec.innerHTML = EmptyOrMinor(td_input_cost.value);
@@ -345,53 +342,53 @@
             valdesc.innerHTML = LessThanZero(td_input_desc.value);
         }
         else {
-            valcant.innerHTML = "";
-            valprec.innerHTML = "";
-            valdesc.innerHTML = "";*/
-        //reemplazar data de inputs a celdas
-        let total = td_input_cant.value * td_input_cost.value;
-        let opccionId = "tdopccion-" + GetId(tdid);
-        var descuento = td_input_desc.value / tdtotal;
-        //descuento no mayor a 1
-        if (td_input_desc.value < 1) {
-            descuento = td_input_desc.value * total; }
-        if (descuento < 1) {
-            descuento *= total; }
-        //span descuento
-        
-        let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
-            '<td>' + td_input_cant.value + '</td>' +
-            '<td>' + td_input_cost.value + '</td>' +
-            '<td>' + descuento + '</td>' +
-            '<td>' + total + '</td>' +
-            '<td id = "' + opccionId + '"></td>';
-        tr.innerHTML = nuevotd;
+            enEdicion = false;
+            valedicion.innerHTML = "";
 
-        let tdopccion = document.getElementById(opccionId);
-        createButton("Editar", tdopccion, function () { Editar(this) });
-        createButton("Eliminar", tdopccion, function () { Eliminar(this) });
-        //celdas costos totales
-        td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal + total;
-        td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - td_input_desc.getAttribute("value") + descuento;
-        td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
-        td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
-        td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
-        //inputs costos totales
-        parcial.value = td_parcial.innerHTML;
-        descuento_detalle.value = td_descuento.innerHTML;
-        neto.value = td_neto.innerHTML;
-        iva.value = td_igv.innerHTML;
-        total_detalle.value = td_total.innerHTML;
-        //modificar elementos inputs
-        let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
-        let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
-        let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
-        let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
-        in_detalle_cantidad.value = td_input_cant.value;
-        in_detalle_costo.value = td_input_cost.value;
-        in_detalle_descuento.value = descuento;
-        in_detalle_total.value = total;
-        // }
+            let total = td_input_cant.value * td_input_cost.value;
+            let opccionId = "tdopccion-" + GetId(tdid);
+            var descuento = td_input_desc.value / tdtotal;
+            //descuento no mayor a 1
+            if (td_input_desc.value < 1) {
+                descuento = td_input_desc.value * total; }
+            if (descuento < 1) {
+                descuento *= total; }
+            //span descuento
+
+            //reemplazar data de inputs a celdas        
+            let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
+                '<td>' + td_input_cant.value + '</td>' +
+                '<td>' + td_input_cost.value + '</td>' +
+                '<td>' + descuento + '</td>' +
+                '<td>' + total + '</td>' +
+                '<td id = "' + opccionId + '"></td>';
+            tr.innerHTML = nuevotd;
+
+            let tdopccion = document.getElementById(opccionId);
+            createButton("Editar", tdopccion, function () { Editar(this) });
+            createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            //celdas costos totales
+            td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal + total;
+            td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - td_input_desc.getAttribute("value") + descuento;
+            td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
+            td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
+            td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
+            //inputs costos totales
+            parcial.value = td_parcial.innerHTML;
+            descuento_detalle.value = td_descuento.innerHTML;
+            neto.value = td_neto.innerHTML;
+            iva.value = td_igv.innerHTML;
+            total_detalle.value = td_total.innerHTML;
+            //modificar elementos inputs
+            let in_detalle_cantidad = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].cantidad");
+            let in_detalle_costo = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
+            let in_detalle_descuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
+            let in_detalle_total = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].total");
+            in_detalle_cantidad.value = td_input_cant.value;
+            in_detalle_costo.value = td_input_cost.value;
+            in_detalle_descuento.value = descuento;
+            in_detalle_total.value = total;
+        }
     }
     function Cancelar(nodo) {
         enEdicion = false;
@@ -461,22 +458,18 @@
                 //cambiar id del div y el nombre de inputs
                 nextbody.id = inputIndex;
                 nextinput.id = "input-" + inputIndex;
-                input[0].name = "Cotizacion.DetalleCotizacion[" + inputIndex + "].idProducto";
-                input[1].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].cantidad";
-                input[2].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].costo";
-                input[3].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].descuento";
-                input[4].id = "Cotizacion.DetalleCotizacion[" + inputIndex + "].total";
-                input[1].name = input[1].id;
-                input[2].name = input[2].id;
-                input[3].name = input[3].id;
-                input[4].name = input[4].id;
+                createInputId(input[0], inputIndex, "Cotizacion.DetalleCotizacion", "idProducto");
+                createInputId(input[1], inputIndex, "Cotizacion.DetalleCotizacion", "cantidad");
+                createInputId(input[2], inputIndex, "Cotizacion.DetalleCotizacion", "costo");
+                createInputId(input[3], inputIndex, "Cotizacion.DetalleCotizacion", "descuento");
+                createInputId(input[4], inputIndex, "Cotizacion.DetalleCotizacion", "total");
                 inputIndex++;
                 console.log(inputIndex);
             }
         }    
         n--;
     }
-    function createButton(name, tdopccion, funct) {
+    function createButton(name, tdopccion, funct) {//[name, funct]
         let button = document.createElement("input");
         button.value = name;
         button.type = "button";
@@ -484,17 +477,20 @@
         button.className = "btn btn-default";
         tdopccion.appendChild(button);
     }
-    function createTd(value, tr) {
+    function createTd(value, tr) {//[value]
         let td = document.createElement("td");
         td.innerHTML = value;
         tr.appendChild(td);
     }
-    function createInput(id, prop, value, div) {
+    function createInput(id, model, prop, value, div) {//[prop, value]
         let input = document.createElement("input");
-        input.name = "Cotizacion.DetalleCotizacion[" + id + "]." + prop;
-        input.id = input.name;
+        createInputId(input, id, model, prop);
         input.value = value;
         input.type = "hidden";
         div.appendChild(input);
+    }
+    function createInputId(input, id, model, prop) {//[input] [prop] misma longitud
+        input.id = model + "[" + id + "]." + prop;
+        input.name = input.id;        
     }
 </script>
