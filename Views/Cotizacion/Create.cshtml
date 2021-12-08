@@ -5,11 +5,8 @@
 
 <head>
     <script type="module">
-        import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
-        window.EmptyOrMinor = EmptyOrMinor
-        window.EqualsZero = EqualsZero
-        window.LessThanZero = LessThanZero
-        window.GetId = GetId
+        import * as detail from '../../Scripts/master-detail_validation.js';
+        window.detail = detail;
     </script>
 </head>
 
@@ -195,7 +192,7 @@
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let total = quantity.value * price.value;
         let descuento = discount.value * total;
-        let id = GetId(valueElement);
+        let id = detail.GetId(valueElement);
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
@@ -206,16 +203,16 @@
         //si cantidad es fraccion
         //validar que el descuento no exceda 1
         if (!valueElement || !quantity.value || !price.value || !discount.value) {
-            valid.innerHTML = EqualsZero(id);
-            valcant.innerHTML = EmptyOrMinor(quantity.value);
-            valprec.innerHTML = EmptyOrMinor(price.value);
-            valdesc.innerHTML = EmptyOrMinor(discount.value);
+            valid.innerHTML = detail.EqualsZero(id);
+            valcant.innerHTML = detail.EmptyOrMinor(quantity.value);
+            valprec.innerHTML = detail.EmptyOrMinor(price.value);
+            valdesc.innerHTML = detail.EmptyOrMinor(discount.value);
         }
         else if (quantity.value < 0 || price.value < 0 || discount.value < 0) {
             valid.innerHTML = "";
-            valcant.innerHTML = LessThanZero(quantity.value);
-            valprec.innerHTML = LessThanZero(price.value);
-            valdesc.innerHTML = LessThanZero(discount.value);
+            valcant.innerHTML = detail.LessThanZero(quantity.value);
+            valprec.innerHTML = detail.LessThanZero(price.value);
+            valdesc.innerHTML = detail.LessThanZero(discount.value);
         }
         else {
             valid.innerHTML = "";
@@ -227,17 +224,17 @@
             body.appendChild(tr);
             tr.id = n;
             //celdas,
-            createTd(valueElement, tr);
-            createTd(nameElement, tr);
-            createTd(quantity.value, tr);
-            createTd(price.value, tr);
-            createTd(descuento, tr);
-            createTd(total, tr);
+            detail.createTd(valueElement, tr);
+            detail.createTd(nameElement, tr);
+            detail.createTd(quantity.value, tr);
+            detail.createTd(price.value, tr);
+            detail.createTd(descuento, tr);
+            detail.createTd(total, tr);
             //y botones de la tabla
             let tdopccion = document.createElement("td");
             tr.appendChild(tdopccion);
-            createButton("Editar", tdopccion, function () { Editar(this) });
-            createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            detail.createButton("Editar", tdopccion, function () { Editar(this) });
+            detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
             //celdas costos totales
             td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) + total;
             td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) + descuento;
@@ -250,11 +247,11 @@
             detalle_input.id = "input-" + n;
             div_detalle_input.appendChild(detalle_input);
             //crear inputs detalles
-            createInput(n, "Cotizacion.DetalleCotizacion", "idProducto", id, detalle_input);
-            createInput(n, "Cotizacion.DetalleCotizacion", "cantidad", quantity.value, detalle_input);
-            createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
-            createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
-            createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
+            detail.createInput(n, "Cotizacion.DetalleCotizacion", "idProducto", id, detalle_input);
+            detail.createInput(n, "Cotizacion.DetalleCotizacion", "cantidad", quantity.value, detalle_input);
+            detail.createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
+            detail.createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
+            detail.createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
             //inputs costos totales        
             parcial.value = td_parcial.innerHTML;
             descuento_detalle.value = td_descuento.innerHTML;
@@ -285,7 +282,7 @@
             let tdcosto = nodostr[3].innerHTML;
             let tddescuento = nodostr[4].innerHTML;
             let tdtotal = nodostr[5].innerHTML;
-            let opccionId = "tdopccion-" + GetId(tdid);
+            let opccionId = "tdopccion-" + detail.GetId(tdid);
             console.log(tdid);
             console.log(tdnombre);
             console.log(tdcantidad);
@@ -305,8 +302,8 @@
             tr.innerHTML = nuevotd;
 
             let tdopccion = document.getElementById(opccionId);
-            createButton("Aceptar", tdopccion, function () { Aceptar(this) });
-            createButton("Cancelar", tdopccion, function () { Cancelar(this) });
+            detail.createButton("Aceptar", tdopccion, function () { Aceptar(this) });
+            detail.createButton("Cancelar", tdopccion, function () { Cancelar(this) });
 
             enEdicion = true;
         }
@@ -332,21 +329,21 @@
         let valdesc = document.getElementById("span-detalle-descuento");
         
         if (!td_input_cant.value || !td_input_cost.value || !td_input_desc.value) {
-            valcant.innerHTML = EmptyOrMinor(td_input_cant.value);
-            valprec.innerHTML = EmptyOrMinor(td_input_cost.value);
-            valdesc.innerHTML = EmptyOrMinor(td_input_desc.value);
+            valcant.innerHTML = detail.EmptyOrMinor(td_input_cant.value);
+            valprec.innerHTML = detail.EmptyOrMinor(td_input_cost.value);
+            valdesc.innerHTML = detail.EmptyOrMinor(td_input_desc.value);
         }
         else if (td_input_cant.value < 0 || td_input_cost.value < 0 || td_input_desc.value < 0) {
-            valcant.innerHTML = LessThanZero(td_input_cant.value);
-            valprec.innerHTML = LessThanZero(td_input_cost.value);
-            valdesc.innerHTML = LessThanZero(td_input_desc.value);
+            valcant.innerHTML = detail.LessThanZero(td_input_cant.value);
+            valprec.innerHTML = detail.LessThanZero(td_input_cost.value);
+            valdesc.innerHTML = detail.LessThanZero(td_input_desc.value);
         }
         else {
             enEdicion = false;
             valedicion.innerHTML = "";
 
             let total = td_input_cant.value * td_input_cost.value;
-            let opccionId = "tdopccion-" + GetId(tdid);
+            let opccionId = "tdopccion-" + detail.GetId(tdid);
             var descuento = td_input_desc.value / tdtotal;
             //descuento no mayor a 1
             if (td_input_desc.value < 1) {
@@ -365,8 +362,8 @@
             tr.innerHTML = nuevotd;
 
             let tdopccion = document.getElementById(opccionId);
-            createButton("Editar", tdopccion, function () { Editar(this) });
-            createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            detail.createButton("Editar", tdopccion, function () { Editar(this) });
+            detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
             //celdas costos totales
             td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal + total;
             td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - td_input_desc.getAttribute("value") + descuento;
@@ -404,7 +401,7 @@
         let tdcosto = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].costo");
         let tddescuento = document.getElementById("Cotizacion.DetalleCotizacion[" + tr.id + "].descuento");
         let tdtotal = tdcantidad.value * tdcosto.value;
-        let opccionId = "tdopccion-" + GetId(tdid);
+        let opccionId = "tdopccion-" + detail.GetId(tdid);
 
         let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
             '<td>' + tdcantidad.value + '</td>' +
@@ -415,8 +412,8 @@
         tr.innerHTML = nuevotd;
 
         let tdopccion = document.getElementById(opccionId);
-        createButton("Editar", tdopccion, function () { Editar(this) });
-        createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+        detail.createButton("Editar", tdopccion, function () { Editar(this) });
+        detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
     }
     function Eliminar(nodo) {
         let td = nodo.parentNode;
@@ -458,39 +455,15 @@
                 //cambiar id del div y el nombre de inputs
                 nextbody.id = inputIndex;
                 nextinput.id = "input-" + inputIndex;
-                createInputId(input[0], inputIndex, "Cotizacion.DetalleCotizacion", "idProducto");
-                createInputId(input[1], inputIndex, "Cotizacion.DetalleCotizacion", "cantidad");
-                createInputId(input[2], inputIndex, "Cotizacion.DetalleCotizacion", "costo");
-                createInputId(input[3], inputIndex, "Cotizacion.DetalleCotizacion", "descuento");
-                createInputId(input[4], inputIndex, "Cotizacion.DetalleCotizacion", "total");
+                detail.createInputId(input[0], inputIndex, "Cotizacion.DetalleCotizacion", "idProducto");
+                detail.createInputId(input[1], inputIndex, "Cotizacion.DetalleCotizacion", "cantidad");
+                detail.createInputId(input[2], inputIndex, "Cotizacion.DetalleCotizacion", "costo");
+                detail.createInputId(input[3], inputIndex, "Cotizacion.DetalleCotizacion", "descuento");
+                detail.createInputId(input[4], inputIndex, "Cotizacion.DetalleCotizacion", "total");
                 inputIndex++;
                 console.log(inputIndex);
             }
         }    
         n--;
-    }
-    function createButton(name, tdopccion, funct) {//[name, funct]
-        let button = document.createElement("input");
-        button.value = name;
-        button.type = "button";
-        button.onclick = funct;
-        button.className = "btn btn-default";
-        tdopccion.appendChild(button);
-    }
-    function createTd(value, tr) {//[value]
-        let td = document.createElement("td");
-        td.innerHTML = value;
-        tr.appendChild(td);
-    }
-    function createInput(id, model, prop, value, div) {//[prop, value]
-        let input = document.createElement("input");
-        createInputId(input, id, model, prop);
-        input.value = value;
-        input.type = "hidden";
-        div.appendChild(input);
-    }
-    function createInputId(input, id, model, prop) {//[input] [prop] misma longitud
-        input.id = model + "[" + id + "]." + prop;
-        input.name = input.id;        
-    }
+    }  
 </script>

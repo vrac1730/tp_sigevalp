@@ -5,11 +5,8 @@
 
 <head>
     <script type="module">
-        import { EmptyOrMinor, EqualsZero, LessThanZero, GetId } from '../../Scripts/master-detail_validation.js';
-        window.EmptyOrMinor = EmptyOrMinor
-        window.EqualsZero = EqualsZero
-        window.LessThanZero = LessThanZero
-        window.GetId = GetId
+        import * as detail from '../../Scripts/master-detail_validation.js';
+        window.detail = detail;
     </script>
 </head>
 
@@ -114,19 +111,19 @@
         let selectElement = document.getElementById("idProducto");
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
-        let id = GetId(valueElement);
+        let id = detail.GetId(valueElement);
         let body = document.getElementById("tabla-cuerpo");
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
 
         if (!valueElement || !quantity.value) {
-            valid.innerHTML = EqualsZero(id);
-            valcant.innerHTML = EmptyOrMinor(quantity.value);
+            valid.innerHTML = detail.EqualsZero(id);
+            valcant.innerHTML = detail.EmptyOrMinor(quantity.value);
         }
         else if (quantity.value < 0) {
             valid.innerHTML = "";
-            valcant.innerHTML = LessThanZero(quantity.value);
+            valcant.innerHTML = detail.LessThanZero(quantity.value);
         }
         else {
             valid.innerHTML = "";
