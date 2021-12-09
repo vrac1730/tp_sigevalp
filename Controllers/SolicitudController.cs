@@ -96,7 +96,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");            
         }
-        [Authorize(Roles = "AdminGeneral")]
+        [Authorize(Roles = "JefeAlmacen")]
         // GET: Solicitud/Edit/5
         public ActionResult EditDetail(int? id)
         {
@@ -111,7 +111,7 @@ namespace SIGEVALP.Controllers
             detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
             return View(detalleSolicitud);
         }
-        [Authorize(Roles = "AdminGeneral")]
+        [Authorize(Roles = "JefeAlmacen")]
         // POST: Solicitud/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

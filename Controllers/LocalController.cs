@@ -30,12 +30,12 @@ namespace SIGEVALP.Controllers
             return View(db.Locales);
         }
         //En la ruta busca por defecto al controlador (Home), sino a la action (Index) y por último el id
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         //GET: Local/Create
         public ActionResult Create() {
             return View();
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         //POST: Local/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -48,7 +48,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Local/Edit
         public ActionResult Edit(int? id)
         {
@@ -62,7 +62,7 @@ namespace SIGEVALP.Controllers
             
             return View(local);
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // Post: Local/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]

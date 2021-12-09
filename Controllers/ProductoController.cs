@@ -43,14 +43,14 @@ namespace SIGEVALP.Controllers
 
             return View(producto);
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Producto/Create
         public ActionResult Create()
         {
             ViewBag.Categorias = db.Categorias;
             return View();
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // POST: Producto/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -81,7 +81,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Producto/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -96,7 +96,7 @@ namespace SIGEVALP.Controllers
             ViewBag.Categorias = db.Categorias;
             return View(producto);
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // POST: Producto/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.

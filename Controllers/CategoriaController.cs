@@ -28,13 +28,13 @@ namespace SIGEVALP.Controllers
             return View(db.Categorias);
         }
 
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         // GET: Categoria/Create
         public ActionResult Create()
         {
             return View();
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         //POST: Categoria/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -47,7 +47,7 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         //GET: Categoria/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -61,7 +61,7 @@ namespace SIGEVALP.Controllers
             
             return View(categoria);
         }
-        [Authorize(Roles = "AdminWeb")]
+        [Authorize(Roles = "AdminGeneral")]
         //POST: Categoria/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
