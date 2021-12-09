@@ -121,15 +121,10 @@
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
 
-        if (!valueElement || !quantity.value) {
-            valid.innerHTML = detail.EqualsZero(id);
-            valcant.innerHTML = detail.EmptyOrMinor(quantity.value);
-        }
-        else if (quantity.value < 0) {
-            valid.innerHTML = "";
-            valcant.innerHTML = detail.LessThanZero(quantity.value);
-        }
-        else {
+        valid.innerHTML = detail.EqualsZero(id);
+        valcant.innerHTML = detail.EmptyOrMinorOrZero(quantity.value);
+
+        if (id != 0 && valcant.innerHTML == "") {
             valid.innerHTML = "";
             valcant.innerHTML = "";
             //crear filas
@@ -213,13 +208,9 @@
         let td_input_cant = document.getElementById("tdCant");
         let valcant = document.getElementById("span-detalle-cantidad");
 
-        if (!td_input_cant.value) {
-            valcant.innerHTML = detail.EmptyOrMinor(td_input_cant.value);
-        }
-        else if (td_input_cant.value < 0) {
-            valcant.innerHTML = detail.LessThanZero(td_input_cant.value);
-        }
-        else {
+        valcant.innerHTML = detail.EmptyOrMinorOrZero(td_input_cant.value);
+
+        if (valcant.innerHTML == "") {
             enEdicion = false;
             valedicion.innerHTML = "";
 

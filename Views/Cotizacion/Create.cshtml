@@ -202,19 +202,12 @@
         //si son símbolos
         //si cantidad es fraccion
         //validar que el descuento no exceda 1
-        if (!valueElement || !quantity.value || !price.value || !discount.value) {
-            valid.innerHTML = detail.EqualsZero(id);
-            valcant.innerHTML = detail.EmptyOrMinor(quantity.value);
-            valprec.innerHTML = detail.EmptyOrMinor(price.value);
-            valdesc.innerHTML = detail.EmptyOrMinor(discount.value);
-        }
-        else if (quantity.value < 0 || price.value < 0 || discount.value < 0) {
-            valid.innerHTML = "";
-            valcant.innerHTML = detail.LessThanZero(quantity.value);
-            valprec.innerHTML = detail.LessThanZero(price.value);
-            valdesc.innerHTML = detail.LessThanZero(discount.value);
-        }
-        else {
+        valid.innerHTML = detail.EqualsZero(id);
+        valcant.innerHTML = detail.EmptyOrMinorOrZero(quantity.value);
+        valprec.innerHTML = detail.EmptyOrMinor(price.value);
+        valdesc.innerHTML = detail.EmptyOrMinor(discount.value);
+
+        if (id != 0 && valcant.innerHTML == "" && valprec.innerHTML == "" && valdesc.innerHTML == "") {
             valid.innerHTML = "";
             valcant.innerHTML = "";
             valprec.innerHTML = "";
@@ -328,17 +321,11 @@
         let valprec = document.getElementById("span-detalle-precio");
         let valdesc = document.getElementById("span-detalle-descuento");
         
-        if (!td_input_cant.value || !td_input_cost.value || !td_input_desc.value) {
-            valcant.innerHTML = detail.EmptyOrMinor(td_input_cant.value);
-            valprec.innerHTML = detail.EmptyOrMinor(td_input_cost.value);
-            valdesc.innerHTML = detail.EmptyOrMinor(td_input_desc.value);
-        }
-        else if (td_input_cant.value < 0 || td_input_cost.value < 0 || td_input_desc.value < 0) {
-            valcant.innerHTML = detail.LessThanZero(td_input_cant.value);
-            valprec.innerHTML = detail.LessThanZero(td_input_cost.value);
-            valdesc.innerHTML = detail.LessThanZero(td_input_desc.value);
-        }
-        else {
+        valcant.innerHTML = detail.EmptyOrMinorOrZero(td_input_cant.value);
+        valprec.innerHTML = detail.EmptyOrMinor(td_input_cost.value);
+        valdesc.innerHTML = detail.EmptyOrMinor(td_input_desc.value);
+
+        if (valcant.innerHTML == "" || valprec.innerHTML == "" || valdesc.innerHTML == "") {
             enEdicion = false;
             valedicion.innerHTML = "";
 
