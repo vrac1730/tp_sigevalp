@@ -60,6 +60,7 @@
         </div>
 
         <div id="div-detalle">
+            <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
             <table id="tabla-detalle" class="table table-hover">
                 <thead>
                     <tr>
@@ -78,11 +79,13 @@
                         <th>
                             @Html.DisplayNameFor(model => model.DetalleSolicitud[0].observacion)
                         </th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-cuerpo">
                 </tbody>
             </table>
+            <div id="detalle-input"></div>
         </div>
     </div>
 
@@ -132,6 +135,8 @@
 
 <script>
     var n = 0;
+    let body = document.getElementById("tabla-cuerpo");
+    let div_detalle_input = document.getElementById("detalle-input");
     function Agregar() {
         //obtenemos valores de elementos
         let quantity = document.getElementById("cantSolicitada");
@@ -139,7 +144,6 @@
         let nameElement = selectElement.options[selectElement.selectedIndex].text;
         let valueElement = selectElement.options[selectElement.selectedIndex].value;
         let id = detail.GetId(valueElement);
-        let body = document.getElementById("tabla-cuerpo");
 
         let valid = document.getElementById("span-prod");
         let valcant = document.getElementById("span-cant");
@@ -155,55 +159,177 @@
         else {
             valid.innerHTML = "";
             valcant.innerHTML = "";
-            //crear elementos del cuerpo de la tabla
+            //crear filas
             let tr = document.createElement("tr");
-            let tdid = document.createElement("td");
-            let tdnombre = document.createElement("td");
-            let tdsolicitado = document.createElement("td");
-            let tdentregado = document.createElement("td");
-            let tdalerta = document.createElement("td");
-            //asigna jerarquía de elementos
-            tr.appendChild(tdid);
-            tr.appendChild(tdnombre);
-            tr.appendChild(tdsolicitado);
-            tr.appendChild(tdentregado);
-            tr.appendChild(tdalerta);
-            tdid.innerHTML = valueElement;
-            tdnombre.innerHTML = nameElement
-            tdsolicitado.innerHTML = quantity.value;
-            tdentregado.innerHTML = 0;
-            tdalerta.innerHTML = "Pendiente";
             body.appendChild(tr);
+            tr.id = n;
+            //celdas
+            detail.createTd(valueElement, tr);
+            detail.createTd(nameElement, tr);
+            detail.createTd(quantity.value, tr);
+            detail.createTd(0, tr);
+            detail.createTd("Pendiente", tr);
+            //botones 
+            let tdopccion = document.createElement("td");
+            tr.appendChild(tdopccion);
+            detail.createButton("Editar", tdopccion, function () { Editar(this) });
+            detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            
+            //crear div para inputs
+            let detalle_input = document.createElement("div");
+            detalle_input.id = "input-" + n;
+            div_detalle_input.appendChild(detalle_input);
             //crear elementos input
-            let div = document.getElementById("div-detalle");
-            let index = document.createElement("input")
-            let idProd = document.createElement("input")
-            let cantSol = document.createElement("input")
-            let cantEnt = document.createElement("input")
-            //asignar valores
-            index.name = "DetalleSolicitud.Index";
-            index.value = n;
-            index.type = "hidden";
-            idProd.name = "DetalleSolicitud[" + n + "].idProducto";
-            idProd.value = id;
-            idProd.type = "hidden";
-            cantSol.name = "DetalleSolicitud[" + n + "].cantSolicitada";
-            cantSol.value = quantity.value;
-            cantSol.type = "hidden";
-            cantEnt.name = "DetalleSolicitud[" + n + "].cantEntregada";
-            cantEnt.value = 0;
-            cantEnt.type = "hidden";
-            //asignar jerarquía de elementos
-            div.appendChild(index);
-            div.appendChild(idProd);
-            div.appendChild(cantSol);
-            div.appendChild(cantEnt);
-
+            detail.createInput(n, "DetalleSolicitud", "idProducto", id, detalle_input);
+            detail.createInput(n, "DetalleSolicitud", "cantSolicitada", quantity.value, detalle_input);
+            detail.createInput(n, "DetalleSolicitud", "cantEntregada", 0, detalle_input);
+        
             selectElement.value = "";
             quantity.value = "";
             n++;
         }
     }
+
+    var enEdicion = false;
+    let valedicion = document.getElementById("span-edicion");
+    function Editar(nodo) {
+        if (enEdicion == false) {
+            let td = nodo.parentNode;
+            let tr = td.parentNode;
+            let nodostr = tr.getElementsByTagName("td");
+
+            let tdid = nodostr[0].innerHTML;
+            let tdnombre = nodostr[1].innerHTML;
+            let tdrequerido = nodostr[2].innerHTML;
+            let tdentregado = nodostr[3].innerHTML;
+            let tdalerta = nodostr[4].innerHTML;
+            let opccionId = "tdopccion-" + detail.GetId(tdid);
+            console.log(tdid);
+            console.log(tdnombre);
+            console.log(tdrequerido);
+            console.log(tdentregado);
+            console.log(tdalerta);
+
+            let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
+                '<td>' + '<input id = "tdCant" type = "text" value = "' + tdrequerido + '"size = "7">' +
+                '<span id="span-detalle-cantidad" class="field-validation-error text-danger"></span>' + '</td>' +
+                '<td>' + tdentregado + '</td>' +
+                '<td>' + tdalerta + '</td>' +
+                '<td id = "' + opccionId + '"></td>';
+            tr.innerHTML = nuevotd;
+
+            let tdopccion = document.getElementById(opccionId);
+            detail.createButton("Aceptar", tdopccion, function () { Aceptar(this) });
+            detail.createButton("Cancelar", tdopccion, function () { Cancelar(this) });
+
+            enEdicion = true;
+        }
+        else {
+            valedicion.innerHTML = "Termine de editar un detalle. Para continuar...";
+        }
+    }
+    function Aceptar(nodo) {
+        let td = nodo.parentNode;
+        let tr = td.parentNode;
+        let nodostr = tr.getElementsByTagName("td");        
+        let tdid = nodostr[0].innerHTML;
+        let tdnombre = nodostr[1].innerHTML;
+        let tdentregado = nodostr[3].innerHTML;
+        let tdalerta = nodostr[4].innerHTML;        
+        //si son símbolos
+        //si cantidad es fraccion
+        let td_input_cant = document.getElementById("tdCant");
+        let valcant = document.getElementById("span-detalle-cantidad");        
+
+        if (!td_input_cant.value) {
+            valcant.innerHTML = detail.EmptyOrMinor(td_input_cant.value);
+        }
+        else if (td_input_cant.value < 0) {
+            valcant.innerHTML = detail.LessThanZero(td_input_cant.value);
+        }
+        else {
+            enEdicion = false;
+            valedicion.innerHTML = "";
+            
+            let opccionId = "tdopccion-" + detail.GetId(tdid);            
+
+            //reemplazar data de inputs a celdas        
+            let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
+                '<td>' + td_input_cant.value + '</td>' +
+                '<td>' + tdentregado + '</td>' +
+                '<td>' + tdalerta + '</td>' +
+                '<td id = "' + opccionId + '"></td>';
+            tr.innerHTML = nuevotd;
+
+            let tdopccion = document.getElementById(opccionId);
+            detail.createButton("Editar", tdopccion, function () { Editar(this) });
+            detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+            
+            //modificar elementos inputs
+            let in_detalle_cantidad = document.getElementById("DetalleSolicitud[" + tr.id + "].cantSolicitada");
+            in_detalle_cantidad.value = td_input_cant.value;
+        }
+    }
+    function Cancelar(nodo) {
+        enEdicion = false;
+        valedicion.innerHTML = "";
+
+        let td = nodo.parentNode;
+        let tr = td.parentNode;
+        let nodostr = tr.getElementsByTagName("td");
+
+        let tdid = nodostr[0].innerHTML;
+        let tdnombre = nodostr[1].innerHTML;
+        let tdrequerido = document.getElementById("DetalleSolicitud[" + tr.id + "].cantSolicitada");
+        let tdentregado = nodostr[3].innerHTML;
+        let tdalerta = nodostr[4].innerHTML;
+        let opccionId = "tdopccion-" + detail.GetId(tdid);
+
+        let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
+            '<td>' + tdrequerido.value + '</td>' +
+            '<td>' + tdentregado + '</td>' +
+            '<td>' + tdalerta + '</td>' +
+            '<td id = "' + opccionId + '"></td>';
+        tr.innerHTML = nuevotd;
+
+        let tdopccion = document.getElementById(opccionId);
+        detail.createButton("Editar", tdopccion, function () { Editar(this) });
+        detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+    }
+    function Eliminar(nodo) {
+        let td = nodo.parentNode;
+        let tr = td.parentNode;
+        var inputIndex = parseInt(tr.id);
+        console.log(div_detalle_input);
+        console.log(n);
+        console.log(tr.id);
+                
+        //no eliminar antes de obtener el tr.id
+        let deleteinput = document.getElementById("input-" + tr.id);
+        div_detalle_input.removeChild(deleteinput);
+        let deletetr = document.getElementById(tr.id);
+        body.removeChild(deletetr);
+        //si hay más de un detalle y la selección no es el ultimo detalle, entonces elimina, reinicia n y ordena
+        //si es diferente eliminar y reiniciar
+        if (n > 1 && inputIndex != n - 1) {
+            for (var i = inputIndex; i < n - 1; i++) {//indice for de acuerdo a selección
+                var nextInputId = inputIndex + 1;
+                var nextinput = document.getElementById("input-" + nextInputId);
+                var nextbody = document.getElementById(nextInputId);
+                var input = nextinput.children;
+                console.log(nextinput);
+                //cambiar id del div y el nombre de inputs
+                nextbody.id = inputIndex;
+                nextinput.id = "input-" + inputIndex;
+                detail.createInputId(input[0], inputIndex, "DetalleSolicitud", "idProducto");
+                detail.createInputId(input[1], inputIndex, "DetalleSolicitud", "cantSolicitada");
+                detail.createInputId(input[2], inputIndex, "DetalleSolicitud", "cantEntregada");
+                inputIndex++;
+                console.log(inputIndex);
+            }
+        }
+        n--;
+    }  
 </script>
 
 @section Scripts {

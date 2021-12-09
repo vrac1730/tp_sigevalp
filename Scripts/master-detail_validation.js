@@ -1,5 +1,5 @@
 ﻿export function EqualsZero(c) {
-    return c == 0 ? "Seleccione un producto" : "";
+    return c == 0 ? "Este campo es requerido" : "";
 }
 export function LessThanZero(c) {
     return c < 0 ? "Este campo no puede ser negativo" : "";
@@ -9,6 +9,24 @@ export function IsEmpty(c) {
 }
 export function EmptyOrMinor(c) {
     return c == "" ? IsEmpty(c) : LessThanZero(c);
+}
+export function EmptyOrMinorOrZero(c) {
+    return c == "" ? IsEmpty(c) : c < 0 ? LessThanZero(c) : EqualsZero(c);
+}
+export function EqualsZeroBool(c) {
+    return c == 0 ? true : false;
+}
+export function LessThanZeroBool(c) {
+    return c < 0 ? true : false;
+}
+export function IsEmptyBool(c) {
+    return c == "" ? true : false;
+}
+export function EmptyOrMinorBool(c) {
+    return c == "" ? IsEmptyBool(c) : LessThanZeroBool(c);
+}
+export function EmptyOrMinorOrZeroBool(c) {
+    return c == "" ? IsEmptyBool(c) : c < 0 ? LessThanZeroBool(c) : EqualsZeroBool(c);
 }
 export function IsSymbol(c) {
 } 
