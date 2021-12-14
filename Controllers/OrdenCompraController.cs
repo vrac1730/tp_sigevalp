@@ -75,6 +75,7 @@ namespace SIGEVALP.Controllers
             //Traer producto aprobados de cotizacion cuyo stock min y max sea diferente de 0
             ViewBag.Productos = db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado == "Aprobado");
             ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+            ViewData["ProductosSol"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 5));
             return View(); 
         }
         [Authorize(Roles = "JefeAlmacen")]
@@ -93,6 +94,7 @@ namespace SIGEVALP.Controllers
                     {
                         ViewBag.Productos = db.DetallesCotizaciones.Include(o => o.Producto).Where(o => o.idProveedor == id & o.Cotizacion.estado == "Aprobado");
                         ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+                        ViewData["ProductosSol"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 5));
                         return View();
                     }                   
 

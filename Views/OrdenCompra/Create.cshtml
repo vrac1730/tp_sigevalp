@@ -21,89 +21,123 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">        
-        @if (Url.RequestContext.RouteData.Values.ContainsKey("id") == false)
-        {
-            <div class="form-group">
-                @Html.LabelFor(model => model.Proveedor.nombre, new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.DropDownList("idProveedor", new SelectList(ViewBag.Proveedores, "id", "nombre"), "Seleccione Proveedor", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
-                </div>
+<div class="form-horizontal">
+    @if (Url.RequestContext.RouteData.Values.ContainsKey("id") == false)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Proveedor.nombre, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("idProveedor", new SelectList(ViewBag.Proveedores, "id", "nombre"), "Seleccione Proveedor", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idProveedor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Seleccionar" class="btn btn-default" />
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Hidden("idProveedor", Url.RequestContext.RouteData.Values["id"])
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Usuario.username, "Usuario", new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownList("idUsuario", new SelectList(ViewBag.Usuarios, "id", "Persona.nombre"), "Seleccione Usuario", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaOrden, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("fechaOrden", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control", @disabled = "disabled" })
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Seleccionar" class="btn btn-default" />
-                </div>
+            @Html.LabelFor(model => model.fechaPago, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.TextBox("fechaPago", DateTime.Today.AddDays(5).ToString("yyyy-MM-dd"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.fechaPago, "", new { @class = "text-danger" })
             </div>
-        }
-        else
-        {
-            @Html.Hidden("idProveedor", Url.RequestContext.RouteData.Values["id"])
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Usuario.username, "Usuario", new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.DropDownList("idUsuario", new SelectList(ViewBag.Usuarios, "id", "Persona.nombre"), "Seleccione Usuario", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Producto</label>
+            <div id="id-prod" class="col-md-3">
+                @Html.DropDownList("idProducto", new SelectList(ViewBag.Productos, "Producto.codigo", "Producto.nombre"), "Seleccionar Producto", new { @class = "form-control col-md-3" })
+                <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.fechaOrden, new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.TextBox("fechaOrden", DateTime.Today.ToString("yyyy-MM-dd"), new { @class = "form-control", @disabled = "disabled" })
-                </div>
-
-                @Html.LabelFor(model => model.fechaPago, new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.TextBox("fechaPago", DateTime.Today.AddDays(5).ToString("yyyy-MM-dd"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.fechaPago, "", new { @class = "text-danger" })
-                </div>
+            <label class="control-label col-md-2">Cantidad</label>
+            <div id="cant-rec" class="col-md-3">
+                <input type="text" id="cantidad" class="form-control" />
+                <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label class="control-label col-md-2">Producto</label>
-                <div id="id-prod" class="col-md-3">
-                    @Html.DropDownList("idProducto", new SelectList(ViewBag.Productos, "Producto.codigo", "Producto.nombre"), "Seleccionar Producto", new { @class = "form-control col-md-3" })
-                    <span id="span-prod" class="field-validation-error text-danger" text-danger></span>
-                </div>
-
-                <label class="control-label col-md-2">Cantidad</label>
-                <div id="cant-rec" class="col-md-3">
-                    <input type="text" id="cantidad" class="form-control" />
-                    <span id="span-cant" class="field-validation-error text-danger" text-danger></span>
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="agregar" type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
+                <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
+        </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="agregar" type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
-                    <input type="submit" value="Registrar" class="btn btn-default" />
-                </div>
-            </div>
-
-            <div id="div-detalle">
-                <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
-                <table id="tabla-detalle" class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Recibido</th>
-                            <th>Observación</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-cuerpo">
-                    </tbody>
-                </table>
-                <div id="detalle-input"></div>
-            </div>
-        }
-    </div>
+        <div id="div-detalle">
+            <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
+            <table id="tabla-detalle" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Recibido</th>
+                        <th>Observación</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-cuerpo">
+                </tbody>
+            </table>
+            <div id="detalle-input"></div>
+        </div>
+        <h4>Productos Sugeridos:</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Observación</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in ViewData["ProductosSol"] as IQueryable<SIGEVALP.Models.ProductoxAlmacen>)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.nombre)
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>                 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producto.Alerta.nombre)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
 }
 
 <script>
