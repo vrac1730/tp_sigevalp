@@ -29,9 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.fechaPago)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.montoTotal)
-        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
         <th>Opción</th>
     </tr>
 
@@ -56,9 +56,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.fechaPago)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.montoTotal)
-        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
         <td>
             @Html.ActionLink("Ver", "Details", new { id = item.id })
         </td>

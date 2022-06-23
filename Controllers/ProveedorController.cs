@@ -43,18 +43,19 @@ namespace SIGEVALP.Controllers
             
             return View(proveedor);
         }
-        [Authorize(Roles = "AdminGeneral")]
+
         // GET: Proveedors/Create
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create()
         {
             return View();
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }                
         // POST: Proveedors/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create([Bind(Include = "id,nombre,direccion,correo,telefono,ruc,razon_social")] Proveedor proveedor)
         {
             if (!ModelState.IsValid)
@@ -64,8 +65,9 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminGeneral")]
+
         // GET: Proveedors/Edit/5
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit(int? id)
         {
             if (id == null)            
@@ -77,13 +79,13 @@ namespace SIGEVALP.Controllers
                 return HttpNotFound();
             
             return View(proveedor);
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }                
         // POST: Proveedors/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit([Bind(Include = "id,nombre,direccion,correo,telefono,ruc,razon_social")] Proveedor proveedor)
         {
             if (!ModelState.IsValid)

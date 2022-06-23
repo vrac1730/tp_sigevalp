@@ -43,19 +43,20 @@ namespace SIGEVALP.Controllers
 
             return View(producto);
         }
-        [Authorize(Roles = "AdminGeneral")]
+
         // GET: Producto/Create
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Create()
         {
             ViewBag.Categorias = db.Categorias;
             return View();
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }        
         // POST: Producto/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Create([Bind(Include = "id,codigo,nombre,descripcion,marca,idCategoria")] Producto producto)
         {
             if (!ModelState.IsValid)
@@ -81,8 +82,9 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminGeneral")]
+
         // GET: Producto/Edit/5
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Edit(int? id)
         {
             if (id == null)            
@@ -95,13 +97,13 @@ namespace SIGEVALP.Controllers
 
             ViewBag.Categorias = db.Categorias;
             return View(producto);
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }        
         // POST: Producto/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Edit([Bind(Include = "id,codigo,nombre,descripcion,marca,idCategoria")] Producto producto)
         {
             if (!ModelState.IsValid)

@@ -29,7 +29,7 @@ namespace SIGEVALP.Controllers
         {
             var result = db.ProductosxAlmacen.Include(p => p.Producto.Categoria);
             //validar simbolos y caracteres no permitidos
-            //mostrar otra vista para resultados no encontrados?
+            //resultados no encontrados
             if (String.IsNullOrWhiteSpace(nombre) && String.IsNullOrWhiteSpace(codigo))
                 return View(check, result);
 
@@ -41,8 +41,10 @@ namespace SIGEVALP.Controllers
 
             return View(check, result);
         }
-        [Authorize(Roles = "JefeAlmacen")]
+
+
         // GET: ProductoxAlmacen/Edit/5
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -55,13 +57,13 @@ namespace SIGEVALP.Controllers
 
             producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
             return View(producto);
-        }
-        [Authorize(Roles = "JefeAlmacen")]
+        }                
         // POST: ProductoxAlmacen/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult Edit([Bind(Include = "id,stock_min,stock_max")] ProductoxAlmacen producto)
         {
             if (!ModelState.IsValid)
@@ -69,11 +71,11 @@ namespace SIGEVALP.Controllers
                 producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
                 return View(producto);
             }
-
+            
             var prod = db.ProductosxAlmacen.Find(producto.id);
             prod.stock_min = producto.stock_min;
             prod.stock_max = producto.stock_max;
-            db.SaveChanges();
+            db.SaveChanges();            
             return RedirectToAction("Index");
         }
 

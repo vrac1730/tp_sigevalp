@@ -57,8 +57,9 @@ namespace SIGEVALP.Controllers
 
             return View(ordenCompra);
         }
-        [Authorize(Roles = "JefeAlmacen")]
+
         // GET: OrdenCompra/Create        
+        [Authorize(Roles = Rol.JefeAlmacen)]
         public ActionResult Create(int? id)//idproveedor
         {
             if (id == null)
@@ -77,13 +78,13 @@ namespace SIGEVALP.Controllers
             ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
             ViewData["ProductosSol"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 5));
             return View(); 
-        }
-        [Authorize(Roles = "JefeAlmacen")]
+        }       
         // POST: OrdenCompra/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Rol.JefeAlmacen)]
         public ActionResult Create(int? id, [Bind(Include = "id,codigo,fechaOrden,fechaPago,montoTotal,idUsuario,idProveedor,DetalleCompras")] OrdenCompra ordenCompra)
         {
             if (ordenCompra.idProveedor != 0)
@@ -110,7 +111,7 @@ namespace SIGEVALP.Controllers
                     foreach (var item in ordenCompra.DetalleCompras)
                     {
                         var prod = db.Productos.Find(item.idProducto);
-                        prod.idAlerta = 7;
+                        prod.idAlerta = 5;//Pendiente
                     }
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -120,8 +121,10 @@ namespace SIGEVALP.Controllers
             ViewBag.Proveedores = db.Proveedores;
             return View();
         }
-        [Authorize(Roles = "JefeAlmacen")]
+
+        //el detalle(estado y cant requerida) y estado general se actualizan desde aquí      
         // GET: OrdenCompra/Edit/5
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult EditDetail(int? id)
         {
             if (id == null)
@@ -134,13 +137,13 @@ namespace SIGEVALP.Controllers
             
             detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
             return View(detalleCompra);
-        }
-        [Authorize(Roles = "JefeAlmacen")]
+        }        
         // POST: OrdenSalida/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult EditDetail([Bind(Include = "id,cantidadRecibida,idProducto")] DetalleCompra detalleCompra)
         {
             if (!ModelState.IsValid) 
@@ -148,7 +151,21 @@ namespace SIGEVALP.Controllers
                 detalleCompra.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleCompra.idProducto);
                 return View(detalleCompra);
             }
-            
+
+            /*            
+          //Ingreso de Insumos a almacen:
+          //al recibir nuevos insumos, incrementar cantidad recibida de detalle orden
+
+          //compara con cantidad requerida, cambiar estado detalle
+          if (detalleCompra.cantidad > detalleCompra.cantidadRecibida) detalleCompra.Producto.idAlerta = 8;//Recibido P.
+          detalleCompra.Producto.idAlerta = 7;//Recibido
+          //al recibir nuevos insumos, cambiar el estado de la orden
+          var orden = db.OrdenesCompras.Find(detalleOrden.idOrdenCompra);
+          foreach (var item in orden.DetalleCompras)
+          {
+
+          }*/
+
             var detalle = db.DetallesCompras.Include(d => d.Producto).First(d => d.id == detalleCompra.id);
             var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleCompra.idProducto);
 
@@ -156,10 +173,8 @@ namespace SIGEVALP.Controllers
             alm.cantidad += (detalleCompra.cantidadRecibida - detalle.cantidadRecibida);
             detalle.cantidadRecibida = detalleCompra.cantidadRecibida;
             detalle.fecha = DateTime.Now;
-            //validar existencias en almacen
-            //evaluar cambio alerta de prodxalmacen
-
             db.SaveChanges();
+
             return RedirectToAction("Details", new { id = detalle.idOrdenCompra });
         }
     }

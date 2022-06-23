@@ -98,10 +98,12 @@
     let bool = document.getElementById("check");
     function Search() {
         bool.value = "Index";
+        form.setAttribute("action", "/ProductoxAlmacen/");
         form.submit();
     }
     function Report() {
         bool.value = "Report";
+        form.setAttribute("action", "/ProductoxAlmacen/");
         form.submit();
     }
     function Print() {

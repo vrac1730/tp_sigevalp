@@ -10,7 +10,6 @@ namespace SIGEVALP.Controllers
 {
     public class LocalController : Controller
     {
-        // Instancia definida para llamar las a clases de la tabla
         private ApplicationDbContext db;
 
         public LocalController()
@@ -23,22 +22,21 @@ namespace SIGEVALP.Controllers
             db.Dispose();
         }
 
-        // GET: Local/Index
-        // Se ocupa de la primera interacción con el usuario
+        // GET: Local/Index        
         public ActionResult Index()
         {            
             return View(db.Locales);
         }
-        //En la ruta busca por defecto al controlador (Home), sino a la action (Index) y por último el id
-        [Authorize(Roles = "AdminGeneral")]
+        
         //GET: Local/Create
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create() {
             return View();
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }        
         //POST: Local/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create([Bind(Include = "id,nombre,direccion,telefono,ruc,razon_social")] Local local) 
         {
             if (!ModelState.IsValid) 
@@ -48,8 +46,9 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminGeneral")]
+        
         // GET: Local/Edit
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -62,10 +61,10 @@ namespace SIGEVALP.Controllers
             
             return View(local);
         }
-        [Authorize(Roles = "AdminGeneral")]
         // Post: Local/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit([Bind(Include = "id,nombre,direccion,telefono,ruc,razon_social")] Local local)
         {
             if (!ModelState.IsValid)

@@ -53,8 +53,10 @@ namespace SIGEVALP.Controllers
             solicitud.Usuario = db.Usuarios.Include(u => u.Local).Include(u => u.Persona).Single(u => u.id == solicitud.idUsuario);
             return View(solicitud);
         }
-        [Authorize(Roles = "AdminGeneral")]
+
+
         // GET: Solicitud/Create
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Create()
         {
             ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
@@ -62,13 +64,13 @@ namespace SIGEVALP.Controllers
             //db.Productos.Where(p => p.cantidad <= p.stock_min & (p.idAlerta == 4 || p.idAlerta == 8));
             ViewData["ProductosA"] = db.ProductosxAlmacen.Include(p => p.Producto.Alerta).Where(p => p.cantidad <= p.stock_min & (p.Producto.idAlerta == 4));
             return View();
-        }
-        [Authorize(Roles = "AdminGeneral")]
+        }        
         // POST: Solicitud/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Rol.AdminGeneral)]
         public ActionResult Create([Bind(Include = "id,fecha,codigo,estado,idUsuario,DetalleSolicitud")] Solicitud solicitud)
         {
             if (!ModelState.IsValid)
@@ -96,8 +98,9 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");            
         }
-        [Authorize(Roles = "JefeAlmacen")]
+
         // GET: Solicitud/Edit/5
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult EditDetail(int? id)
         {
             if (id == null)
@@ -110,13 +113,13 @@ namespace SIGEVALP.Controllers
             
             detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
             return View(detalleSolicitud);
-        }
-        [Authorize(Roles = "JefeAlmacen")]
+        }                
         // POST: Solicitud/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.JefeAlmacen, Rol.Almacenero)]
         public ActionResult EditDetail([Bind(Include = "id,cantEntregada,idProducto")] DetalleSolicitud detalleSolicitud)
         {
             if (!ModelState.IsValid) 
@@ -124,7 +127,7 @@ namespace SIGEVALP.Controllers
                 detalleSolicitud.Producto = db.Productos.Include(p => p.Alerta).First(p => p.id == detalleSolicitud.idProducto);
                 return View(detalleSolicitud);
             }
-
+            //al registrar la salida de insumos, cambiar estado de solicitud sin exceder stock(cambiar estado de stock)
             var detalle = db.DetallesSolicitudes.Include(d => d.Producto).First(d => d.id == detalleSolicitud.id);
             var alm = db.ProductosxAlmacen.FirstOrDefault(a => a.idProducto == detalleSolicitud.idProducto);
 
@@ -132,8 +135,6 @@ namespace SIGEVALP.Controllers
             detalle.cantEntregada = detalleSolicitud.cantEntregada;
             alm.cantidad -= (detalleSolicitud.cantEntregada - detalle.cantEntregada);
             detalle.fecha = DateTime.Now;
-            //validar existencias en almacen
-            //evaluar cambio alerta de prodxalmacen
 
             db.SaveChanges();
             return RedirectToAction("Details", new { id = detalle.idSolicitud });

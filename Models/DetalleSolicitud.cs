@@ -21,8 +21,8 @@ namespace SIGEVALP.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten  positivos.")]
         public int cantEntregada { get; set; }
 
-        [DisplayName("Observación")]
-        public string observacion { get; set; }
+        [DisplayName("Estado")]
+        public string estado { get; set; }
 
         [DisplayName("Fecha")]
         [Column(TypeName = "datetime2")]

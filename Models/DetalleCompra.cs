@@ -21,6 +21,9 @@ namespace SIGEVALP.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten  positivos.")]
         public int cantidadRecibida { get; set; }
 
+        [DisplayName("Estado")]
+        public string estado { get; set; }
+
         [DisplayName("Total")]
         public double total { get; set; }
 
@@ -36,7 +39,5 @@ namespace SIGEVALP.Models
 
         [ForeignKey("idProducto")]
         public Producto Producto { get; set; }
-        //[ForeignKey("idProducto, idProveedor")]
-        //public DetalleCotizacion DetalleCotizacion { get; set; }
     }
 }

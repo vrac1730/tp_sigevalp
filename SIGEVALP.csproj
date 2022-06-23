@@ -224,11 +224,14 @@
     <Compile Include="Migrations\202112030029494_SeedUsers.Designer.cs">
       <DependentUpon>202112030029494_SeedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206180247290_DetallesEstado &amp; AuthorizeRoles .cs" />
+    <Compile Include="Migrations\202206180247290_DetallesEstado &amp; AuthorizeRoles .Designer.cs">
+      <DependentUpon>202206180247290_DetallesEstado &amp; AuthorizeRoles .cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
     <Compile Include="Models\Almacen.cs" />
-    <Compile Include="Models\AuthorizeRolesAttribute.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Cotizacion.cs" />
     <Compile Include="Models\DetalleCompra.cs" />
@@ -389,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112030029494_SeedUsers.resx">
       <DependentUpon>202112030029494_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206180247290_DetallesEstado &amp; AuthorizeRoles .resx">
+      <DependentUpon>202206180247290_DetallesEstado &amp; AuthorizeRoles .cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -25,7 +25,9 @@ namespace SIGEVALP.Models
         [DisplayName("Total")]
         public double total { get; set; }
 
-        //public int idAlerta { get; set; }
+        [DisplayName("Estado")]
+        public string estado { get; set; }
+
         public int idCotizacion { get; set; }
 
         [ForeignKey("idProducto")]
@@ -36,8 +38,5 @@ namespace SIGEVALP.Models
 
         [ForeignKey("idCotizacion")]
         public Cotizacion Cotizacion { get; set; }
-
-        //[ForeignKey("idAlerta")]
-        //public Alerta Alerta { get; set; }
     }
 }

@@ -28,16 +28,16 @@ namespace SIGEVALP.Controllers
             return View(db.Categorias);
         }
 
-        [Authorize(Roles = "AdminGeneral")]
         // GET: Categoria/Create
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create()
         {
             return View();
         }
-        [Authorize(Roles = "AdminGeneral")]
         //POST: Categoria/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Create([Bind(Include = "id, nombre, descripcion")]Categoria categoria)
         {
             if(!ModelState.IsValid) 
@@ -47,8 +47,9 @@ namespace SIGEVALP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "AdminGeneral")]
+        
         //GET: Categoria/Edit/5
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit(int? id)
         {
             if (id == null) 
@@ -61,10 +62,10 @@ namespace SIGEVALP.Controllers
             
             return View(categoria);
         }
-        [Authorize(Roles = "AdminGeneral")]
         //POST: Categoria/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Rol.AdminGeneral, Rol.AdminWeb)]
         public ActionResult Edit([Bind(Include = "id, nombre, descripcion")] Categoria categoria)
         {
             if(!ModelState.IsValid)

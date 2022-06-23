@@ -20,8 +20,8 @@ namespace SIGEVALP.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            context.Database.Delete();
-            context.Database.CreateIfNotExists();
+            //context.Database.Delete();
+            //context.Database.CreateIfNotExists();
 
             context.Personas.AddOrUpdate(x => x.id,
             new Persona() { id = 1, dni = 12345678, nombre = "Sebastián", aPaterno = "Rodríguez", aMaterno = "De La Torre Ugarte", celular = 123456789 },
@@ -58,10 +58,10 @@ namespace SIGEVALP.Migrations
             new Alerta() { id = 1, nombre = "Bajo Stock", descripcion = "" },
             new Alerta() { id = 2, nombre = "Punto Pedido", descripcion = "" },
             new Alerta() { id = 3, nombre = "Stock Disponible", descripcion = "" },
-            new Alerta() { id = 4, nombre = "Ninguna", descripcion = "" },
+            new Alerta() { id = 4, nombre = "Entregado", descripcion = "" },
             new Alerta() { id = 5, nombre = "Pendiente", descripcion = "" },
             new Alerta() { id = 6, nombre = "Entregado P.", descripcion = "" },
-            new Alerta() { id = 7, nombre = "En orden", descripcion = "" },
+            new Alerta() { id = 7, nombre = "Recibido", descripcion = "" },
             new Alerta() { id = 8, nombre = "Recibido P.", descripcion = "" },
             new Alerta() { id = 9, nombre = "Aprobado", descripcion = "" },
             new Alerta() { id = 10, nombre = "Rechazado", descripcion = "" }
@@ -126,14 +126,14 @@ namespace SIGEVALP.Migrations
             new Cotizacion() { id = 2, codigo = "0002", fecha = new DateTime(2021, 06, 03, 12, 20, 20), estado = "Pendiente", parcial = 277.5, descuento = 13.88, neto = 263.62, iva = 0.00, total = 263.62, idUsuario = 2, idProveedor = 1 },
             new Cotizacion() { id = 3, codigo = "0003", fecha = new DateTime(2021, 06, 03, 12, 21, 20), estado = "Aprobado", parcial = 279.5, descuento = 0.00, neto = 279.5, iva = 50.31, total = 329.81, idUsuario = 2, idProveedor = 2 }
             );
-            
-            context.DetallesSolicitudes.AddOrUpdate(x => new { x.idSolicitud, x.idProducto },
-            new DetalleSolicitud() { idSolicitud = 1, idProducto = 1, cantSolicitada = 100, cantEntregada = 0, observacion = "" },
-            new DetalleSolicitud() { idSolicitud = 1, idProducto = 2, cantSolicitada = 10, cantEntregada = 0, observacion = "" }
+
+            context.DetallesSolicitudes.AddOrUpdate(x => x.id,
+            new DetalleSolicitud() { id = 1, cantSolicitada = 100, cantEntregada = 0, estado = "Pendiente", idProducto = 1, idSolicitud = 1 },
+            new DetalleSolicitud() { id = 2, cantSolicitada = 10, cantEntregada = 0, estado = "Pendiente", idProducto = 2, idSolicitud = 1 }
             );
             context.DetallesCompras.AddOrUpdate(x => x.id,
-            new DetalleCompra() { id = 1, cantidad = 20, total = 410, cantidadRecibida = 0, idProducto = 5, idOrdenCompra = 1 },
-            new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, idProducto = 6, idOrdenCompra = 1 }
+            new DetalleCompra() { id = 1, cantidad = 20, total = 410, cantidadRecibida = 0, estado="Pendiente", idProducto = 5, idOrdenCompra = 1 },
+            new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, estado="Pendiente", idProducto = 6, idOrdenCompra = 1 }
             );
             context.DetallesCotizaciones.AddOrUpdate(x => new { x.idProveedor, x.idProducto },
             new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, cantidad = 5, descuento = 5.68, total = 113.50, idCotizacion = 2 },
