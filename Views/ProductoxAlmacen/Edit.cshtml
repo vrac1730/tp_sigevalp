@@ -1,12 +1,12 @@
 ﻿@model SIGEVALP.Models.ProductoxAlmacen
 
-<h2>Registro Insumo</h2>
+<h2>Modificar Nivel Stock</h2>
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
 <hr />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "ProductoxAlmacen", FormMethod.Post, new { @id = "form-edit-productoxAlmacen" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.id)
@@ -37,7 +37,7 @@
             @Html.LabelFor(model => model.stock_min, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.stock_min, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stock_min, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.stock_min, "", new { @class = "text-danger", @id = "span-stock_min" })
             </div>
         </div>
 
@@ -45,7 +45,7 @@
             @Html.LabelFor(model => model.stock_max, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.stock_max, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stock_max, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.stock_max, "", new { @class = "text-danger", @id = "span-stock_max" })
             </div>
         </div>
 
@@ -72,8 +72,39 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="button" value="Guardar" onclick="ComparaStock();" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+<script>
+    function ComparaStock() {
+        let min = document.getElementById("stock_min");
+        let max = document.getElementById("stock_max");
+        let form = document.getElementById("form-edit-productoxAlmacen");
+        let span_stock_max = document.getElementById("span-stock_max");
+        let span_stock_min = document.getElementById("span-stock_min");
+        span_stock_min.innerHTML = "";
+        span_stock_max.innerHTML = "";
+
+        let minNoEsNum = isNaN(min.value);
+        let maxNoEsNum = isNaN(max.value);
+
+        if (minNoEsNum)
+            span_stock_min.innerHTML = "El valor " + min.value + " no es válido para stock mínimo.";
+
+        if (maxNoEsNum) 
+            span_stock_max.innerHTML = "El valor " + max.value + " no es válido para stock máximo.";
+
+        if (!minNoEsNum && !maxNoEsNum) {
+            console.log(min.value)
+            console.log(max.value)
+
+            if (max.value <= min.value)
+                span_stock_max.innerHTML = "El nivel de stock no puede ser menor o igual al mínimo.";
+
+            else
+                form.submit();  
+        }              
+    }
+</script>

@@ -19,11 +19,11 @@ namespace SIGEVALP.Models
         public int cantidad { get; set; }
 
         [DisplayName("Stock mínimo")]
-        [Range(000, 25, ErrorMessage = "Valor positivo, no mayor a 25")]
+        [Range(000, 100, ErrorMessage = "El stock debe ser positivo, no mayor a 100")]
         public int stock_min { get; set; }
 
         [DisplayName("Stock máximo")]
-        [Range(0000, 1000, ErrorMessage = "Valor positivo, no mayor a 1000")]
+        [Range(0000, 1000, ErrorMessage = "El stock debe ser positivo, no mayor a 1000")]
         public int stock_max { get; set; }
 
         public int idProducto { get; set; }

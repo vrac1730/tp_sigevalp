@@ -68,7 +68,7 @@ namespace SIGEVALP.Controllers
         {
             if (!ModelState.IsValid)
             {
-                producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.idProducto);
+                producto.Producto = db.Productos.Include(p => p.Categoria).First(p => p.id == producto.id);
                 return View(producto);
             }
             

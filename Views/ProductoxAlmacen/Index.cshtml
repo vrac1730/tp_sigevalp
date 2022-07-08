@@ -57,7 +57,8 @@
 
 @foreach (var item in Model)
 {
-    var stockClass = item.stock_min == 0 || item.stock_max == 0 ? "label label-danger" : "";
+    var stockMin = item.stock_min == 0 ? "label label-danger" : "";
+    var stockMax = item.stock_max == 0 ? "label label-danger" : "";
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Producto.codigo)
@@ -69,10 +70,10 @@
             @Html.DisplayFor(modelItem => item.Producto.descripcion)
         </td>
         <td>
-            <span class="@stockClass">@item.stock_min</span>
+            <span class="@stockMin">@item.stock_min</span>
         </td>
         <td>
-            <span class="@stockClass">@item.stock_max</span>
+            <span class="@stockMax">@item.stock_max</span>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Producto.Categoria.nombre)
@@ -84,10 +85,7 @@
             @Html.DisplayFor(modelItem => item.cantidad)
         </td>
         <td>
-            @if (item.stock_min == 0 || item.stock_max == 0)
-            {
-                @Html.ActionLink("Editar", "Edit", new { id = item.id })
-            }
+            @Html.ActionLink("Editar", "Edit", new { id = item.id })
         </td>
     </tr>
 }
