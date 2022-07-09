@@ -65,12 +65,10 @@ namespace SIGEVALP.Controllers
                 return View();
             }          
             
-            var cat = db.Categorias.Find(producto.idCategoria);
-            var codcat = cat.nombre.Substring(0, 2).ToUpper();
-            var codmarca = producto.marca.Substring(0, 2).ToUpper();
+            var categoria = db.Categorias.Find(producto.idCategoria);
             var prod = db.Productos.ToList().Last();
             int n = prod.id + 1;
-            producto.codigo = codcat + codmarca + n;
+            producto.codigo = categoria.nombre.Substring(0, 2).ToUpper() + producto.marca.Substring(0, 2).ToUpper() + n;
             db.Productos.Add(producto);
 
             ProductoxAlmacen pro = new ProductoxAlmacen {

@@ -73,10 +73,41 @@ namespace SIGEVALP.Controllers
             cotizacion.fecha = DateTime.Now;
             var co = db.Cotizaciones.ToList().Last();
             int id = co.id + 1;
-            cotizacion.codigo = "000" + id;
+            cotizacion.codigo = "000" + id;//usuario(2), proveedor(2), id
+
             foreach (var item in cotizacion.DetalleCotizacion)
-            { 
-                item.idProveedor = cotizacion.idProveedor; 
+            {
+                var prod = db.Productos.Find(item.idProducto);
+                string codigo = prod.codigo + cotizacion.idProveedor;
+
+                var contDetalle = cotizacion.DetalleCotizacion.Count;
+                var contItem = cotizacion.DetalleCotizacion.IndexOf(item) + 1;
+                int duplicados = 0;
+
+                //comprobar duplicado de detalle con bd   
+                bool detalle = db.DetallesCotizaciones.Any(p => p.codigo == codigo);
+                //devolver detalles de cotizacion con estado "Duplicado"
+                if (detalle)
+                {
+                    item.estado = "Duplicado";
+                    duplicados++;
+                }
+                if (contItem == contDetalle)
+                {
+                    if (duplicados != 0) 
+                    {
+                        ViewBag.Productos = db.Productos;
+                        ViewBag.Proveedores = db.Proveedores;
+                        ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+                        return View(cotizacion);
+                    }
+                    else
+                    {
+                        item.idProveedor = cotizacion.idProveedor;
+                        item.codigo = codigo;
+                    }                    
+                }                
+                //en view evaluar contenido de estado y retornar msje                
             }
             db.Cotizaciones.Add(cotizacion);
             db.SaveChanges();

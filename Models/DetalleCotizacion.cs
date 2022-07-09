@@ -13,6 +13,8 @@ namespace SIGEVALP.Models
         public int idProducto { get; set; }
         public int idProveedor { get; set; }
 
+        public string codigo { get; set; }
+
         [DisplayName("Precio Unit.")]
         public double costo { get; set; }
         

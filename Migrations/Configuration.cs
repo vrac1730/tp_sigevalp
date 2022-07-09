@@ -136,12 +136,12 @@ namespace SIGEVALP.Migrations
             new DetalleCompra() { id = 2, cantidad = 20, total = 470, cantidadRecibida = 0, estado="Pendiente", idProducto = 6, idOrdenCompra = 1 }
             );
             context.DetallesCotizaciones.AddOrUpdate(x => new { x.idProveedor, x.idProducto },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, cantidad = 5, descuento = 5.68, total = 113.50, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, cantidad = 10, descuento = 0.00, total = 215.00, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, cantidad = 8, descuento = 8.20, total = 164.00, idCotizacion = 2 },
-            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, cantidad = 3, descuento = 0.00, total = 64.50, idCotizacion = 3 },
-            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, cantidad = 7, descuento = 7.18, total = 143.50, idCotizacion = 1 },
-            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, cantidad = 6, descuento = 7.05, total = 141.00, idCotizacion = 1 }
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 1, costo = 22.7, cantidad = 5, descuento = 5.68, total = 113.50, codigo= "PANI11", idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 2, costo = 21.5, cantidad = 10, descuento = 0.00, total = 215.00, codigo = "PANI12", idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 1, idProveedor = 3, costo = 20.5, cantidad = 8, descuento = 8.20, total = 164.00, codigo = "PANI13", idCotizacion = 2 },
+            new DetalleCotizacion() { idProducto = 2, idProveedor = 2, costo = 21.5, cantidad = 3, descuento = 0.00, total = 64.50, codigo = "PADO22", idCotizacion = 3 },
+            new DetalleCotizacion() { idProducto = 5, idProveedor = 3, costo = 20.5, cantidad = 7, descuento = 7.18, total = 143.50, codigo = "ACCO53", idCotizacion = 1 },
+            new DetalleCotizacion() { idProducto = 6, idProveedor = 3, costo = 23.5, cantidad = 6, descuento = 7.05, total = 141.00, codigo = "COMA63", idCotizacion = 1 }
             );
 
             context.ProductosxAlmacen.AddOrUpdate(x => x.id,

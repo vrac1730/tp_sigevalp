@@ -228,6 +228,10 @@
     <Compile Include="Migrations\202206180247290_DetallesEstado &amp; AuthorizeRoles .Designer.cs">
       <DependentUpon>202206180247290_DetallesEstado &amp; AuthorizeRoles .cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207082309411_Codigo en detalle.cs" />
+    <Compile Include="Migrations\202207082309411_Codigo en detalle.Designer.cs">
+      <DependentUpon>202207082309411_Codigo en detalle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Alerta.cs" />
@@ -395,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206180247290_DetallesEstado &amp; AuthorizeRoles .resx">
       <DependentUpon>202206180247290_DetallesEstado &amp; AuthorizeRoles .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207082309411_Codigo en detalle.resx">
+      <DependentUpon>202207082309411_Codigo en detalle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
