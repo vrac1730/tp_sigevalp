@@ -249,6 +249,8 @@
     let neto = document.getElementById("in_neto");
     let iva = document.getElementById("in_iva");
     let total_detalle = document.getElementById("in_total");
+    //span en agregar o editar
+    let valedicion = document.getElementById("span-edicion");
 
     function Agregar() {
         //identificamos elementos por id
@@ -267,70 +269,81 @@
         let valprec = document.getElementById("span-pre");
         let valdesc = document.getElementById("span-desc");
         //evaluar duplicados
-        //si son símbolos
-        //si cantidad es fraccion
-        //validar que el descuento no exceda 1
-        valid.innerHTML = detail.EqualsZero(id);
-        valcant.innerHTML = detail.EmptyOrMinorOrZero(quantity.value);
-        valprec.innerHTML = detail.EmptyOrMinor(price.value);
-        valdesc.innerHTML = detail.EmptyOrMinor(discount.value);
-
-        if (id != 0 && valcant.innerHTML == "" && valprec.innerHTML == "" && valdesc.innerHTML == "") {
-            valid.innerHTML = "";
-            valcant.innerHTML = "";
-            valprec.innerHTML = "";
-            valdesc.innerHTML = "";
-            //crear filas,
-            let tr = document.createElement("tr");
-            body.appendChild(tr);
-            tr.id = n;
-            //celdas,
-            detail.createTd(valueElement, tr);
-            detail.createTd(nameElement, tr);
-            detail.createTd(quantity.value, tr);
-            detail.createTd(price.value, tr);
-            detail.createTd(descuento, tr);
-            detail.createTd(total, tr);
-            //y botones de la tabla
-            let tdopccion = document.createElement("td");
-            tr.appendChild(tdopccion);
-            detail.createButton("Editar", tdopccion, function () { Editar(this) });
-            detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
-            //celdas costos totales
-            td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) + total;
-            td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) + descuento;
-            td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
-            td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
-            td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
-
-            //crear div para inputs
-            let detalle_input = document.createElement("div");
-            detalle_input.id = "input-" + n;
-            div_detalle_input.appendChild(detalle_input);
-            //crear inputs detalles
-            detail.createInput(n, "Cotizacion.DetalleCotizacion", "idProducto", id, detalle_input);
-            detail.createInput(n, "Cotizacion.DetalleCotizacion", "cantidad", quantity.value, detalle_input);
-            detail.createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
-            detail.createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
-            detail.createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
-            //inputs costos totales
-            parcial.value = td_parcial.innerHTML;
-            descuento_detalle.value = td_descuento.innerHTML;
-            neto.value = td_neto.innerHTML;
-            iva.value = td_igv.innerHTML;
-            total_detalle.value = td_total.innerHTML;
-
-            //limpiar inputs al agregar detalles
-            selectElement.value = "";
-            quantity.value = "";
-            price.value = "";
-            discount.value = "";
-            n++;
+        var codDetalleDuplicado = "";
+        valedicion.innerHTML = "";
+        for (var i = 0; i < body.children.length; i++) {
+            var tr = document.getElementById(i);
+            if (tr.getElementsByTagName("td")[0].innerHTML == valueElement) 
+                codDetalleDuplicado = valueElement;            
         }
+        if (codDetalleDuplicado.length > 0) {
+            valedicion.innerHTML = "No se puede ingresar producto duplicados. Codigo: " + codDetalleDuplicado;
+        }
+        else {
+            //si son símbolos
+            //si cantidad es fraccion
+            //validar que el descuento no exceda 1
+            valid.innerHTML = detail.EqualsZero(id);
+            valcant.innerHTML = detail.EmptyOrMinorOrZero(quantity.value);
+            valprec.innerHTML = detail.EmptyOrMinor(price.value);
+            valdesc.innerHTML = detail.EmptyOrMinor(discount.value);
+
+            if (id != 0 && valcant.innerHTML == "" && valprec.innerHTML == "" && valdesc.innerHTML == "") {
+                valid.innerHTML = "";
+                valcant.innerHTML = "";
+                valprec.innerHTML = "";
+                valdesc.innerHTML = "";
+                //crear filas,
+                let tr = document.createElement("tr");
+                body.appendChild(tr);
+                tr.id = n;
+                //celdas,
+                detail.createTd(valueElement, tr);
+                detail.createTd(nameElement, tr);
+                detail.createTd(quantity.value, tr);
+                detail.createTd(price.value, tr);
+                detail.createTd(descuento, tr);
+                detail.createTd(total, tr);
+                //y botones de la tabla
+                let tdopccion = document.createElement("td");
+                tr.appendChild(tdopccion);
+                detail.createButton("Editar", tdopccion, function () { Editar(this) });
+                detail.createButton("Eliminar", tdopccion, function () { Eliminar(this) });
+                //celdas costos totales
+                td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) + total;
+                td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) + descuento;
+                td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
+                td_igv.innerHTML = 0 * parseFloat(td_neto.innerHTML);
+                td_total.innerHTML = parseFloat(td_neto.innerHTML) + parseFloat(td_igv.innerHTML);
+
+                //crear div para inputs
+                let detalle_input = document.createElement("div");
+                detalle_input.id = "input-" + n;
+                div_detalle_input.appendChild(detalle_input);
+                //crear inputs detalles
+                detail.createInput(n, "Cotizacion.DetalleCotizacion", "idProducto", id, detalle_input);
+                detail.createInput(n, "Cotizacion.DetalleCotizacion", "cantidad", quantity.value, detalle_input);
+                detail.createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
+                detail.createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
+                detail.createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
+                //inputs costos totales
+                parcial.value = td_parcial.innerHTML;
+                descuento_detalle.value = td_descuento.innerHTML;
+                neto.value = td_neto.innerHTML;
+                iva.value = td_igv.innerHTML;
+                total_detalle.value = td_total.innerHTML;
+
+                //limpiar inputs al agregar detalles
+                selectElement.value = "";
+                quantity.value = "";
+                price.value = "";
+                discount.value = "";
+                n++;
+            }
+        }     
     }
 
     var enEdicion = false;
-    let valedicion = document.getElementById("span-edicion");
     function Editar(nodo) {
         if (enEdicion == false) {
             let td = nodo.parentNode;
