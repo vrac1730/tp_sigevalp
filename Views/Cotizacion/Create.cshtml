@@ -17,7 +17,11 @@
 </div>
 <hr />
 
-@using (Html.BeginForm("Create","Cotizacion",FormMethod.Post))
+@*<p>@Url.RequestContext.HttpContext.User.Identity.Name</p>
+<p>@Url.RequestContext.HttpContext.Request.Form.Get("Cotizacion.DetalleCotizacion[0].idProducto")</p>
+<p>@Url.RequestContext.HttpContext.Request.Form</p>*@
+
+@using (Html.BeginForm("Create", "Cotizacion", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -76,7 +80,7 @@
                     <span id="span-desc" class="field-validation-error text-danger" text-danger></span>
                 </div>
             </div>
-      
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
@@ -85,83 +89,147 @@
             </div>
         </div>
 
-            <div id="div-detalle">
-                <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
-                <table id="tabla-detalle" class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.codigo)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].cantidad)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].costo)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].descuento)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DetalleCotizacion[0].total)
-                            </th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-cuerpo">
-                    </tbody>
+        <div id="div-detalle">
+            @if (ViewBag.Duplicados != null)
+            {
+                <span class="field-validation-error text-danger" text-danger>Los siguiente productos ya han sido cotizados para este proveedor:</span>
+                foreach (var item in ViewBag.Duplicados)
+                {
+                    <p class="field-validation-error text-danger">@item</p>
+                }
+            }
+            <span id="span-edicion" class="field-validation-error text-danger" text-danger></span>
+            <table id="tabla-detalle" class="table table-hover">
+                <thead>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor(n => n.parcial)</td>
-                        <td id="td_parcial">0.00</td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.codigo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].Producto.nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].cantidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].costo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].descuento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DetalleCotizacion[0].total)
+                        </th>
+                        <th>Opciones</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor(n => n.descuento)</td>
-                        <td id="td_descuento">0.00</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor(n => n.neto)</td>
-                        <td id="td_neto">0.00</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor(n => n.iva)</td>
-                        <td id="td_igv">0.00</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor(n => n.total)</td>
-                        <td id="td_total">0.00</td>
-                    </tr>
-                </table>
-                <div id="detalle-input"></div>
-                <input id="in_parcial" name="Cotizacion.parcial" type="hidden">
-                <input id="in_descuento" name="Cotizacion.descuento" type="hidden">
-                <input id="in_neto" name="Cotizacion.neto" type="hidden">
-                <input id="in_iva" name="Cotizacion.iva" type="hidden">
-                <input id="in_total" name="Cotizacion.total" type="hidden">
+                </thead>
+                <tbody id="tabla-cuerpo">
+                    @if (ViewBag.Duplicados != null)
+                    {
+                        for (int i = 0; i < Model.DetalleCotizacion.Count; i++)
+                        {
+                            <tr id="@i">
+                                <td>@Model.DetalleCotizacion[i].Producto.codigo</td>
+                                <td>@Model.DetalleCotizacion[i].Producto.nombre</td>
+                                <td>@Model.DetalleCotizacion[i].cantidad</td>
+                                <td>@Model.DetalleCotizacion[i].costo</td>
+                                <td>@Model.DetalleCotizacion[i].descuento</td>
+                                <td>@Model.DetalleCotizacion[i].total</td>
+                                <td>
+                                    <input type="button" value="Editar" class="btn btn-default" onclick="Editar(this);">
+                                    <input type="button" value="Eliminar" class="btn btn-default" onclick="Eliminar(this);">
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @{
+                    double[] cotizacion_totales = new double[5];
+                    if (ViewBag.Duplicados != null)
+                    {
+                        cotizacion_totales[0] = Model.parcial;
+                        cotizacion_totales[1] = Model.descuento;
+                        cotizacion_totales[2] = Model.neto;
+                        cotizacion_totales[3] = Model.iva;
+                        cotizacion_totales[4] = Model.total;
+                    }
+                    else
+                    {
+                        cotizacion_totales[0] = 0.00;
+                        cotizacion_totales[1] = 0.00;
+                        cotizacion_totales[2] = 0.00;
+                        cotizacion_totales[3] = 0.00;
+                        cotizacion_totales[4] = 0.00;
+                    }
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.parcial)</td>
+                    <td id="td_parcial">@cotizacion_totales[0]</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.descuento)</td>
+                    <td id="td_descuento">@cotizacion_totales[1]</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.neto)</td>
+                    <td id="td_neto">@cotizacion_totales[2]</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.iva)</td>
+                    <td id="td_igv">@cotizacion_totales[3]</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Html.DisplayNameFor(n => n.total)</td>
+                    <td id="td_total">@cotizacion_totales[4]</td>
+                </tr>
+            </table>
+            <div id="detalle-input">
+                @if (ViewBag.Duplicados != null)
+                {
+                    for (int i = 0; i < Model.DetalleCotizacion.Count; i++)
+                    {
+                        <div id="input-@i">
+                            <input id="Cotizacion.DetalleCotizacion[@i].idProducto"
+                                   name="Cotizacion.DetalleCotizacion[@i].idProducto" type="hidden" value="@Model.DetalleCotizacion[i].idProducto">
+                            <input id="Cotizacion.DetalleCotizacion[@i].cantidad"
+                                   name="Cotizacion.DetalleCotizacion[@i].cantidad" type="hidden" value="@Model.DetalleCotizacion[i].cantidad">
+                            <input id="Cotizacion.DetalleCotizacion[@i].costo"
+                                   name="Cotizacion.DetalleCotizacion[@i].costo" type="hidden" value="@Model.DetalleCotizacion[i].costo">
+                            <input id="Cotizacion.DetalleCotizacion[@i].descuento"
+                                   name="Cotizacion.DetalleCotizacion[@i].descuento" type="hidden" value="@Model.DetalleCotizacion[i].descuento">
+                            <input id="Cotizacion.DetalleCotizacion[@i].total"
+                                   name="Cotizacion.DetalleCotizacion[@i].total" type="hidden" value="@Model.DetalleCotizacion[i].total">
+                        </div>
+                    }
+                }
             </div>
+            <input id="in_parcial" name="Cotizacion.parcial" type="hidden" value="@cotizacion_totales[0]">
+            <input id="in_descuento" name="Cotizacion.descuento" type="hidden" value="@cotizacion_totales[1]">
+            <input id="in_neto" name="Cotizacion.neto" type="hidden" value="@cotizacion_totales[2]">
+            <input id="in_iva" name="Cotizacion.iva" type="hidden" value="@cotizacion_totales[3]">
+            <input id="in_total" name="Cotizacion.total" type="hidden" value="@cotizacion_totales[4]">
         </div>
+    </div>
 }
 
 <script>
@@ -245,7 +313,7 @@
             detail.createInput(n, "Cotizacion.DetalleCotizacion", "costo", price.value, detalle_input);
             detail.createInput(n, "Cotizacion.DetalleCotizacion", "descuento", descuento, detalle_input);
             detail.createInput(n, "Cotizacion.DetalleCotizacion", "total", total, detalle_input);
-            //inputs costos totales        
+            //inputs costos totales
             parcial.value = td_parcial.innerHTML;
             descuento_detalle.value = td_descuento.innerHTML;
             neto.value = td_neto.innerHTML;
@@ -287,11 +355,11 @@
                 '<td>' + '<input id = "tdCant" type = "text" value = "' + tdcantidad + '"size = "7">' +
                 '<span id="span-detalle-cantidad" class="field-validation-error text-danger"></span>' + '</td>' +
                 '<td>' + '<input id = "tdCost" type = "text" value = "' + tdcosto + '"size = "7">' +
-                '<span id="span-detalle-precio" class="field-validation-error text-danger"></span>'+'</td>' +
+                '<span id="span-detalle-precio" class="field-validation-error text-danger"></span>' + '</td>' +
                 '<td>' + '<input id = "tdDesc" type = "text" value = "' + tddescuento + '"size = "7">' +
-                '<span id="span-detalle-descuento" class="field-validation-error text-danger"></span>'+'</td>' +
+                '<span id="span-detalle-descuento" class="field-validation-error text-danger"></span>' + '</td>' +
                 '<td>' + tdtotal + '</td>' +
-                '<td id = "' + opccionId + '"></td>';                                           
+                '<td id = "' + opccionId + '"></td>';
             tr.innerHTML = nuevotd;
 
             let tdopccion = document.getElementById(opccionId);
@@ -304,7 +372,7 @@
             valedicion.innerHTML = "Termine de editar un detalle. Para continuar...";
         }
     }
-    function Aceptar(nodo) {    
+    function Aceptar(nodo) {
         let td = nodo.parentNode;
         let tr = td.parentNode;
         let nodostr = tr.getElementsByTagName("td");
@@ -320,7 +388,7 @@
         let valcant = document.getElementById("span-detalle-cantidad");
         let valprec = document.getElementById("span-detalle-precio");
         let valdesc = document.getElementById("span-detalle-descuento");
-        
+
         valcant.innerHTML = detail.EmptyOrMinorOrZero(td_input_cant.value);
         valprec.innerHTML = detail.EmptyOrMinor(td_input_cost.value);
         valdesc.innerHTML = detail.EmptyOrMinor(td_input_desc.value);
@@ -334,12 +402,14 @@
             var descuento = td_input_desc.value / tdtotal;
             //descuento no mayor a 1
             if (td_input_desc.value < 1) {
-                descuento = td_input_desc.value * total; }
+                descuento = td_input_desc.value * total;
+            }
             if (descuento < 1) {
-                descuento *= total; }
+                descuento *= total;
+            }
             //span descuento
 
-            //reemplazar data de inputs a celdas        
+            //reemplazar data de inputs a celdas
             let nuevotd = '<td>' + tdid + '</td>' + '<td>' + tdnombre + '</td>' +
                 '<td>' + td_input_cant.value + '</td>' +
                 '<td>' + td_input_cost.value + '</td>' +
@@ -407,13 +477,16 @@
         let tr = td.parentNode;
         var inputIndex = parseInt(tr.id);
         console.log(div_detalle_input);
-        console.log(n);
-        console.log(tr.id);
+        console.log("n: "+n);
+        console.log("id eliminado: "+tr.id);
+        //Definir n para detalles ya registrados en otra cotización
+        n = body.children.length;
+        console.log("body: "+body.children.length);
 
         let nodostr = tr.getElementsByTagName("td");
         let tddescuento = nodostr[4].innerHTML;
         let tdtotal = nodostr[5].innerHTML;
-         //celdas costos totales
+        //celdas costos totales
         td_parcial.innerHTML = parseFloat(td_parcial.innerHTML) - tdtotal;
         td_descuento.innerHTML = parseFloat(td_descuento.innerHTML) - tddescuento;
         td_neto.innerHTML = parseFloat(td_parcial.innerHTML) - parseFloat(td_descuento.innerHTML);
@@ -450,7 +523,7 @@
                 inputIndex++;
                 console.log(inputIndex);
             }
-        }    
+        }
         n--;
-    }  
+    }
 </script>

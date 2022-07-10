@@ -75,39 +75,29 @@ namespace SIGEVALP.Controllers
             int id = co.id + 1;
             cotizacion.codigo = "000" + id;//usuario(2), proveedor(2), id
 
+            List<string> prodCotizados = new List<string>();
+            var contDetalle = cotizacion.DetalleCotizacion.Count - 1;
             foreach (var item in cotizacion.DetalleCotizacion)
             {
                 var prod = db.Productos.Find(item.idProducto);
-                string codigo = prod.codigo + cotizacion.idProveedor;
+                item.codigo = prod.codigo + cotizacion.idProveedor;
+                item.idProveedor = cotizacion.idProveedor;
 
-                var contDetalle = cotizacion.DetalleCotizacion.Count;
-                var contItem = cotizacion.DetalleCotizacion.IndexOf(item) + 1;
-                int duplicados = 0;
-
-                //comprobar duplicado de detalle con bd   
-                bool detalle = db.DetallesCotizaciones.Any(p => p.codigo == codigo);
-                //devolver detalles de cotizacion con estado "Duplicado"
+                //comprobar duplicados y crear lista de codigos
+                bool detalle = db.DetallesCotizaciones.Any(p => p.codigo == item.codigo);
                 if (detalle)
+                    prodCotizados.Add(prod.codigo);
+                //si hay duplicados retornarlos con los detalles
+                var contItem = cotizacion.DetalleCotizacion.IndexOf(item);     
+                cotizacion.DetalleCotizacion[contItem].Producto = prod;
+                if (contItem == contDetalle && prodCotizados.Count != 0)
                 {
-                    item.estado = "Duplicado";
-                    duplicados++;
-                }
-                if (contItem == contDetalle)
-                {
-                    if (duplicados != 0) 
-                    {
-                        ViewBag.Productos = db.Productos;
-                        ViewBag.Proveedores = db.Proveedores;
-                        ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
-                        return View(cotizacion);
-                    }
-                    else
-                    {
-                        item.idProveedor = cotizacion.idProveedor;
-                        item.codigo = codigo;
-                    }                    
-                }                
-                //en view evaluar contenido de estado y retornar msje                
+                    ViewBag.Productos = db.Productos;
+                    ViewBag.Proveedores = db.Proveedores;
+                    ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
+                    ViewBag.Duplicados = prodCotizados;
+                    return View(cotizacion);
+                }                           
             }
             db.Cotizaciones.Add(cotizacion);
             db.SaveChanges();
