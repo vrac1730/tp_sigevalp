@@ -10,11 +10,9 @@
     </script>
 </head>
 
-<h2>Registrar</h2>
-<h4>Cotizacion</h4>
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>
+<h2>Registrar Cotización</h2>
+    
+@Html.ActionLink("Regresar", "Index")
 <hr />
 
 @*<p>@Url.RequestContext.HttpContext.User.Identity.Name</p>
@@ -83,8 +81,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="Agregar" onclick="Agregar();" class="btn btn-default" />
-                    <input type="submit" value="Registrar" class="btn btn-default" />
+                    <input type="button" value="Agregar" onclick="Agregar();" class="btn btn-secondary" />
+                    <input type="submit" value="Registrar" class="btn btn-success" />
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@
 }
 
 <h2>Reporte Stock</h2>
+<br />
 
 @using (Html.BeginForm("Index", "ProductoxAlmacen", FormMethod.Post, new { @id = "form1" }))
 {
@@ -19,9 +20,9 @@
             @Html.TextBox("nombre", "", new { @class = "form-control" })
         </div>
         <div class="form-group">
-            <input type="button" class="btn btn-default" onclick="Search();" value="Buscar">
-            <input type="button" class="btn btn-default" onclick="Report();" value="Generar Reporte">
-            <input type="button" class="btn btn-default" onclick="Print();" value="Imprimir Pdf">
+            <input type="button" class="btn btn-secondary" onclick="Search();" value="Buscar">
+            <input type="button" class="btn btn-secondary" onclick="Report();" value="Generar Reporte">
+            <input type="button" class="btn btn-secondary" onclick="Print();" value="Imprimir Pdf">
         </div>
     </div>
 }
@@ -85,7 +86,9 @@
             @Html.DisplayFor(modelItem => item.cantidad)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.id })
+            <a href="/ProductoxAlmacen/Edit/@item.id">
+                <img src="\Content\material icons\edit_24px.svg" />
+            </a>
         </td>
     </tr>
 }

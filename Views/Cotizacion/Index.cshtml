@@ -3,10 +3,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Cotizaciones</h2>
-<div>
-    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default"})
-</div>
+<h2>  Cotizaciones
+      <a href="/Cotizacion/Create">
+          <img src="\Content\material icons\add_24px.svg" />
+      </a>
+</h2>
 <br />
 
 <table class="table table-hover">
@@ -66,9 +67,15 @@
             @Html.DisplayFor(modelItem => item.total)
         </td>        
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Detalles", "Details", new { id = item.id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
+            <a href="/Cotizacion/Details/@item.id">
+                <img src="\Content\material icons\description_24px.svg" />
+            </a>|
+            <a href="/Cotizacion/Edit/@item.id">
+                <img src="\Content\material icons\edit_24px.svg" />
+            </a>|
+            <a href="/Cotizacion/Delete/@item.id">
+                <img src="\Content\material icons\delete_24px.svg" />
+            </a>
         </td>
     </tr>
 }

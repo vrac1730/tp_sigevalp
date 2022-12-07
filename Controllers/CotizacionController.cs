@@ -69,7 +69,7 @@ namespace SIGEVALP.Controllers
                 ViewBag.Usuarios = db.Usuarios.Include(u => u.Persona);
                 return View();                
             }
-            cotizacion.estado = "Pendiente";
+            cotizacion.estado = "Aprobado";
             cotizacion.fecha = DateTime.Now;
             var co = db.Cotizaciones.ToList().Last();
             int id = co.id + 1;

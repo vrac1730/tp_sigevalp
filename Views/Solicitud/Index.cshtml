@@ -3,7 +3,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Mis Solicitudes</h2>
+<h2>  Mis Solicitudes
+    <a href="/Solicitud/Create">
+        <img src="\Content\material icons\add_24px.svg" />
+    </a>
+</h2>
+<br />
 
 @using (Html.BeginForm("Index", "Solicitud", FormMethod.Post))
 {
@@ -17,12 +22,6 @@
         </div>              
     </div>
 }
-
-<div style="padding-right: 6%">
-    <p style="text-align:right">
-        @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
-    </p>    
-</div>
 
 <table class="table table-hover">
     <tr>

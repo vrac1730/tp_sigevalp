@@ -3,11 +3,12 @@
     ViewBag.Title = "Catálogo";
 }
 
-<h2>Productos</h2>
-<div>
-    @Html.ActionLink("Registrar", "Create", null, new { @class="btn btn-default" })
-</div>
-<br />
+<h2>  Productos
+      <a href="/Producto/Create">
+          <img src="\Content\material icons\add_24px.svg" />
+      </a>
+</h2>
+<br/>
 
 <table class="table table-hover">
     <tr>
@@ -29,26 +30,29 @@
         <th>Opción</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>    
-        <td>
-            @Html.DisplayFor(modelItem => item.codigo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.marca)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria.nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.id })             
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.nombre)
+            </td>
+            <td>
+                <a href="/Producto/Edit/@item.id">
+                    <img src="\Content\material icons\edit_24px.svg" />
+                </a>
+            </td>
+        </tr>
+    }
 </table>

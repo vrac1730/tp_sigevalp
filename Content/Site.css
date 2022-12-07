@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+/* Color Scheme */
+.palette1 {
+    --base1: #d9ac25;
+    --content1: #fecf50;
+    --base2: #034c8c;
+    --content2: #0477bf;
+    --base: #fdfae5;
+}

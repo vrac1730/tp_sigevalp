@@ -18,7 +18,7 @@ namespace SIGEVALP.Models
         public int cantSolicitada { get; set; }
 
         [DisplayName("Cant. Entregada")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten  positivos.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "* Solo se permiten números positivos.")]
         public int cantEntregada { get; set; }
 
         [DisplayName("Estado")]

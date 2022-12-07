@@ -18,7 +18,7 @@
             @Html.TextBox("nombre", "", new { @class = "form-control" })
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-default" value="Buscar">
+            <input type="submit" class="btn btn-secondary" value="Buscar">
         </div>
     </div>
 }
@@ -76,7 +76,9 @@
                 Ingreso
             </td>
             <td>
-                @Html.ActionLink("Detalles", "Details", new { id = item.id, tipo = "Ingreso" })
+                <a href="/HistorialMovimiento/Details/@item.id?tipo=Ingreso">
+                    <img src="\Content\material icons\description_24px.svg" />
+                </a>
             </td>
         </tr>
     }
@@ -106,7 +108,9 @@
                 Salida
             </td>
             <td>
-                @Html.ActionLink("Detalles", "Details", new { id = item.id, tipo = "Salida" })
+                <a href="/HistorialMovimiento/Details/@item.id?tipo=Salida">
+                    <img src="\Content\material icons\description_24px.svg"/>
+                </a>
             </td>
         </tr>
     }

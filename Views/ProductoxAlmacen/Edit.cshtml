@@ -1,9 +1,8 @@
 ﻿@model SIGEVALP.Models.ProductoxAlmacen
 
-<h2>Modificar Nivel Stock</h2>
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>
+<h2>Modificar Nivel de Stock</h2>
+    
+@Html.ActionLink("Regresar", "Index")
 <hr />
 
 @using (Html.BeginForm("Edit", "ProductoxAlmacen", FormMethod.Post, new { @id = "form-edit-productoxAlmacen" }))
@@ -72,7 +71,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Guardar" onclick="ComparaStock();" class="btn btn-default" />
+                <input type="button" value="Guardar" onclick="ComparaStock();" class="btn btn-warning" />
             </div>
         </div>
     </div>

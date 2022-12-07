@@ -3,11 +3,9 @@
     ViewBag.Title = "EditDetail";
 }
 
-<h2>Registrar</h2>
-<h4>Ingreso de Producto</h4>
-<div>
-    @Html.ActionLink("Regresar", "Details", new { id = Model.idOrdenCompra })
-</div>
+<h2>Registrar Ingreso de Insumos</h2>
+    
+@Html.ActionLink("Regresar", "Details", new { id = Model.idOrdenCompra })
 <hr />
 
 @using (Html.BeginForm())
@@ -55,7 +53,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-warning" />
             </div>
         </div>
     </div>

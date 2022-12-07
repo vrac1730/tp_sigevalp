@@ -3,10 +3,11 @@
     ViewBag.Title = "Index-Local";
 }
 
-<h2>Lista de Locales</h2>   
-<div>
-    @Html.ActionLink("Registrar", "Create", null, new { @class = "btn btn-default" })
-</div>
+<h2>  Locales
+      <a href="/Local/Create">
+          <img src="\Content\material icons\add_24px.svg" />
+      </a>
+</h2>   
 <br />
 
 <table class="table table-hover">
@@ -48,7 +49,9 @@
             @Html.DisplayFor(modelItem => item.razon_social)
         </td>        
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.id })
+            <a href="/Local/Edit/@item.id">
+                <img src="\Content\material icons\edit_24px.svg" />
+            </a>
         </td>
     </tr>            
     }

@@ -3,11 +3,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Detalle</h2>
-<h4>Orden Compra</h4>
-<p>
-    @Html.ActionLink("Regresar", "Index")
-</p>
+<h2>Detalle de Orden</h2>
+    
+@Html.ActionLink("Regresar", "Index")
 <hr />
 
 <div>    
@@ -117,7 +115,9 @@ else
                 @Html.DisplayFor(modelItem => item.Producto.Alerta.nombre)
             </td>
             <td>
-                @Html.ActionLink("Editar", "EditDetail", new { id = item.id })
+                <a href="/OrdenCompra/EditDetail/@item.id">
+                    <img src="\Content\material icons\edit_24px.svg" />
+                </a>
             </td>
         </tr>
     }
