@@ -1,0 +1,49 @@
+﻿<ul class="navbar-nav">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle btn-light" data-bs-toggle="dropdown" href="#content-ddlGestiona" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlGestiona">
+            Gestionar
+        </a>
+        <ul class="dropdown-menu" id="content-ddlConsulta">
+            <li>@Html.ActionLink("Productos", "Index", "Producto", null, new { @class = "dropdown-item" })</li>
+            <li>@Html.ActionLink("Proveedores", "Index", "Proveedor", null, new { @class = "dropdown-item" })</li>
+            <li>@Html.ActionLink("Categorías", "Index", "Categoria", null, new { @class = "dropdown-item" })</li>
+            <li>@Html.ActionLink("Locales", "Index", "Local", null, new { @class = "dropdown-item" })</li>
+        </ul>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#content-ddlGenera" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlGenera">
+            Generar Orden
+        </a>
+        <ul class="dropdown-menu" id="content-ddlGenera">
+            <li>@Html.ActionLink("Orden de Compra", "Index", "OrdenCompra", null, new { @class = "dropdown-item" })</li>
+            <li>@Html.ActionLink("Solicitud", "Index", "Solicitud", null, new { @class = "dropdown-item" })</li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        @Html.ActionLink("Cotizacion", "Index", "Cotizacion", null, new { @class = "nav-link" })
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#content-ddlConsulta" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlConsulta">
+            Sobre Insumos
+        </a>
+        <ul class="dropdown-menu" id="content-ddlConsulta">
+            <li>@Html.ActionLink("Consultar Movimientos", "Index", "HistorialMovimiento", null, new { @class = "dropdown-item" })</li>
+            <li>@Html.ActionLink("Consultar Stock", "Index", "ProductoxAlmacen", null, new { @class = "dropdown-item" })</li>
+        </ul>
+    </li>
+</ul>
+<style>
+    /* Changes Navigation link´s color on mouse hover */
+    .nav-link {
+        color: #FFF !important;
+    }
+    .nav-link:hover {
+        color: var(--content1) !important;
+    }
+    /* Changes navbar toggler`s background */
+    .navbar-toggler[aria-expanded="true"] {
+        background-color: var(--content2);
+    }
+    /*mostrar dropdown content en focus
+    ocultar background azul*/
+</style>

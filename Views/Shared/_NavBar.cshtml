@@ -1,82 +1,46 @@
-﻿<div class="navbar navbar-expand-lg fixed-top">
+﻿<nav class="navbar navbar-background fixed-top"> @* navbar-expand-lg: the media query overrides the visibility property when min-width: 992px *@
     <div class="container-fluid">
         <div>
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" type="button" aria-expanded="false" aria-controls="navbar-collapse">
+            @*<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" type="button" aria-expanded="false" aria-controls="navbar-collapse">*@
+            <button class="navbar-toggler px-2" data-bs-toggle="offcanvas" data-bs-target=".offcanvas-start" type="button" aria-expanded="false" aria-controls=".offcanvas-start">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            @Html.ActionLink("SIGEVALP", "Index", "Home", null, new { @class = "navbar-brand text-white" })
+            @Html.ActionLink("SIGEVALP", "Index", "Home", null, new { @class = "navbar-brand text-white yellow-txt-on ms-2" })
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#content-ddlGestiona" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlGestiona">
-                        Gestionar
-                    </a>
-                    <ul class="dropdown-menu" id="content-ddlConsulta">
-                        <li>@Html.ActionLink("Productos", "Index", "Producto", null, new { @class = "dropdown-item" })</li>
-                        <li>@Html.ActionLink("Proveedores", "Index", "Proveedor", null, new { @class = "dropdown-item" })</li>
-                        <li>@Html.ActionLink("Categorías", "Index", "Categoria", null, new { @class = "dropdown-item" })</li>
-                        <li>@Html.ActionLink("Locales", "Index", "Local", null, new { @class = "dropdown-item" })</li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#content-ddlGenera" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlGenera">
-                        Generar Orden
-                    </a>
-                    <ul class="dropdown-menu" id="content-ddlGenera">
-                        <li>@Html.ActionLink("Orden de Compra", "Index", "OrdenCompra", null, new { @class = "dropdown-item" })</li>
-                        <li>@Html.ActionLink("Solicitud", "Index", "Solicitud", null, new { @class = "dropdown-item" })</li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Cotizacion", "Index", "Cotizacion", null, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#content-ddlConsulta" data-bs-auto-close="true" role="button" aria-expanded="false" aria-controls="content-ddlConsulta">
-                        Sobre Insumos
-                    </a>
-                    <ul class="dropdown-menu" id="content-ddlConsulta">
-                        <li>@Html.ActionLink("Consultar Movimientos", "Index", "HistorialMovimiento", null, new { @class = "dropdown-item" })</li>
-                        <li>@Html.ActionLink("Consultar Stock", "Index", "ProductoxAlmacen", null, new { @class = "dropdown-item" })</li>
-                    </ul>
-                </li>
-            </ul>
+        @*<div class="navbar-collapse collapse">
+            @Html.Partial("_CollapsedNavItems")
+        </div>*@
+        <div class="offcanvas offcanvas-start offcanvas-background" tabindex="-1" aria-labelledby="offcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title text-white" id="offcanvasLabel">Trattoria la Piccolina</h5>
+                <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                @Html.Partial("_OffcanvasBody")
+            </div>
         </div>
         @Html.Partial("_LoginPartial")
     </div>
-</div>
+</nav>
 
 <style>
-    /* Navbar´s background and brand's color on hover */
-    .navbar {
+    .navbar-background {
         background-color: var(--base2) !important;
     }
-    .navbar-brand:hover {
-        color: var(--content1) !important;
+    .offcanvas-background {
+        background-color: var(--base2-light) !important;
     }
-    /* Navigation link´s color base and when mouse is over */
-    .nav-link {
-        color: #FFF !important;
-    }
-    .nav-link:hover {
-        color: var(--content1) !important;
-    }
-    /* Hides the border and the box-shadow of the navbar-toggler-icon svg */
+    /* Changes navbar´s text color on mouse hover */
+    .yellow-txt-on:hover {
+        color: var(--content1) !important;  
+    }    
+    /* Hides the box-shadow from navbar-toggler class */
     .navbar-toggler {
-        border-color: transparent !important;
-        padding-left: 0px;
-        color: transparent;
+        border-color: #FFF !important;
+        color: transparent;     
     }
-    .navbar-toggler[aria-expanded="true"] {
-        /*border-color: transparent !important;
-        color: transparent;*/
-    }
-    /* Changes the toggler icon color */
-    .navbar-toggler-icon { /* The encoding notation replaces the desired character with a percent sign and two hexadecimal digits position of the character in the ASCII character set. */
+    /* Changes the toggler icon color: The encoding notation replaces the desired character with % and two hexadecimal digits position in the ASCII character set. */
+    .navbar-toggler-icon {          /*             <                                                            >  <                   (                    )           */
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28 255, 255, 255, 1 %29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    }
-    /* When the toggler is focused: Hides the outer contour at the border of the navbar-toggler-icon svg */
-    .navbar .navbar-toggler:focus {
-        /*color: transparent;*/
     }
 </style> 

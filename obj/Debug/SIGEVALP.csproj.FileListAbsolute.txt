@@ -913,8 +913,6 @@ D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\es\EntityFramework.resources.dll
-D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\es\EntityFramework.SqlServer.resources.dll
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\es\System.Web.Helpers.resources.dll
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\es\System.Web.Mvc.resources.dll
 D:\Respaldo\Proyectos\bs 5.2\tp_sigevalp\bin\es\System.Web.Optimization.resources.dll

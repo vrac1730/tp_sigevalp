@@ -29,4 +29,8 @@ textarea {
     --base2: #034c8c;
     --content2: #0477bf;
     --base: #fdfae5;
+    --base1-light: hsl(45deg 71% 60%);
+    --base2-light: hsl(208deg 96% 38%);
+    --content1-light: hsl(44deg 99% 75%);
+    --content2-light: hsl(203deg 96% 75%);
 }
