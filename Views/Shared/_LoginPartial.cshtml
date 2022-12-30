@@ -7,10 +7,10 @@
 
         <dl class="d-flex flex-row" style="position: fixed; top: 0.5rem; right: 1%;">
             <dd>
-                @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "link-format yellow-txt-on p-2" })
+                @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "unstyled-link text-white yellow-txt-on p-2" })
             </dd>
             <dd>
-                <a class="link-format yellow-txt-on p-2" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a>
+                <a class="unstyled-link text-white yellow-txt-on p-2" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a>
             </dd>
         </dl>
     }
@@ -19,16 +19,18 @@ else
 {
     <dl class="d-flex flex-row" style="position: fixed; top: 0.5rem; right: 2%;">
         <dd>
-            @Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "link-format yellow-txt-on p-2" })
+            @Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "unstyled-link text-white yellow-txt-on p-2" })
         </dd>
         <dd>
-            @Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "link-format yellow-txt-on p-2" })
+            @Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "unstyled-link text-white yellow-txt-on p-2" })
         </dd>
     </dl>
 }
 <style>
-    .link-format {
-        color: #FFF;
+    .yellow-txt-on:hover {
+        color: var(--content1) !important;
+    }
+    .unstyled-link {
         display: block;
         text-decoration: none;
     }

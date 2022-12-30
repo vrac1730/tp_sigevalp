@@ -400,8 +400,9 @@
     <Content Include="Views\ProductoxAlmacen\Edit.cshtml" />
     <Content Include="Views\HistorialMovimiento\Index.cshtml" />
     <Content Include="Views\HistorialMovimiento\Details.cshtml" />
-    <Content Include="Views\Shared\_CollapsedNavItems.cshtml" />
-    <Content Include="Views\Shared\_OffcanvasBody.cshtml" />
+    <Content Include="Views\Shared\_CollapsedComponent.cshtml" />
+    <Content Include="Views\Shared\_NavItems.cshtml" />
+    <Content Include="Views\Shared\_OffCanvasBody.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

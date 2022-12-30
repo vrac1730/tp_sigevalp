@@ -1,22 +1,19 @@
-﻿<nav class="navbar navbar-background fixed-top"> @* navbar-expand-lg: the media query overrides the visibility property when min-width: 992px *@
+﻿<nav class="navbar navbar-background navbar-expand-md fixed-top"> @* navbar-expand-md: create media query to show offcanvas body (nav items) and hide offcanvas header (sidebar) until window.innerWidth´s less than 768px *@
     <div class="container-fluid">
         <div>
-            @*<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" type="button" aria-expanded="false" aria-controls="navbar-collapse">*@
             <button class="navbar-toggler px-2" data-bs-toggle="offcanvas" data-bs-target=".offcanvas-start" type="button" aria-expanded="false" aria-controls=".offcanvas-start">
                 <span class="navbar-toggler-icon"></span>
             </button>
             @Html.ActionLink("SIGEVALP", "Index", "Home", null, new { @class = "navbar-brand text-white yellow-txt-on ms-2" })
         </div>
-        @*<div class="navbar-collapse collapse">
-            @Html.Partial("_CollapsedNavItems")
-        </div>*@
         <div class="offcanvas offcanvas-start offcanvas-background" tabindex="-1" aria-labelledby="offcanvasLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title text-white" id="offcanvasLabel">Trattoria la Piccolina</h5>
-                <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title" id="offcanvasLabel">Trattoria la Piccolina</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                @Html.Partial("_OffcanvasBody")
+                @Html.Partial("_OffCanvasBody")
+                @Html.Partial("_NavItems")
             </div>
         </div>
         @Html.Partial("_LoginPartial")
@@ -28,19 +25,27 @@
         background-color: var(--base2) !important;
     }
     .offcanvas-background {
-        background-color: var(--base2-light) !important;
+        /*background-color: var(--base2-light) !important;*/
     }
-    /* Changes navbar´s text color on mouse hover */
-    .yellow-txt-on:hover {
-        color: var(--content1) !important;  
-    }    
+    /* Hides offcanvasBody and navItems when width is: greater than 768px and less than 768px respectively. */
+    #OffCanvasBody {
+        display: none;
+    }
+    @@media (max-width: 767px) {
+        #OffCanvasBody {
+            display: block !important;
+        }
+        #NavItems {
+            display: none !important;
+        }
+    }
     /* Hides the box-shadow from navbar-toggler class */
     .navbar-toggler {
         border-color: #FFF !important;
-        color: transparent;     
+        color: transparent;
     }
     /* Changes the toggler icon color: The encoding notation replaces the desired character with % and two hexadecimal digits position in the ASCII character set. */
-    .navbar-toggler-icon {          /*             <                                                            >  <                   (                    )           */
+    .navbar-toggler-icon { /*             <                                                            >  <                   (                    )           */
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28 255, 255, 255, 1 %29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 </style> 

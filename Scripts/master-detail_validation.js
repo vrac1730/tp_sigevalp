@@ -21,7 +21,7 @@ export function EmptyOrMinorOrSymbol(c) {
 export function GetId(c) {
     return c.substr(4, c.length);
 }
-export function createButton(name, tdopccion, funct) {//[name, funct]
+export function createButton(name, tdopccion, funct) {// name: input´s value, tdopccion: parent node, funct: define function with node as parameter
     let button = document.createElement("input");
     button.value = name;
     button.type = "button";
@@ -29,19 +29,19 @@ export function createButton(name, tdopccion, funct) {//[name, funct]
     button.className = "btn btn-default";
     tdopccion.appendChild(button);
 }
-export function createTd(value, tr) {//[value]
+export function createTd(value, tr) {// value: td´s inner html, tr: parent node
     let td = document.createElement("td");
     td.innerHTML = value;
     tr.appendChild(td);
 }
-export function createInput(id, model, prop, value, div) {//[prop, value]
+export function createInput(id, model, prop, value, div) {// id: num of detail, model: object model´s name, value: model´s property, value: prod id, div: parent node
     let input = document.createElement("input");
     createInputId(input, id, model, prop);
     input.value = value;
     input.type = "hidden";
     div.appendChild(input);
 }
-export function createInputId(input, id, model, prop) {//[input] [prop] misma longitud
+export function createInputId(input, id, model, prop) {// input: element node
     input.id = model + "[" + id + "]." + prop;
     input.name = input.id;
 }
