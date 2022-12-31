@@ -1,21 +1,40 @@
-﻿<ul class="navbar-nav" id="OffCanvasBody">
-    <li>
-        <strong class="my-2">Gestionar</strong>
-        @Html.ActionLink("Productos", "Index", "Producto", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Proveedores", "Index", "Proveedor", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Categorías", "Index", "Categoria", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Locales", "Index", "Local", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-    </li>
-    <li>
-        <strong class="my-2">Documentos</strong>
-        @Html.ActionLink("Orden de Compra", "Index", "OrdenCompra", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Solicitud", "Index", "Solicitud", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Cotizar Insumos", "Index", "Cotizacion", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-    </li>
-    <li>
-        <strong class="my-2">Sobre Insumos</strong>
-        @Html.ActionLink("Consultar Movimientos", "Index", "HistorialMovimiento", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-        @Html.ActionLink("Consultar Stock", "Index", "ProductoxAlmacen", null, new { @class = "unstyled-link text-black my-1 mx-3" })
-    </li>
-</ul>
-@* bg_gray content en focus *@
+﻿<dl class="small" id="OffCanvasBody">
+    <dd class="mb-0 py-2">
+        <strong class="fw-semibold">Gestionar</strong>
+        <div class="pb-2 small">
+            @Html.ActionLink("Productos", "Index", "Producto", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Proveedores", "Index", "Proveedor", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Categorías", "Index", "Categoria", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Locales", "Index", "Local", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+        </div>
+    </dd>
+    <dd class="mb-0 py-2">
+        <strong class="fw-semibold">Documentos</strong>
+        <div class="pb-2 small">
+            @Html.ActionLink("Orden de Compra", "Index", "OrdenCompra", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Solicitud", "Index", "Solicitud", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Cotizar Insumos", "Index", "Cotizacion", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+        </div>
+    </dd>
+    <dd class="mb-0 py-2">
+        <strong class="fw-semibold">Sobre Insumos</strong>
+        <div class="pb-2 small">
+            @Html.ActionLink("Consultar Movimientos", "Index", "HistorialMovimiento", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+            @Html.ActionLink("Consultar Stock", "Index", "ProductoxAlmacen", null, new { @class = "unstyled-link offcanvas-link rounded-2" })
+        </div>
+    </dd>
+</dl>
+
+<style>
+    .offcanvas-link {
+        color: rgba(0,0,0,0.65);
+        padding: .1875rem .5rem;
+        margin-top: .125rem;
+        margin-left: 1.125rem;
+        width: fit-content;
+    }
+    .offcanvas-link:hover {
+        color: #000;
+        background-color: rgb(0,0,0,0.1);
+    }
+</style>
